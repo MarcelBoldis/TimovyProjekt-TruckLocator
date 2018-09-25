@@ -1,1 +1,1 @@
-# Timovy Projekt-TruckLocator
+# Tímový Projekt - TruckLocator
