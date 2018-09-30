@@ -2,6 +2,7 @@
 html, body{
     margin: 0;
     font-family: 'Montserrat', sans-serif;
+    background: rgba(255,249,227, 0.5);
 }
 a{
     text-decoration: none;
@@ -18,7 +19,7 @@ li {
     padding: 0;
     margin: 0;
     display: inline-block;
-    width: 33%;
+    width: 32.5%;
     text-align: center;
     font-size:1.2em;
     padding-bottom: 5px;
@@ -30,6 +31,7 @@ li:hover {
     border-bottom: 1px solid white;
 }
 nav{
+    box-sizing: border-box;
     position: absolute;
     width: 100%;
     top: 0;
@@ -74,31 +76,30 @@ section h1{
 }
 
 #intro {
-    height: 100vh;
     background-image: url('img/cover.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-    height: 100vh;
+    min-height: 100vh;
     width: 100%;
 }
 
 #aboutProjectHeader{
-    width: 17%;
     font-size: 2em;
     color: #5c045f;
     text-align: left;
     margin: 40px 80px 15px 80px;
-    border-bottom: 1px solid rgba(92, 4, 95, 0.37);
+    font-weight: 400;
+    margin-top: 100px;
 }
 
 #project, #docs {
     background: rgba(255, 249, 227, 0.5);
-    height: 100vh;
+    min-height: 100vh;
 }
 
 #members {
     background: rgba(252, 246, 228, 0.911);
-    height: 100vh;
+    min-height: 100vh;
 }
 #members h1 {
     margin-bottom: 10vh;
@@ -125,7 +126,7 @@ section h1{
     text-align: center;
 }
 .box img {
-    width: 300px;
+    width: 50%;
     text-align: center;
 }
 #marcel {
@@ -133,15 +134,93 @@ section h1{
     top: 100px;
 }
 
-#content {
+#projectContent {
     margin: 0 60px;
     width: 60%;
     padding: 20px;
     text-indent: 30px;
     line-height: 1.8;
+    float: left;
+}
+#projectImage {
+    float: right;
+    margin-right: 5%;
+    width: 20%;
 }
 
-#aboutProject {
-    display: flex;
-    flex-direction: row;
+.docContainer {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: rgba(255, 133, 77, 0.986);
+    text-align: center;
+    float: left;
+    margin: 5%;
+}
+.docContainer i {
+    display: block;
+    margin-top: 40px;
+    margin-bottom: 10px;
+}
+.docContainer a {
+    color: #eee;
+}
+.fa-file-pdf{
+    font-size: 2em;
+}
+
+
+
+
+/**************Media queries*******************/
+
+@media screen and (max-width: 1200px) {
+    #intro h1 {
+        font-size: 6em;
+    }
+    #aboutProjectHeader {
+        text-align: center;
+    }
+    #projectContent {
+        width: 70%;
+        margin: 0 auto;
+
+        float: none;
+    }
+    #projectImage {
+        float: none;
+        margin: 0;
+        text-align: center;
+    }
+    #project {
+        text-align: center;
+    }
+    #members h1 {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    #intro h1 {
+        font-size: 5em;
+    }
+    #projectImage {
+    width: 30%;
+    }
+
+    #docs h1 {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    #intro h1 {
+        font-size: 3em;
+    }
+    nav ul {
+        width: 100%;
+    }
+    #members h1,#docs h1 {
+        font-size: 2em;
+    }
 }
