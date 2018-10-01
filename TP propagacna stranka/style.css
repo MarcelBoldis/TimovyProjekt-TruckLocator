@@ -19,7 +19,7 @@ li {
     padding: 0;
     margin: 0;
     display: inline-block;
-    width: 32.5%;
+    width: 24.5%;
     text-align: center;
     font-size:1.2em;
     padding-bottom: 5px;
@@ -92,12 +92,22 @@ section h1{
     margin-top: 100px;
 }
 
-#project, #docs {
-    background: rgba(255, 249, 227, 0.5);
+#project, #state {
+    background: rgba(255, 255, 119, .6);
     min-height: 100vh;
 }
 
-#members {
+section {
+    padding-bottom: 10px;
+}
+
+.docContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#members, #docs {
     background: rgba(252, 246, 228, 0.911);
     min-height: 100vh;
 }
@@ -148,7 +158,7 @@ section h1{
     width: 20%;
 }
 
-.docContainer {
+#zap1 {
     width: 150px;
     height: 150px;
     border-radius: 50%;
@@ -157,24 +167,29 @@ section h1{
     float: left;
     margin: 5%;
 }
-.docContainer i {
+#zap1 i {
     display: block;
     margin-top: 40px;
     margin-bottom: 10px;
 }
-.docContainer a {
+#zap1 a {
     color: #eee;
 }
 .fa-file-pdf{
     font-size: 2em;
 }
 
+.timeline {
+    width: 70%;
+    margin: 0 auto;
+    text-align: center;
+}
 
 
 
 /**************Media queries*******************/
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1280px) {
     #intro h1 {
         font-size: 6em;
     }
@@ -198,9 +213,12 @@ section h1{
     #members h1 {
         width: 50%;
     }
+    nav ul {
+        width: 70%;
+    }
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 920px) {
     #intro h1 {
         font-size: 5em;
     }
@@ -211,16 +229,93 @@ section h1{
     #docs h1 {
         width: 50%;
     }
+
+    nav ul {
+        width: 100%;
+    }
 }
 
 @media screen and (max-width: 700px) {
     #intro h1 {
         font-size: 3em;
     }
-    nav ul {
-        width: 100%;
-    }
+
     #members h1,#docs h1 {
         font-size: 2em;
     }
+    nav ul {
+     font-size: .7em;
+    }
 }
+
+/* ********** timeline ********** */
+#content {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.event:hover {
+    color: #000;
+}
+
+/* Timeline */
+.timeline {
+    border-left: 4px solid #004ffc;
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    color: black;
+    margin: 50px auto;
+    letter-spacing: 0.5px;
+    position: relative;
+    line-height: 1.4em;
+    font-size: 1.03em;
+    padding: 50px;
+    list-style: none;
+    text-align: left;
+    font-weight: 100;
+    max-width: 30%;
+}
+
+.timeline h2,
+.timeline h3 {
+
+}
+.timeline .event {
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+    padding-bottom: 25px;
+    margin-bottom: 50px;
+    position: relative;
+    width: 50%;
+}
+.timeline .event:last-of-type {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border: none;
+}
+.timeline .event:before,
+.timeline .event:after {
+    position: absolute;
+    display: block;
+    top: 0;
+}
+.timeline .event:before {
+    left: -217.5px;
+    color: black;
+    content: attr(data-date);
+    text-align: right;
+    font-size: 0.9em;
+    min-width: 120px;
+    font-weight: 300;
+}
+.timeline .event:after {
+    box-shadow: 0 0 0 4px #004ffc;
+    left: -57.85px;
+    background: #313534;
+    border-radius: 50%;
+    height: 11px;
+    width: 11px;
+    content: "";
+    top: 5px;
+}
+
