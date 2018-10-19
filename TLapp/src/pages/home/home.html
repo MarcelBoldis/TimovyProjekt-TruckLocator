@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-navbar color="darkBlue">
+    <ion-title>
+      TruckLocator
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card *ngIf="trackDataInfo | async as trackInfo">
+    <div>
+      <ion-item color="light">
+        <ion-avatar item-start>
+          <img src="{{trackInfo.image}}">
+        </ion-avatar>
+        <h2>{{trackInfo.direction}}</h2>
+        <h3>{{trackInfo.date}}</h3>
+        <i (click)="openFuelCostsModal()" item-right class="material-icons">
+          local_gas_station
+        </i>
+      </ion-item>
+      <p class="description">{{trackInfo.description}}</p>
+    </div>
+    <div>
+      <ion-row>
+        <div class="driverInfo">
+          <h3>{{trackInfo.truckDriver}}</h3>
+          <h3>{{trackInfo.truck}}</h3>
+        </div>
+        <div>
+          <i class="material-icons" (click)="openTasks()">
+            assignment
+          </i>
+        </div>
+      </ion-row>
+    </div>
+    <ion-grid align-self-center>
+      <button ion-button color="startButton" (click)="startTracking()">Štart</button>
+      <button ion-button color="dark" (click)="addTrackToDatabase()">Add Fake Data</button>
+    </ion-grid>
+    <ion-card *ngIf="openTask">
+      <div *ngFor="let taskItem of trackInfo.tasks; let i = index ">
+        <ion-item class="ionTaskItem" [ngClass]="taskItem.done ? 'taksDone' : 'taskInProgress'">
+          <div (click)="updateCucumber(i, taskItem.done)">
+            {{taskItem.place}}
+            <P>{{taskItem.fullAdress}}</P>
+            <span>
+              - {{taskItem.description}}
+            </span>
+            <p item-right *ngIf="taskItem.done">Hotovo!</p>
+          </div>
+        </ion-item>
+      </div>
+    </ion-card>
+  </ion-card>
+</ion-content>
