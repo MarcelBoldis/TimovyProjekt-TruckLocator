@@ -1,0 +1,28 @@
+page-home {
+    div {
+        margin: 5px;
+    }
+    .description {
+        overflow-wrap: break-word;
+        margin: 5px;
+        color: gray;
+        font-style: italic;
+    }
+    .checkBoxStyle{
+        text-align: left
+    }
+    .ionTaskItem{
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+    .taksDone{
+        color: green;
+        background: rgba(0, 128, 0, 0.144);
+        p{
+            color: rgba(0, 128, 0, 0.712);
+        }
+    }
+    .taskInProgress{
+        background: #f4f4f4;
+    }
+}

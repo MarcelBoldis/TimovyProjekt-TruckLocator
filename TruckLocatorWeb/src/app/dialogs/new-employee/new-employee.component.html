@@ -1,0 +1,49 @@
+<div class="dialog">
+
+    <h1>Pridanie zamestnanca</h1>
+    <mat-divider></mat-divider>
+    <mat-icon (click)="closeDialog()" class="close">close</mat-icon>
+    <div class="content-wrapper">
+      <form id="newTruckForm">
+  
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Meno">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Priezvisko">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Rodné číslo">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Číslo OP">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Dátum narodenia">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Špecializácia">
+            <mat-option>Vodič</mat-option>
+            <mat-option>Dispečér</mat-option>
+            <mat-option>Manažér</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+  
+      <div [fileUploadInputFor]="fileUploadQueue" class="upload-drop-zone">
+        <p>Vložte fotku zamestnanca</p>
+      </div>
+  
+  
+      <div style="width: 500px">
+        <mat-file-upload-queue #fileUploadQueue [fileAlias]="'file'" [httpUrl]="'http://localhost:8180/jax-rs-jersey-application-sample'"
+          multiple>
+  
+          <mat-file-upload [file]="file" [id]="i" *ngFor="let file of fileUploadQueue.files; let i = index"></mat-file-upload>
+        </mat-file-upload-queue>
+      </div>
+      <div class="btn">
+        <button mat-raised-button class="submitButton" color="primary">Pridaj</button>
+      </div>
+    </div>
+  </div>

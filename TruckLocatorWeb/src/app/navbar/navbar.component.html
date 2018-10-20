@@ -1,0 +1,13 @@
+<nav class="group">
+  <ul>
+    <li><a routerLink="/home">Home</a></li>
+    <li><a routerLink="/employers">Zamestnanci</a></li>
+    <li><a routerLink="/trucks">Vozidla</a></li>
+    <li><a routerLink="/tasks">Tasky</a></li>
+  </ul>
+  <mat-icon [matMenuTriggerFor]="menu" >account_circle</mat-icon>
+  <mat-menu #menu="matMenu">
+      <button mat-menu-item>Editácia profilu</button>
+      <button mat-menu-item>Odhlásenie</button>
+    </mat-menu>
+</nav>

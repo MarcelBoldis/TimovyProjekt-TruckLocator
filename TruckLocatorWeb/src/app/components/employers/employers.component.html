@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="left-content">
+        <mat-icon id="addPerson" (click)="addNewEmployee()">add_circle_outline</mat-icon>
+
+        <mat-card class="legedCard">
+            <h2>Skupiny</h2>
+            <mat-divider></mat-divider>
+            <div class="legend">
+                <div class="wrapGroup">
+                    <span class="driver"><span>{{drivers}}</span></span>
+                    <span>Driver</span>
+                </div>
+                <div class="wrapGroup">
+                    <span class="manager"><span>{{managers}}</span></span>
+                    <span>Manažér</span>
+                </div>
+                <div class="wrapGroup">
+                    <span class="dispatcher"><span>{{dispatchers}}</span></span>
+                    <span>Dispečér</span>
+                </div>
+            </div>
+
+        </mat-card>
+
+    </div>
+    <div class="right-content">
+
+        <app-employee-detail (managers)="getManagers($event)" (dispatchers)="getDispatchers($event)" (drivers)="getDrivers($event)"></app-employee-detail>
+    </div>
+</div>

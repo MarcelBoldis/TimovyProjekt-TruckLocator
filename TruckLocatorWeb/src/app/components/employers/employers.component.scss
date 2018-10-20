@@ -1,0 +1,94 @@
+@import '../../../assets/global-css/variables.scss';
+
+
+.container {
+    width: 95%;
+    margin: 0 auto;
+
+    margin-top: 5vh;
+
+    .left-content {
+        float: left;
+        width: 20vw;
+        mat-icon {
+            color: $nav-color;
+            font-size: 3em;
+        }
+    }
+    .right-content {
+        float: right;
+        width: 70vw;
+        overflow: auto;
+        height: 80vh;
+    }
+
+}
+.legedCard {
+    padding: 0;
+    margin-top: 13px;
+    h2 {
+        margin: 0;
+        padding: 10px;
+
+    }
+}
+.legend {
+    padding: 10px;
+
+    span {
+        text-align: center;
+        line-height: 20px;
+        margin-bottom: 8px;
+        font-weight: 600;
+    }
+    .driver{
+        border: 3px solid  $nav-color;
+        border-radius: 50%;
+        color: $nav-color;
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        margin-right: 12px;
+    }
+    .manager {
+        border: 3px solid  $manager-color;
+        border-radius: 50%;
+        color: $manager-color;
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        margin-right: 12px;
+    }
+    .dispatcher{
+        border: 3px solid  $dispatcher-color;
+        border-radius: 50%;
+        color: $dispatcher-color;
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        margin-right: 12px;
+    }
+}
+
+#addPerson {
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+/*Scroll bar*/
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: white;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: $nav-color; 
+    border-radius: 10px;
+}
