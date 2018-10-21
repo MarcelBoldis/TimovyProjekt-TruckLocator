@@ -4,6 +4,8 @@ import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { EmployeeInfoComponent } from 'src/app/dialogs/employee-info/employee-info.component';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { FirebaseService } from 'src/app/services/firebase.service';
 export interface State {
   flag: string;
   name: string;
@@ -23,7 +25,7 @@ export class EmployeeDetailComponent implements OnInit {
   dispatcherCount = 0;
   stateCtrl = new FormControl();
   filteredStates: Observable<State[]>;
-
+  tmp: any;
   @Output() managers = new EventEmitter<number>();
   @Output() drivers = new EventEmitter<number>();
   @Output() dispatchers = new EventEmitter<number>();
@@ -55,7 +57,9 @@ export class EmployeeDetailComponent implements OnInit {
     }
   ];
 
-  constructor(public dialog: MatDialog) {
+  constructor(public dialog: MatDialog,
+              public db: AngularFireDatabase,
+              public fbService: FirebaseService) {
     this.filteredStates = this.stateCtrl.valueChanges
       .pipe(
         startWith(''),
@@ -70,26 +74,26 @@ export class EmployeeDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.employeeList.push({ role: 'driver', name: 'Marek Blaha', function: 'Vodič' });
-    this.employeeList.push({ role: 'manager', name: 'Marcel Boldis', function: 'Manažér' });
-    this.employeeList.push({ role: 'driver', name: 'Nikola  Carnogurska', function: 'Vodič' });
-    this.employeeList.push({ role: 'dispatcher', name: 'Karol Trabalka', function: 'Dispečér' });
-    this.employeeList.push({ role: 'manager', name: 'Lucia Centarova', function: 'Manažér' });
-    this.employeeList.push({ role: 'dispatcher', name: 'Lucia Centarova', function: 'Dispečér' });
-    this.employeeList.push({ role: 'driver', name: 'Lucia Centarova', function: 'Vodič' });
-    this.employeeList.push({ role: 'driver', name: 'Lucia Centarova', function: 'Vodič' });
-    this.employeeList.push({ role: 'dispatcher', name: 'Lucia Centarova', function: 'Dispečér' });
-    this.employeeList.push({ role: 'driver', name: 'Lucia Centarova', function: 'Vodič' });
-    this.employeeList.push({ role: 'manager', name: 'Lucia Centarova', function: 'Manažér' });
+    this.db.list('/companies/softec').valueChanges().subscribe(drivers => {
+      this.employeeList = drivers;
+      this.countRoles();
+    });
 
+    // this.employeeList = this.fbService.getEmployeeList().;
+  }
+
+  countRoles() {
+    this.driverCount = 0;
+    this.managerCount = 0;
+    this.dispatcherCount = 0;
     this.employeeList.filter(value => {
-      if (value.role === 'driver') {
+      if (value.specialisation === 'Vodič') {
         this.driverCount++;
       }
-      if (value.role === 'manager') {
+      if (value.specialisation === 'Manažér') {
         this.managerCount++;
       }
-      if (value.role === 'dispatcher') {
+      if (value.specialisation === 'Dispečér') {
         this.dispatcherCount++;
       }
     });

@@ -1,0 +1,49 @@
+<div class="wrapper">
+
+  <mat-card>
+    <h2>Vytvorenie novej trasy</h2>
+    <mat-divider></mat-divider>
+    <div class="card-content">
+      <form class="example-form">
+        <mat-form-field>
+
+          <mat-select placeholder="Kamionista">
+            <mat-option *ngFor="let driver of drivers" [value]="driver.name">{{driver.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select placeholder="Auto">
+            <mat-option>Truck1</mat-option>
+            <mat-option>Truck2</mat-option>
+            <mat-option>Truck3</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Favorite food" value="Sushi">
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Favorite food" value="Sushi">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Favorite food" value="Sushi">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Favorite food" value="Sushi">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Favorite food" value="Sushi">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Favorite food" value="Sushi">
+        </mat-form-field>
+
+        <button mat-raised-button color="primary">Pridaj trasu</button>
+      </form>
+    </div>
+  </mat-card>
+
+
+</div>
