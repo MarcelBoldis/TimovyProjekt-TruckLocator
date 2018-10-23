@@ -18,9 +18,11 @@
         <mat-form-field class="example-full-width">
           <input matInput placeholder="Číslo OP" formControlName="idNumber">
         </mat-form-field>
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Dátum narodenia" formControlName="birthDate">
-        </mat-form-field>
+        <mat-form-field>
+            <input matInput [matDatepicker]="picker" formControlName="birthDate" placeholder="Choose a date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
         <mat-form-field>
           <mat-select placeholder="Špecializácia" formControlName="specialisation">
             <mat-option value="Vodič">Vodič</mat-option>
@@ -44,8 +46,8 @@
           <mat-file-upload [file]="file" [id]="i" *ngFor="let file of fileUploadQueue.files; let i = index"></mat-file-upload>
         </mat-file-upload-queue>
       </div>
-      <div class="btn">
-        <button mat-raised-button (click)="sendEmployee()" class="submitButton" color="primary">Pridaj</button>
+      <div class="btn" >
+        <button mat-raised-button [disabled]="!newEmployeeForm.valid" (click)="sendEmployee()" class="submitButton" color="primary">Pridaj</button>
       </div>
     </div>
   </div>
