@@ -10,13 +10,11 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from "angularfire2/auth";
 import { FIREBASE_CREDENTIALS } from './firebase.credentials';
-import { ChatComponent } from '../components/chat/chat';
 import { LoginPage } from '../pages/login/login';
 
 @NgModule({
   declarations: [
     MyApp,
-    ChatComponent,
     LoginPage
   ],
   imports: [
