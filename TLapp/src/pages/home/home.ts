@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, ModalController, Modal } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
-import { TrackInterface, TasksInterface, CoordinationsInterface } from '../../interfaces/trackInterface';
+import { TrackInterface, TasksInterface, CoordinationsInterface, FuelCostsInterface } from '../../interfaces/trackInterface';
 
 @Component({
   selector: 'page-home',
@@ -28,7 +28,11 @@ export class HomePage {
     lat: 20,
     long: 20,
   }
-
+  fakeFuelCosts: FuelCostsInterface = {
+    fuelAmount:0,
+    gasStation:"",
+    price:0
+  }
   fakeTrack: TrackInterface = {
     direction: "BA-ZA",
     date: "10.16.2018",
@@ -38,7 +42,7 @@ export class HomePage {
     truck: "IVECO HY 700 (NO3744SK)",
     tasks: this.fakeTasks,
     coordinations: this.fakeCurrentCoords,
-    fuelCosts: null,
+    fuelCosts: this.fakeFuelCosts,
   }
   constructor(public navCtrl: NavController, private db: AngularFireDatabase, private modalControler: ModalController) {
     this.trackDataInfo = this.db.object('/UPC/Drivers/' + 'Maros Lipa/track').valueChanges();
@@ -49,7 +53,7 @@ export class HomePage {
     const fuelCostsModal: Modal = this.modalControler.create('FuelCostsPage',{ data: dataForModal});
     fuelCostsModal.present();
     fuelCostsModal.onDidDismiss((data) => {
-      console.log('updated data:', data);
+      this.updateFuelCosts(data);
     });
   }
   addTrackToDatabase() {
@@ -59,6 +63,14 @@ export class HomePage {
   }
   openTasks() {
     this.openTask = !this.openTask;
+  }
+
+  updateFuelCosts(updatedFuelCosts: FuelCostsInterface){
+    this.db.object('/UPC/Drivers/' + 'Maros Lipa/' + 'track/fuelCosts/').update({
+      fuelAmount: updatedFuelCosts.fuelAmount,
+      price: updatedFuelCosts.price,
+      gasStation: updatedFuelCosts.gasStation
+    });
   }
 
   updateCucumber(index: number, checkedStatus: boolean) {

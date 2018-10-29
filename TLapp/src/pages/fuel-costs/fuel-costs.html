@@ -20,15 +20,15 @@
 
   <ion-item>
     <ion-label color="darkBlue" stacked>Názov čerpacej stanice</ion-label>
-    <ion-input type="text" placeholder="Názov..."></ion-input>
+    <ion-input type="text" [(ngModel)]="updatedFuelCosts.gasStation" placeholder="Názov..."></ion-input>
   </ion-item>
   <ion-item>
     <ion-label color="darkBlue" stacked>Zaplatená suma</ion-label>
-    <ion-input type="number" placeholder="Cena..."></ion-input>
+    <ion-input type="number" [(ngModel)]="updatedFuelCosts.price" placeholder="Cena..."></ion-input>
   </ion-item>
   <ion-item>
     <ion-label color="darkBlue" stacked>Možstvo paliva</ion-label>
-    <ion-input type="number" placeholder="Možstvo v litroch..."></ion-input>
+    <ion-input type="number" [(ngModel)]="updatedFuelCosts.fuelAmount" placeholder="Možstvo v litroch..."></ion-input>
   </ion-item>
   <div class="saveButton">
     <button ion-button (click)="dismiss()">Uložiť</button>
