@@ -10,11 +10,13 @@ import { HomePage } from '../pages/home/home';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { FIREBASE_CREDENTIALS } from './firebase.credentials';
+import { ChatComponent } from '../components/chat/chat';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    ChatComponent
   ],
   imports: [
     BrowserModule,

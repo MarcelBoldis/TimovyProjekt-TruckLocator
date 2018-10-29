@@ -1,0 +1,15 @@
+.yourMessage{
+    background-color: color($colors, primary);
+    padding: 5px;
+    border-radius: 10px;
+}
+.outsideMessage{
+    background-color: color($colors, secondary);
+    padding: 5px;
+    border-radius: 10px;
+    text-align: end;
+}
+i{
+    font-size: 10px;
+    margin: 5px;
+}
