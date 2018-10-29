@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController, Modal } from 'ionic-angular';
+import {IonicPage, NavController, ModalController, Modal} from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { FuelCostsInterface } from '../../interfaces/trackInterface';
+import { AngularFireAuth } from 'angularfire2/auth';
 
+@IonicPage()
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -12,8 +14,11 @@ export class HomePage {
   truckerData: Observable<any[]>;
   trackDataInfo: Observable<any>;
   openTask: boolean = false;
-  
-  constructor(public navCtrl: NavController, private db: AngularFireDatabase, private modalControler: ModalController) {
+
+  constructor(public navCtrl: NavController,
+    private db: AngularFireDatabase,
+    private modalControler: ModalController,
+    private ofAuth: AngularFireAuth) {
     this.trackDataInfo = this.db.object('/UPC/Drivers/' + 'Maros Lipa/track').valueChanges();
     this.trackDataInfo.subscribe(data => console.log(data))
   }
