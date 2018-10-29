@@ -1,0 +1,46 @@
+@import '../../../assets/global-css/variables.scss';
+
+.wrapper {
+    padding-top: 5vh;
+    width: 95%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    .left {
+        width: 30%;
+        margin-right: 5%;
+        float: left;
+        
+        .list {
+            max-height: 65vh;
+            overflow: auto;
+            padding: 0 15px 0 0;
+            box-sizing: border-box;
+
+            /* width */
+
+        }
+    }
+
+    .right {
+        width: 65%;
+        float: right;
+    }
+}
+
+
+/*Scroll bar*/
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: white;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: $nav-color; 
+    border-radius: 10px;
+}

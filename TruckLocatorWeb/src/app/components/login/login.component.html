@@ -1,0 +1,20 @@
+<!-- <mat-icon>add_circle</mat-icon> -->
+
+
+<mat-card class="form-card">
+
+  <form [formGroup]="loginForm" >
+    <mat-form-field>
+      <input matInput placeholder="Login" formControlName="login" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="password" placeholder="Heslo" formControlName="password" required>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="checkInputs()">Prihlasiť</button>
+  </form>
+
+</mat-card>
+
+<p>Ešte nie ste registrovaný? <a routerLink="/registration">Registrujte sa.</a></p>
+
+<!-- <p>{{loginForm.value | json}}</p> -->

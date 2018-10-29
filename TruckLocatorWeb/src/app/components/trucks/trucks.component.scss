@@ -1,0 +1,85 @@
+@import '../../../assets/global-css/variables.scss';
+
+.container {
+    width: 95%;
+    margin: 0 auto;
+
+    margin-top: 5vh;
+
+    .left-content {
+        float: left;
+        width: 20vw;
+        #addTruck {
+            color: $nav-color;
+            font-size: 3em;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+    .right-content {
+        float: right;
+        width: 70vw;
+        overflow: auto;
+        height: 80vh;
+    }
+
+}
+
+.legedCard {
+    padding: 0;
+    margin-top: 13px;
+    h2 {
+        margin: 0;
+        padding: 10px;
+
+    }
+}
+.legend {
+    padding: 10px;
+
+    .wrapGroup{
+        line-height: 25px;
+        mat-icon{
+            font-size: 25px;
+            position: relative;
+            top: 6px;
+            margin-right: 8px;
+        }
+        span {
+            color: black;
+        }
+    }
+}
+
+
+
+.available {
+    color: $truck-available;
+}
+.inService {
+    color: $truck-in-service;
+}
+.inProcess {
+    color: $truck-in-process;
+}
+
+
+
+
+/*Scroll bar*/
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: white;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: $nav-color; 
+    border-radius: 10px;
+}
