@@ -26,13 +26,14 @@ export class MapComponent implements OnInit {
     const marker1 = L.marker([48.151965, 17.117568]).addTo(mymap);
     const marker2 = L.marker([48.151965, 17.072995]).addTo(mymap);
 
-    L.Routing.control({
-      waypoints: [
-        L.latLng(57.74, 11.94),
-        L.latLng(57.6792, 11.949)
-      ]
-    }).addTo(mymap);
-    console.log(L);
+
+    // Sluzi pre vykreslovanie trate
+    // L.Routing.control({
+    //   waypoints: [
+    //     L.latLng(57.74, 11.94),
+    //     L.latLng(57.6792, 11.949)
+    //   ]
+    // }).addTo(mymap);
 
   }
 
