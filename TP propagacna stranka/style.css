@@ -3,15 +3,17 @@ html, body{
     margin: 0;
     font-family: 'Montserrat', sans-serif;
     background: rgba(255,249,227, 0.5);
+    font-size: 16px;
 }
-a{
+
+a, a:active, a:focus, a:hover {
     text-decoration: none;
 }
 ul {
     list-style: none;
     padding: 0;
     margin: 0;
-    width: 50%;
+    width: 100%;
     margin: 30px auto;
     box-sizing: border-box;
 }
@@ -19,13 +21,13 @@ li {
     padding: 0;
     margin: 0;
     display: inline-block;
-    width: 32.5%;
+    width: 15%;
     text-align: center;
     font-size:1.2em;
     padding-bottom: 5px;
     font-weight: 200;
 }  
-li:hover {
+nav li:hover {
     transition: all 0.2s linear;
     color: white;
     border-bottom: 1px solid white;
@@ -40,6 +42,7 @@ nav{
 
 nav a {
     color: #eee;
+    font-size: 20px;
 }
 nav a:hover{
     transition: all 0.2s linear;
@@ -49,8 +52,7 @@ nav a:hover{
 section h1{
     text-align: center;
     font-weight: 400;
-    font-size: 3em;
-    
+    font-size: 3em; 
 }
 
 .section {
@@ -68,7 +70,7 @@ section h1{
     margin: 0;
     padding: 0;
     text-align: center;
-    font-size: 8em;
+    font-size: 9em;
     font-weight: 400;
     color: #eee;
     position: relative;
@@ -92,22 +94,32 @@ section h1{
     margin-top: 100px;
 }
 
-#project, #docs {
-    background: rgba(255, 249, 227, 0.5);
+#project, #state, #photos {
+    background: rgba(255, 255, 119, .6);
     min-height: 100vh;
 }
 
-#members {
+section {
+    padding-bottom: 10px;
+}
+
+#members, #docs, #contact {
     background: rgba(252, 246, 228, 0.911);
     min-height: 100vh;
 }
 #members h1 {
-    margin-bottom: 10vh;
+    margin-bottom: 7vh;
 }
+
+#members img {
+    border-radius: 50%;
+}
+
 .wrapper{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    margin-top: 15px;
 }
 #up {
     position: fixed;
@@ -128,7 +140,21 @@ section h1{
 .box img {
     width: 50%;
     text-align: center;
+    margin-bottom: 10px;
 }
+
+.box a {
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.box a:hover {
+    color: black;
+    transition: all 0.2s linear;
+    border-bottom: 1px solid black;
+}
+
 #marcel {
     position: relative;
     top: 100px;
@@ -148,33 +174,54 @@ section h1{
     width: 20%;
 }
 
-.docContainer {
+.center-block {
+    display: table;
+    margin: auto;
+}
+
+.zapisnice {
+    margin: 40px;
+}
+
+.zap1 {
     width: 150px;
     height: 150px;
     border-radius: 50%;
     background: rgba(255, 133, 77, 0.986);
     text-align: center;
-    float: left;
-    margin: 5%;
 }
-.docContainer i {
+.zap1 i {
     display: block;
     margin-top: 40px;
     margin-bottom: 10px;
 }
-.docContainer a {
+.zap1 a {
     color: #eee;
 }
 .fa-file-pdf{
     font-size: 2em;
 }
 
+.timeline {
+    width: 70%;
+    margin: 0 auto;
+    text-align: center;
+}
 
+.contact-block {
+    margin-top: 60px;
+    text-align: center;
+}
+
+#contact .row {
+    padding: 15px 0;
+    justify-content: center;
+}
 
 
 /**************Media queries*******************/
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1280px) {
     #intro h1 {
         font-size: 6em;
     }
@@ -198,9 +245,15 @@ section h1{
     #members h1 {
         width: 50%;
     }
+    nav ul {
+        width: 100%;
+    }
+    nav li a {
+        font-size: .8em;
+    }
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 920px) {
     #intro h1 {
         font-size: 5em;
     }
@@ -211,16 +264,118 @@ section h1{
     #docs h1 {
         width: 50%;
     }
+
+    nav ul {
+        width: 100%;
+    }
+    nav li a {
+        font-size: .8em;
+    }
 }
 
 @media screen and (max-width: 700px) {
     #intro h1 {
         font-size: 3em;
     }
-    nav ul {
-        width: 100%;
-    }
+
     #members h1,#docs h1 {
         font-size: 2em;
     }
+    nav ul {
+        width: 100%;
+        font-size: .7em;
+    }
+    nav li a {
+        font-size: .8em;
+    }
 }
+
+/* ********** timeline ********** */
+#content {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.event:hover {
+    color: #000;
+}
+
+/* Timeline */
+.timeline {
+    border-left: 4px solid #004ffc;
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    color: black;
+    margin: 50px auto;
+    letter-spacing: 0.5px;
+    position: relative;
+    line-height: 1.4em;
+    font-size: 1.00em;
+    padding: 50px;
+    list-style: none;
+    text-align: left;
+    font-weight: 100;
+    max-width: 30%;
+}
+
+.timeline h2,
+.timeline h3 {
+
+}
+.timeline .event {
+    border-bottom: 1px dashed rgba(50, 45, 45, 0.1);
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+    position: relative;
+    width: 100%;
+    line-height: 1.6;
+}
+.timeline .event:last-of-type {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border: none;
+}
+.timeline .event:before,
+.timeline .event:after {
+    position: absolute;
+    display: block;
+    top: 0;
+}
+.timeline .event:before {
+    left: -217.5px;
+    color: black;
+    content: attr(data-date);
+    text-align: right;
+    font-size: 0.9em;
+    min-width: 120px;
+    font-weight: 500;
+}
+.timeline .event:after {
+    box-shadow: 0 0 0 4px #004ffc;
+    left: -57.85px;
+    background: #313534;
+    border-radius: 50%;
+    height: 11px;
+    width: 11px;
+    content: "";
+    top: 5px;
+}
+
+#photos .container {
+    margin-top: 30px;
+}
+#photos>.container>.row {
+    justify-content: center;
+    align-items: center;
+}
+
+.carousel {
+    height: 60%;
+    width: 60%;
+  }
+
+#main_area {
+    margin-top: 60px;
+}
+
