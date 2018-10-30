@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { FuelCostsInterface } from '../../interfaces/trackInterface';
 
 /**
  * Generated class for the FuelCostsPage page.
@@ -16,7 +17,11 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 export class FuelCostsPage {
 
   dataFromHomePage: any;
-  updatedFuelCostsData: any;
+  updatedFuelCosts: FuelCostsInterface = {
+    fuelAmount: null,
+    gasStation: null,
+    price: null
+  };
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private view: ViewController) {
@@ -31,7 +36,6 @@ export class FuelCostsPage {
   }
 
   dismiss() {
-    this.updatedFuelCostsData = "new fuelCosts";
-    this.view.dismiss(this.updatedFuelCostsData);
+    this.view.dismiss(this.updatedFuelCosts);
   }
 }
