@@ -51,9 +51,9 @@
 
 
 <mat-card *ngFor="let employee of employeeList; let index = index;">
-  <img [ngClass]="[employee.role == 'driver' ? 'driverBorder' : '',  employee.role == 'manager' ? 'managerBorder' : '',  employee.role == 'dispatcher' ? 'dispatcherBorder' : '']" src="../../../../imgs/img1.jpg" alt="photo">
-  <h1>{{employee.name}}</h1>
-  <h2>{{employee.function}}</h2>
+  <img [ngClass]="[employee.specialisation == 'Vodič' ? 'driverBorder' : '',  employee.specialisation == 'Manažér' ? 'managerBorder' : '',  employee.specialisation == 'Dispečér' ? 'dispatcherBorder' : '']" src="../../../../imgs/img1.jpg" alt="photo">
+  <h1>{{employee.firstName}} {{employee.lastName}}</h1>
+  <h2>{{employee.specialisation}}</h2>
     <div class="actions group">
       <div class="action" (click)="showInfo(index)" ><mat-icon>info</mat-icon></div>
       <div class="action" (click)="showEdit(index)" ><mat-icon>edit</mat-icon></div>

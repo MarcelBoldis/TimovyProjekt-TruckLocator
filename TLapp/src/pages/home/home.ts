@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController, Modal } from 'ionic-angular';
+import {IonicPage, NavController, ModalController, Modal} from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
-import { TrackInterface, TasksInterface, CoordinationsInterface } from '../../interfaces/trackInterface';
+import { FuelCostsInterface } from '../../interfaces/trackInterface';
+import { AngularFireAuth } from 'angularfire2/auth';
 
+@IonicPage()
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -12,35 +14,11 @@ export class HomePage {
   truckerData: Observable<any[]>;
   trackDataInfo: Observable<any>;
   openTask: boolean = false;
-  fakeTasks: TasksInterface[] = [{
-    isDone: false,
-    description: "Vylozit pivo",
-    place: "Decodom",
-    fullAdress: "Namestovo, Hviezdoslavova 54"
-  },
-  {
-    isDone: false,
-    description: "Vylozit pivo",
-    place: "Decodom",
-    fullAdress: "Namestovo, Hviezdoslavova 54"
-  }]
-  fakeCurrentCoords: CoordinationsInterface = {
-    lat: 20,
-    long: 20,
-  }
 
-  fakeTrack: TrackInterface = {
-    direction: "BA-ZA",
-    date: "10.16.2018",
-    description: "Vylozit 20 kartonov piva pre spolocnost Pilsner Urquell. Je potrebne zobrat vsetky palety cestou spat",
-    image: "http://icons.iconarchive.com/icons/flat-icons.com/flat/256/Beer-icon.png",
-    truckDriver: "Maros Lipa",
-    truck: "IVECO HY 700 (NO3744SK)",
-    tasks: this.fakeTasks,
-    coordinations: this.fakeCurrentCoords,
-    fuelCosts: null,
-  }
-  constructor(public navCtrl: NavController, private db: AngularFireDatabase, private modalControler: ModalController) {
+  constructor(public navCtrl: NavController,
+    private db: AngularFireDatabase,
+    private modalControler: ModalController,
+    private ofAuth: AngularFireAuth) {
     this.trackDataInfo = this.db.object('/UPC/Drivers/' + 'Maros Lipa/track').valueChanges();
     this.trackDataInfo.subscribe(data => console.log(data))
   }
@@ -49,16 +27,24 @@ export class HomePage {
     const fuelCostsModal: Modal = this.modalControler.create('FuelCostsPage',{ data: dataForModal});
     fuelCostsModal.present();
     fuelCostsModal.onDidDismiss((data) => {
-      console.log('updated data:', data);
+      this.updateFuelCosts(data);
     });
   }
   addTrackToDatabase() {
-    this.db.object('/UPC/Drivers/' + 'Maros Lipa/').update({
-      track: this.fakeTrack
-    });
+    // this.db.object('/UPC/Drivers/' + 'Maros Lipa/').update({
+    //   track: this.fakeTrack
+    // });
   }
   openTasks() {
     this.openTask = !this.openTask;
+  }
+
+  updateFuelCosts(updatedFuelCosts: FuelCostsInterface){
+    this.db.object('/UPC/Drivers/' + 'Maros Lipa/' + 'track/fuelCosts/').update({
+      fuelAmount: updatedFuelCosts.fuelAmount,
+      price: updatedFuelCosts.price,
+      gasStation: updatedFuelCosts.gasStation
+    });
   }
 
   updateCucumber(index: number, checkedStatus: boolean) {
@@ -66,5 +52,4 @@ export class HomePage {
       done: !checkedStatus
     });
   }
-
 }

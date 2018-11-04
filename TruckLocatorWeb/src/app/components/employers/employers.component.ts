@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NewEmployeeComponent } from 'src/app/dialogs/new-employee/new-employee.component';
+import { IPerson } from 'src/models/person';
 
 @Component({
   selector: 'app-employers',
@@ -34,8 +35,14 @@ export class EmployersComponent implements OnInit {
   }
 
   addNewEmployee() {
+    let newEmployee = <IPerson>{};
     const dialogRef = this.dialog.open(NewEmployeeComponent, {
       width: '50%',
+      data: {newEmployee}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      newEmployee = result;
+      console.log(newEmployee);
     });
   }
 }

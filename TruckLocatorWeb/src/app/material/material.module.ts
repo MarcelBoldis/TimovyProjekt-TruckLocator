@@ -10,12 +10,14 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatSelectModule} from '@angular/material/select';
 import { MatFileUploadModule } from 'angular-material-fileupload';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule, MatSliderModule, DateAdapter} from '@angular/material';
 @NgModule({
-  imports: [CommonModule, BrowserAnimationsModule, MatButtonModule, MatCheckboxModule, MatExpansionModule,
-            MatIconModule, MatSnackBarModule, MatDialogModule, MatDividerModule, MatMenuModule,
+  imports: [CommonModule, BrowserAnimationsModule, MatButtonModule, MatCheckboxModule, MatExpansionModule, MatNativeDateModule,
+            MatIconModule, MatSnackBarModule, MatDialogModule, MatDividerModule, MatMenuModule, MatDatepickerModule,
             MatInputModule, MatCardModule, MatAutocompleteModule, MatSelectModule, MatFileUploadModule  ],
-  exports: [CommonModule, BrowserAnimationsModule, MatButtonModule, MatCheckboxModule, MatExpansionModule,
-            MatIconModule, MatSnackBarModule, MatDialogModule, MatDividerModule, MatMenuModule,
+  exports: [CommonModule, BrowserAnimationsModule, MatButtonModule, MatCheckboxModule, MatExpansionModule, MatNativeDateModule,
+            MatIconModule, MatSnackBarModule, MatDialogModule, MatDividerModule, MatMenuModule, MatDatepickerModule,
             MatInputModule, MatCardModule, MatAutocompleteModule, MatSelectModule, MatFileUploadModule  ],
   declarations: []
 })
