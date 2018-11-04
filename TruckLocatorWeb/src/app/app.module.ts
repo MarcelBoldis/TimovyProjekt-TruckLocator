@@ -24,6 +24,7 @@ import { EmployeeInfoComponent } from './dialogs/employee-info/employee-info.com
 import { TruckDetailComponent } from './components/trucks/truck-detail/truck-detail.component';
 import { NewTruckComponent } from './dialogs/new-truck/new-truck.component';
 import { NewEmployeeComponent } from './dialogs/new-employee/new-employee.component';
+import { StatisticsComponent } from './components/statistics/statistics.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { NewEmployeeComponent } from './dialogs/new-employee/new-employee.compon
     EmployeeInfoComponent,
     TruckDetailComponent,
     NewTruckComponent,
-    NewEmployeeComponent
+    NewEmployeeComponent,
+    StatisticsComponent
   ],
   imports: [
     BrowserModule,
