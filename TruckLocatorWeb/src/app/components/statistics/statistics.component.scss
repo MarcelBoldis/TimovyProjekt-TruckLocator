@@ -13,10 +13,12 @@
     }
     .right-content {
         float: right;
+        box-sizing: border-box;
+        padding: 15px;
         width: 69%;
         overflow: auto;
-        height: 80vh;
         background-color: $background-charts;
+        overflow: hidden;
     }
 
 }
@@ -52,12 +54,11 @@
     }
 }
 
-#chartDiv {
-    margin: 0 auto;
+
+#chartDivko, 
+#chartDivko2 {
+    height: 100%;
+    width: 100%;
 }
 
-#chartDivko, #chartDivko2 {
-    display: none;
-    width: 100%; 
-    height: 100%;
-}
+

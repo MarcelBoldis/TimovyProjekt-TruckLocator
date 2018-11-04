@@ -1,10 +1,14 @@
-.left-content, 
-.right-content {
-    width: 50%;
-    box-sizing: border-box;
-    float: left;
-    margin-top: 5vh;
-}
+// .left-content, 
+// .right-content {
+//     width: 50%;
+//     box-sizing: border-box;
+//     float: left;
+//     margin-top: 5vh;
+// }
 
-.right-content {
+.container {
+    position: relative;
+    top: 5vh;
+    width: 80%;
+    margin: 0 auto;
 }

@@ -4,8 +4,16 @@
     mat-form-field {
         width: 20%;
         margin:  8px 2.5%;
+        &.textarea {
+            width: 95%;
+        }
     }
 
+    mat-icon {
+        position: relative;
+        top: -2px;
+        padding-right: 8px;
+    }
     .example-form {
         button {
             margin: 0 2.5%;
@@ -13,4 +21,18 @@
         }
     }
 }
+.example-form {
+    position: relative;
+    .addRoute {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+
+    h4 {
+        margin: 0;
+        padding-top: 15px;
+    }
+}
+
 

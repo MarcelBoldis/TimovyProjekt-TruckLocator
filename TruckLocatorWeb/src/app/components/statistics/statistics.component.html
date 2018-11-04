@@ -1,36 +1,28 @@
 <div class="container">
     <div class="left-content">
-  
-      <mat-card class="legedCard">
-          <h2>Vyberte štatistiku:</h2>
-          <mat-divider></mat-divider>
-          <div class="legend">
-              <div class="wrapGroup" (click)="showGraph(0, 'chartDivko')">
+
+        <mat-card class="legedCard">
+            <h2>Vyberte štatistiku:</h2>
+            <mat-divider></mat-divider>
+            <div class="legend">
+                <div class="wrapGroup" (click)="showGraph(0, 'chartDivko')">
                     <span>Graf 1</span>
-              </div>
-              <div class="wrapGroup" (click)="showGraph(1, 'chartDivko2')">
+                </div>
+                <div class="wrapGroup" (click)="showGraph(1, 'chartDivko2')">
                     <span>Graf 2</span>
-              </div>
-              <div class="wrapGroup" (click)="showGraph(2, 'chartDivko2')">
+                </div>
+                <!-- <div class="wrapGroup" (click)="showGraph(2, 'chartDivko2')">
                     <span>Graf 3</span>
-              </div>
-              <div class="wrapGroup" (click)="showGraph(3, 'chartDivko')">
-                <span>Graf 4</span>
+                </div>
+                <div class="wrapGroup" (click)="showGraph(3, 'chartDivko')">
+                    <span>Graf 4</span>
+                </div> -->
             </div>
-          </div>
-  
-      </mat-card>
-  
-  
+        </mat-card>
     </div>
-    <div class="right-content">
-        <div id= 'chartDiv' style="width: 90%; height: 90%;">
-            <div id='chartDivko'>
-                <canvas id='lineChart' style="width: 100%; height: 100%;"></canvas>
-            </div>
-            <div id='chartDivko2'>
-                <canvas id='doughnutChart' style="width: 100%; height: 100%;"></canvas>               
-            </div>
+    <mat-card  class="right-content">
+        <div id='chartDivko'>
+            <canvas  id='myChart'></canvas>
         </div>
-    </div>
-  </div>
+    </mat-card>
+</div>
