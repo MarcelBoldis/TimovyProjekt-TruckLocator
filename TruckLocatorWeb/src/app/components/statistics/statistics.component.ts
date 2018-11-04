@@ -26,17 +26,15 @@ export class StatisticsComponent implements OnInit {
         ]
       },
       options: {
+        legend: {
+          display: false
+        },
         title: {
           text: 'Chart',
           display: true
         },
-        scales: {
-          xAxes: [{
-            display: true
-          }],
-          yAxes: [{
-            display: true
-          }],
+        animation: {
+          duration: 3000
         }
       }
     });
@@ -50,5 +48,12 @@ export class StatisticsComponent implements OnInit {
         labels: ['Red', 'Yellow', 'Blue']
       },
     });
+  }
+
+  showGraph(index: number, para: string) {
+    // const destroy: HTMLElement = document.getElementById('chartDiv');
+    // destroy.innerHTML = '';
+    const element: HTMLElement = document.getElementById(para);
+    element.setAttribute('style', 'display:block;');
   }
 }

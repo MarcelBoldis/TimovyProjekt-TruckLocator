@@ -47,7 +47,7 @@ import { NewTaskComponent } from './components/tasks/new-task/new-task.component
     TruckDetailComponent,
     NewTruckComponent,
     NewEmployeeComponent,
-    StatisticsComponent
+    StatisticsComponent,
     TaskListComponent,
     NewTaskComponent,
   ],
