@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material';
 import { EmployeeInfoComponent } from 'src/app/dialogs/employee-info/employee-info.component';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { FirebaseService } from 'src/app/services/firebase.service';
+
 export interface State {
   flag: string;
   name: string;
