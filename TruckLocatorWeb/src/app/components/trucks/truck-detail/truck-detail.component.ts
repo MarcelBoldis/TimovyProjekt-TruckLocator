@@ -4,7 +4,8 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { EmployeeInfoComponent } from 'src/app/dialogs/employee-info/employee-info.component';
-
+import { AngularFireDatabase } from 'angularfire2/database';
+import { FirebaseService } from 'src/app/services/firebase.service';
 export interface State {
   flag: string;
   name: string;
@@ -52,7 +53,9 @@ export class TruckDetailComponent implements OnInit {
     }
   ];
 
-  constructor(public dialog: MatDialog) {
+  constructor(public dialog: MatDialog,
+              public db: AngularFireDatabase,
+              public fbService: FirebaseService) {
     this.filteredStates = this.stateCtrl.valueChanges
       .pipe(
         startWith(''),
@@ -67,13 +70,9 @@ export class TruckDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.truckList.push({ state: 'available', name: 'Scania', function: '150 501 km' });
-    this.truckList.push({ state: 'available', name: 'Man', function: '1 555 051 km' });
-    this.truckList.push({ state: 'service', name: 'Mercedes', function: '1 km' });
-    this.truckList.push({ state: 'process', name: 'Mercedes', function: '1 km' });
-    this.truckList.push({ state: 'available', name: 'Mercedes', function: '1 km' });
-    this.truckList.push({ state: 'service', name: 'Mercedes', function: '1 km' });
-    this.truckList.push({ state: 'process', name: 'Mercedes', function: '1 km' });
+    this.db.list('/companies/softec/trucks').valueChanges().subscribe(trucks => {
+      this.truckList = trucks;
+    });
 
   }
 

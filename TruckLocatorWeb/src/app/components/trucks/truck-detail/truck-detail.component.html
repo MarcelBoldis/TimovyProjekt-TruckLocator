@@ -18,8 +18,8 @@
 
 <mat-card class="truckCard" *ngFor="let truck of truckList; let index = index;">
   <img src="../../../../imgs/truck2.png" alt="photo">
-  <h1>{{truck.name}}</h1>
-  <h2>{{truck.function}}</h2>
+  <h1>{{truck.brand}}</h1>
+  <h2>{{truck.km}} km</h2>
   <div [class]=truck.state>
     <mat-icon id="state" >fiber_manual_record</mat-icon>
   </div>
