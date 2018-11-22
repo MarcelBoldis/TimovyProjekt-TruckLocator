@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material';
 import { EmployeeInfoComponent } from 'src/app/dialogs/employee-info/employee-info.component';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { FirebaseService } from 'src/app/services/firebase.service';
+import { NewEmployeeComponent } from 'src/app/dialogs/new-employee/new-employee.component';
 export interface State {
   flag: string;
   name: string;
@@ -76,7 +77,9 @@ export class EmployeeDetailComponent implements OnInit {
   ngOnInit() {
     this.db.list('/companies/softec').valueChanges().subscribe(drivers => {
       this.employeeList = drivers;
+      this.employeeList.splice(-1, 1);
       this.countRoles();
+      console.log(this.employeeList);
     });
 
     // this.employeeList = this.fbService.getEmployeeList().;
@@ -105,15 +108,21 @@ export class EmployeeDetailComponent implements OnInit {
   }
 
   showInfo(index: number) {
-    const dialogRef = this.dialog.open(EmployeeInfoComponent, {
-      width: '500px',
-      data: {employee: this.employeeList[index]}
+    const dialogRef = this.dialog.open(NewEmployeeComponent, {
+      width: '50%',
+      data: {data : this.employeeList[index], edit: false}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
     });
   }
   showEdit(index: number) {
-    const dialogRef = this.dialog.open(EmployeeInfoComponent, {
-      width: '500px',
-      data: {employee: this.employeeList[index]}
+    const dialogRef = this.dialog.open(NewEmployeeComponent, {
+      width: '50%',
+      data: {data : this.employeeList[index], edit: true}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
     });
   }
 

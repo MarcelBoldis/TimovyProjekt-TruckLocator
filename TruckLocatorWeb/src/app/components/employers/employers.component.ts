@@ -38,7 +38,6 @@ export class EmployersComponent implements OnInit {
     let newEmployee = <IPerson>{};
     const dialogRef = this.dialog.open(NewEmployeeComponent, {
       width: '50%',
-      data: {newEmployee}
     });
     dialogRef.afterClosed().subscribe(result => {
       newEmployee = result;

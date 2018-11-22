@@ -10,6 +10,8 @@ import { AngularFireList, AngularFireDatabase } from 'angularfire2/database';
 })
 export class NewEmployeeComponent implements OnInit {
 
+  title: string;
+  showEditInputs: boolean;
   constructor(public dialogRef: MatDialogRef<NewEmployeeComponent>,
               public fb: FormBuilder,
               private af: AngularFireDatabase,
@@ -26,7 +28,23 @@ export class NewEmployeeComponent implements OnInit {
     });
 
   ngOnInit() {
+    this.title = 'Pridanie zamestnanca';
+    this.showEditInputs = true;
     this.employee = this.af.list('/companies/softec');
+    console.log(this.data);
+
+    if (this.data) {
+      if (this.data.edit) {
+        this.newEmployeeForm.setValue(this.data.data);
+        this.title = 'Editácia zamestnanca';
+      } else {
+        this.newEmployeeForm.setValue(this.data.data);
+        this.newEmployeeForm.disable();
+        this.title = 'Info o zamestnancovi';
+        this.showEditInputs = false;
+      }
+
+    }
   }
   onNoClick(): void {
     this.dialogRef.close();
@@ -36,7 +54,24 @@ export class NewEmployeeComponent implements OnInit {
     this.dialogRef.close();
   }
   sendEmployee() {
+    const timestamp =  this.newEmployeeForm.get('birthDate').value._i.year + '-' +
+    + this.newEmployeeForm.get('birthDate').value._i.month + '-' +
+    + this.newEmployeeForm.get('birthDate').value._i.date + 'T00:00:00.000Z';
+    this.newEmployeeForm.get('birthDate').setValue(timestamp);
     this.dialogRef.close(this.newEmployeeForm.value);
-    this.employee.push(this.newEmployeeForm.value);
+    // this.af.list('/companies').valueChanges().subscribe(data => {
+    //   data.forEach(element => {
+    //     console.log(element);
+    //   });
+    // });
+    // console.log(this.af.database.ref('/companies/softec').child);
+    if (!this.data) {
+      console.log('--------------------');
+      console.log(this.newEmployeeForm.value);
+      this.employee.push(this.newEmployeeForm.value);
+    }
   }
+
+
+
 }

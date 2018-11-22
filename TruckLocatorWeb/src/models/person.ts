@@ -3,7 +3,7 @@ export interface IPerson {
     lastName: string;
     birthNumber: string;
     idNumber: string;
-    dirthDate: Date;
+    birthDate: Date;
     specialisation: number;
     address: string;
     photo: string;

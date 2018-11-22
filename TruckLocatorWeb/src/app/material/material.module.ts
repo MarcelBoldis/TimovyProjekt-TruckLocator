@@ -12,13 +12,17 @@ import { MatFileUploadModule } from 'angular-material-fileupload';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule, MatSliderModule, DateAdapter} from '@angular/material';
+import {MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 @NgModule({
   imports: [CommonModule, BrowserAnimationsModule, MatButtonModule, MatCheckboxModule, MatExpansionModule, MatNativeDateModule,
             MatIconModule, MatSnackBarModule, MatDialogModule, MatDividerModule, MatMenuModule, MatDatepickerModule,
-            MatInputModule, MatCardModule, MatAutocompleteModule, MatSelectModule, MatFileUploadModule  ],
+            MatInputModule, MatCardModule, MatAutocompleteModule, MatSelectModule, MatFileUploadModule, MatMomentDateModule  ],
   exports: [CommonModule, BrowserAnimationsModule, MatButtonModule, MatCheckboxModule, MatExpansionModule, MatNativeDateModule,
             MatIconModule, MatSnackBarModule, MatDialogModule, MatDividerModule, MatMenuModule, MatDatepickerModule,
-            MatInputModule, MatCardModule, MatAutocompleteModule, MatSelectModule, MatFileUploadModule  ],
-  declarations: []
+            MatInputModule, MatCardModule, MatAutocompleteModule, MatSelectModule, MatFileUploadModule, MatMomentDateModule  ],
+  declarations: [],
+  providers: [
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
+  ]
 })
 export class MaterialModule { }
