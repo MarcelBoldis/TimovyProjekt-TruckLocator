@@ -25,7 +25,6 @@ import { TruckDetailComponent } from './components/trucks/truck-detail/truck-det
 import { NewTruckComponent } from './dialogs/new-truck/new-truck.component';
 import { NewEmployeeComponent } from './dialogs/new-employee/new-employee.component';
 import { StatisticsComponent } from './components/statistics/statistics.component';
-import { TaskListComponent } from './components/tasks/task-list/task-list.component';
 import { NewTaskComponent } from './components/tasks/new-task/new-task.component';
 
 
@@ -48,7 +47,6 @@ import { NewTaskComponent } from './components/tasks/new-task/new-task.component
     NewTruckComponent,
     NewEmployeeComponent,
     StatisticsComponent,
-    TaskListComponent,
     NewTaskComponent,
   ],
   imports: [
