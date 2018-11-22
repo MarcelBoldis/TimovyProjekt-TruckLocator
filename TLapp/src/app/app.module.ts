@@ -11,6 +11,9 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from "angularfire2/auth";
 import { FIREBASE_CREDENTIALS } from './firebase.credentials';
 import { LoginPage } from '../pages/login/login';
+import { GeoLocationServiceProvider } from '../providers/geo-location-service/geo-location-service';
+import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
+import { DriverDataServiceProvider } from '../providers/driver-data-service/driver-data-service';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,10 @@ import { LoginPage } from '../pages/login/login';
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    GeoLocationServiceProvider,
+    BackgroundGeolocation,
+    DriverDataServiceProvider
   ]
 })
 export class AppModule { }

@@ -34,10 +34,9 @@
         </div>
       </ion-row>
     </div>
-    <ion-grid align-self-center>
-      <button ion-button color="startButton" (click)="startTracking()">Štart</button>
-      <button ion-button color="dark" (click)="addTrackToDatabase()">Add Fake Data</button>
-    </ion-grid>
+
+    <geo-location></geo-location>
+
     <ion-card *ngIf="openTask">
       <div *ngFor="let taskItem of trackInfo.tasks; let i = index ">
         <ion-item class="ionTaskItem" [ngClass]="taskItem.done ? 'taksDone' : 'taskInProgress'">

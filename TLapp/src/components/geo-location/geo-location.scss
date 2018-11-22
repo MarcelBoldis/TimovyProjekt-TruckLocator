@@ -1,0 +1,9 @@
+geo-location {
+    .geolocationButton{
+        text-align: center;
+        padding-bottom: 10px;
+    }
+    .inTrackingStatus{
+        background-color: color($colors, danger);
+    }
+}

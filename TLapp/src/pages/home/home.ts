@@ -30,11 +30,6 @@ export class HomePage {
       this.updateFuelCosts(data);
     });
   }
-  addTrackToDatabase() {
-    // this.db.object('/UPC/Drivers/' + 'Maros Lipa/').update({
-    //   track: this.fakeTrack
-    // });
-  }
   openTasks() {
     this.openTask = !this.openTask;
   }
