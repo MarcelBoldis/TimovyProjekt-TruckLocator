@@ -30,7 +30,7 @@ export class NewEmployeeComponent implements OnInit {
   ngOnInit() {
     this.title = 'Pridanie zamestnanca';
     this.showEditInputs = true;
-    this.employee = this.af.list('/companies/softec');
+    this.employee = this.af.list('/UPC/Drivers');
     console.log(this.data);
 
     if (this.data) {
@@ -64,7 +64,6 @@ export class NewEmployeeComponent implements OnInit {
     //     console.log(element);
     //   });
     // });
-    // console.log(this.af.database.ref('/companies/softec').child);
     if (!this.data) {
       console.log('--------------------');
       console.log(this.newEmployeeForm.value);

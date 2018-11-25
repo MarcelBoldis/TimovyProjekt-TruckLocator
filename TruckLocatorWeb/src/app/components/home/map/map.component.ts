@@ -29,8 +29,8 @@ export class MapComponent implements OnInit, OnChanges {
       id: 'mapbox.streets',
     }).addTo(this.map);
 
-    this.map.on('click', (e) => { 
-      console.log(e.latlng); 
+    this.map.on('click', (e) => {
+      console.log(e.latlng);
     });
 
     this.dbService.getGeolocations().subscribe(data => {
@@ -56,7 +56,7 @@ export class MapComponent implements OnInit, OnChanges {
     const geolocations = this.geoTestData.filter(data => data.id === id)[0];
     var markers = [];
     geolocations.geolocations.forEach(geolocation => {
-      var marker = L.marker([geolocation.long, geolocation.lat]);    
+      var marker = L.marker([geolocation.long, geolocation.lat]);
       markers.push(marker.getLatLng());
     });
 
@@ -64,8 +64,8 @@ export class MapComponent implements OnInit, OnChanges {
       waypoints: markers,
       lineOptions: {
         styles: [
-          {color: 'black', opacity: 0.15, weight: 7}, 
-          {color: 'white', opacity: 0.7, weight: 4}, 
+          {color: 'black', opacity: 0.15, weight: 7},
+          {color: 'white', opacity: 0.7, weight: 4},
           {color: 'red', opacity: 1, weight: 1}
         ],
         missingRouteStyles: [

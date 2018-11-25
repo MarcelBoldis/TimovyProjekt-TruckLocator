@@ -27,11 +27,11 @@ export class NewTaskComponent implements OnInit {
       wayDescript: ['', Validators.required],
     });
   ngOnInit() {
-    this.db.list('/companies/softec/trucks').valueChanges().subscribe(trucks => {
+    this.db.list('/UPC/Trucks').valueChanges().subscribe(trucks => {
       this.truckList = trucks;
     });
 
-    this.db.list('/companies/softec').valueChanges().subscribe(drivers => {
+    this.db.list('/UPC/Drivers').valueChanges().subscribe(drivers => {
       this.persons = drivers;
       this.filtredDrivers(this.persons);
     });

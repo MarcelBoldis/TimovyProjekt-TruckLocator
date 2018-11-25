@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class FirebaseService {
-  private basePath: string = '/companies/softec';
+  private basePath: string = '/UPC';
   private geolocTestData: string = '../assets/geolocations.json';
 
   employeeList = [];
@@ -18,7 +18,7 @@ export class FirebaseService {
   constructor(private db: AngularFireDatabase, private _http: HttpClient) { }
 
   getEmployeeList() {
-    this.db.list('/companies/softec').valueChanges().subscribe(drivers => {
+    this.db.list('/UPC/Drivers').valueChanges().subscribe(drivers => {
       this.employeeList = drivers;
     });
     return this.employeeList;
