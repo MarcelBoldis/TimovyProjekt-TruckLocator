@@ -54,11 +54,6 @@ export class NewEmployeeComponent implements OnInit {
     this.dialogRef.close();
   }
   sendEmployee() {
-    const timestamp =  this.newEmployeeForm.get('birthDate').value._i.year + '-' +
-    + this.newEmployeeForm.get('birthDate').value._i.month + '-' +
-    + this.newEmployeeForm.get('birthDate').value._i.date + 'T00:00:00.000Z';
-    this.newEmployeeForm.get('birthDate').setValue(timestamp);
-    this.dialogRef.close(this.newEmployeeForm.value);
     // this.af.list('/companies').valueChanges().subscribe(data => {
     //   data.forEach(element => {
     //     console.log(element);
@@ -66,9 +61,17 @@ export class NewEmployeeComponent implements OnInit {
     // });
     // console.log(this.af.database.ref('/companies/softec').child);
     if (!this.data) {
+      const timestamp =  this.newEmployeeForm.get('birthDate').value._i.year + '-' +
+        + this.newEmployeeForm.get('birthDate').value._i.month + '-' +
+        + this.newEmployeeForm.get('birthDate').value._i.date + 'T00:00:00.000Z';
+      this.newEmployeeForm.get('birthDate').setValue(timestamp);
+      this.dialogRef.close(this.newEmployeeForm.value);
       console.log('--------------------');
       console.log(this.newEmployeeForm.value);
       this.employee.push(this.newEmployeeForm.value);
+    } else if (this.data) {
+      console.log('here');
+      // this.employee.push(this.newEmployeeForm.value);
     }
   }
 
