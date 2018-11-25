@@ -5,7 +5,7 @@
     <mat-icon (click)="closeDialog()" class="close">close</mat-icon>
     <div class="content-wrapper">
       <form id="newTruckForm" [formGroup]="newEmployeeForm">
-  
+
         <mat-form-field class="example-full-width">
           <input matInput placeholder="Meno" formControlName="firstName">
         </mat-form-field>
@@ -19,7 +19,7 @@
           <input matInput placeholder="Číslo OP" formControlName="idNumber">
         </mat-form-field>
         <mat-form-field>
-            <input matInput [matDatepicker]="picker" formControlName="birthDate" placeholder="Choose a date">
+            <input matInput [matDatepicker]="picker" formControlName="birthDate" placeholder="Dátum narodenia">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
@@ -34,15 +34,15 @@
           <input matInput placeholder="Adresa" formControlName="address">
         </mat-form-field>
       </form>
-  
+
       <div [fileUploadInputFor]="fileUploadQueue" class="upload-drop-zone" *ngIf="showEditInputs">
         <p>Vložte fotku zamestnanca</p>
       </div>
-  
+
       <div style="width: 500px" *ngIf="showEditInputs">
         <mat-file-upload-queue #fileUploadQueue [fileAlias]="'file'" [httpUrl]="'http://localhost:8180/jax-rs-jersey-application-sample'"
           multiple>
-  
+
           <mat-file-upload [file]="file" [id]="i" *ngFor="let file of fileUploadQueue.files; let i = index"></mat-file-upload>
         </mat-file-upload-queue>
       </div>
