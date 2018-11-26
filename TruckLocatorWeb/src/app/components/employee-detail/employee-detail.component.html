@@ -50,13 +50,13 @@
 </div>
 
 
-<mat-card *ngFor="let employee of employeeList; let index = index;">
+<mat-card #driverBox *ngFor="let employee of employeeList; let index = index;" class="driverBox">
   <img [ngClass]="[employee.specialisation == 'Vodič' ? 'driverBorder' : '',  employee.specialisation == 'Manažér' ? 'managerBorder' : '',  employee.specialisation == 'Dispečér' ? 'dispatcherBorder' : '']" src="../../../../imgs/img1.jpg" alt="photo">
   <h1>{{employee.firstName}} {{employee.lastName}}</h1>
   <h2>{{employee.specialisation}}</h2>
     <div class="actions group">
       <div class="action" (click)="showInfo(index)" ><mat-icon>info</mat-icon></div>
       <div class="action" (click)="showEdit(index)" ><mat-icon>edit</mat-icon></div>
-      <div class="action" (click)="deleteEmployee(index)" ><mat-icon>delete</mat-icon></div>
+      <div class="action" (click)="deleteEmployee($event, index)" ><mat-icon>delete</mat-icon></div>
   </div>
 </mat-card>

@@ -13,7 +13,7 @@ export class FirebaseService {
   private geolocTestData: string = '../assets/geolocations.json';
 
   employeeList = [];
-  
+
 
   constructor(private db: AngularFireDatabase, private _http: HttpClient) { }
 
@@ -24,7 +24,7 @@ export class FirebaseService {
     return this.employeeList;
   }
 
-  getGeolocations(): Observable<GeolocationsModel[]> {    
+  getGeolocations(): Observable<GeolocationsModel[]> {
     return this._http.get<GeolocationsModel[]>(this.geolocTestData, { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });
   }
 

@@ -37,7 +37,8 @@
           <textarea matInput placeholder="Popis" formControlName="wayDescript"></textarea>
         </mat-form-field>
         
-        <button mat-raised-button color="primary" [disabled]="!addNewTaskForm.valid"><mat-icon >add_circle_outline</mat-icon>Pridaj úlohu</button>
+        <button mat-raised-button color="primary" (click)="addRoute()" [disabled]="!addNewTaskForm.valid"><mat-icon >add_circle_outline</mat-icon>Pridaj úlohu</button>
+        <button mat-raised-button class="right" color="secondary" (click)="createTrack()" [disabled]="!addNewTaskForm.valid"><mat-icon >add_circle_outline</mat-icon>Vytvor trasu</button>
         <!-- <button mat-raised-button color="primary" class="addRoute">Pridaj trasu</button> -->
       </form>
     </div>

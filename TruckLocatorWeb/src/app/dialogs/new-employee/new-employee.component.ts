@@ -31,7 +31,6 @@ export class NewEmployeeComponent implements OnInit {
     this.title = 'Pridanie zamestnanca';
     this.showEditInputs = true;
     this.employee = this.af.list('/UPC/Drivers');
-    console.log(this.data);
 
     if (this.data) {
       if (this.data.edit) {
@@ -54,12 +53,7 @@ export class NewEmployeeComponent implements OnInit {
     this.dialogRef.close();
   }
   sendEmployee() {
-    // this.af.list('/companies').valueChanges().subscribe(data => {
-    //   data.forEach(element => {
-    //     console.log(element);
-    //   });
-    // });
-    if (!this.data) {
+      if (!this.data) {
       const timestamp =  this.newEmployeeForm.get('birthDate').value._i.year + '-' +
         + this.newEmployeeForm.get('birthDate').value._i.month + '-' +
         + this.newEmployeeForm.get('birthDate').value._i.date + 'T00:00:00.000Z';
@@ -69,9 +63,12 @@ export class NewEmployeeComponent implements OnInit {
       console.log(this.newEmployeeForm.value);
       this.employee.push(this.newEmployeeForm.value);
     } else if (this.data) {
-      console.log('here');
-      // this.employee.push(this.newEmployeeForm.value);
+
+      this.af.object('/UPC/Drivers/' + this.data.clickedIndex)
+      .update(this.newEmployeeForm.value);
     }
+    this.dialogRef.close();
+
   }
 
 

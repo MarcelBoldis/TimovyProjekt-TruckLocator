@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { FirebaseService } from 'src/app/services/firebase.service';
-import { FormBuilder, Validators } from '@angular/forms';
-
+import { FormBuilder, Validators, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-new-task',
@@ -36,6 +35,13 @@ export class NewTaskComponent implements OnInit {
       this.filtredDrivers(this.persons);
     });
 
+  }
+
+  addRoute() {
+    console.log(this.addNewTaskForm.value);
+  }
+  createTrack() {
+    console.log(this.addNewTaskForm.value);
   }
 
   filtredDrivers(persons) {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ElementRef, ViewChild, ViewChildren } from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
@@ -20,6 +20,7 @@ export interface State {
 })
 export class EmployeeDetailComponent implements OnInit {
 
+  myFuckingList: any = [];
   employeeList = [];
   managerCount = 0;
   driverCount = 0;
@@ -30,6 +31,8 @@ export class EmployeeDetailComponent implements OnInit {
   @Output() managers = new EventEmitter<number>();
   @Output() drivers = new EventEmitter<number>();
   @Output() dispatchers = new EventEmitter<number>();
+  @ViewChildren('driverBox') driverBox: ElementRef;
+
 
   states: State[] = [
     {
@@ -73,7 +76,6 @@ export class EmployeeDetailComponent implements OnInit {
 
     return this.states.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0);
   }
-
   ngOnInit() {
     this.db.list('/UPC/Drivers').valueChanges().subscribe(drivers => {
       this.employeeList = drivers;
@@ -81,7 +83,10 @@ export class EmployeeDetailComponent implements OnInit {
       console.log(this.employeeList);
     });
 
-    // this.employeeList = this.fbService.getEmployeeList().;
+    const listObservable = this.db.list('/UPC/Drivers').snapshotChanges();
+    listObservable.subscribe(result => {
+      this.myFuckingList = result;
+    });
   }
 
   countRoles() {
@@ -118,15 +123,16 @@ export class EmployeeDetailComponent implements OnInit {
   showEdit(index: number) {
     const dialogRef = this.dialog.open(NewEmployeeComponent, {
       width: '50%',
-      data: {data : this.employeeList[index], edit: true}
+      data: {data : this.employeeList[index], edit: true, clickedIndex: this.myFuckingList[index].key}
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
     });
   }
 
-  deleteEmployee(index: number) {
-    this.employeeList.splice(index, 1);
+  deleteEmployee(event: any, index: number) {
+    const driverBox = document.getElementsByClassName('driverBox')[index];
+    driverBox.classList.add('inactive');
   }
 
 
