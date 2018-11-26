@@ -52,4 +52,11 @@ export class HomePage {
       done: !checkedStatus
     });
   }
+
+  logOut(){
+    var that = this;
+    this.ofAuth.auth.signOut().then(success => {
+      that.navCtrl.setRoot("LoginPage");
+    });
+  }
 }

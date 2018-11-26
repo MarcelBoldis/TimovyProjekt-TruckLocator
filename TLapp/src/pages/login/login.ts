@@ -26,29 +26,47 @@ export class LoginPage {
   }
 
   ionViewDidLoad() {
+   
+ 
+
+    // if(this.ofAuth.auth.currentUser != null){
+    //   this.navCtrl.setRoot('HomePage');
+    //   return;
+    // }
     console.log('ionViewDidLoad LoginPage');
   }
 
-  async login(user : UserInterface){
+  async login(user : UserInterface){    
+    var that= this;
     try{
-      const result = this.ofAuth.auth.signInWithEmailAndPassword(user.userName, user.password);
-      if(result){
-        console.log(result);
-        this.navCtrl.push('HomePage');
-      }else{
-        this.user.userName = "";
-        this.user.password = "";
-        this.toast.create({
-          message: 'Zadali ste nesprávne údaje',
+      that.ofAuth.auth.setPersistence("local")
+      .then(function() {
+        // Existing and future Auth states are now persisted in the current
+        // session only. Closing the window would clear any existing state even
+        // if a user forgets to sign out.
+        // ...
+        // New sign-in will be persisted with session persistence.
+        return that.ofAuth.auth.signInWithEmailAndPassword(user.userName, user.password);
+      })
+      .then(success => {
+        that.navCtrl.setRoot('HomePage');
+      })
+      .catch(error => {
+        // Handle Errors here.
+        console.log(error.code + error.message);
+        user.userName = "";
+        user.password = "";
+        that.toast.create({
+          message: 'Zadali ste nesprávne prihlasovacie údaje',
           duration: 3000
-        }).present();
-      }
+         }).present();
+      });
     }catch(e){
         console.error(e);
-        this.user.userName = "";
-        this.user.password = "";
-        this.toast.create({
-          message: 'Zadali ste nesprávne údaje',
+        user.userName = "";
+        user.password = "";
+        that.toast.create({
+          message: 'Zadali ste nesprávne prihlasovacie údaje',
           duration: 3000
         }).present();
     }
