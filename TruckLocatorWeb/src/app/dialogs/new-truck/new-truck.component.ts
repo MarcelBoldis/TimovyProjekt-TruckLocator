@@ -24,7 +24,7 @@ export class NewTruckComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.trucks = this.af.list('/companies/softec/trucks');
+    this.trucks = this.af.list('/UPC/Trucks');
   }
   onNoClick(): void {
     this.dialogRef.close();

@@ -71,7 +71,7 @@ export class TruckDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.db.list('/companies/softec/trucks').valueChanges().subscribe(trucks => {
+    this.db.list('/UPC/Trucks').valueChanges().subscribe(trucks => {
       this.truckList = trucks;
     });
 

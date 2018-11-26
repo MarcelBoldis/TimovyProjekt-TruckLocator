@@ -1,5 +1,5 @@
 <mat-expansion-panel *ngFor="let driver of activeDrivers; let i = index;">
-  <mat-expansion-panel-header>
+  <mat-expansion-panel-header (click)="showRoute(i)">
     <mat-panel-title>
       <mat-icon>fiber_manual_record</mat-icon>{{driver.name}}
     </mat-panel-title>

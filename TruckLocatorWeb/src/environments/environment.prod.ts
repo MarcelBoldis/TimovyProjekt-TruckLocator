@@ -1,11 +1,13 @@
 export const environment = {
   production: true,
   firebase: {
-    apiKey: 'AIzaSyDrfRc3TvCpfQvKEGZhpoXNCxFTwg8qZA4',
-    authDomain: 'trucklocator-549dc.firebaseapp.com',
-    databaseURL: 'https://trucklocator-549dc.firebaseio.com',
-    projectId: 'trucklocator-549dc',
-    storageBucket: 'trucklocator-549dc.appspot.com',
-    messagingSenderId: '190115697684'
+    apiKey: 'AIzaSyB5Snfs-mFOu3QxROE96ND0haG60Z79wrQ',
+    authDomain: 'trucklocator-57350.firebaseapp.com',
+    databaseURL: 'https://trucklocator-57350.firebaseio.com',
+    projectId: 'trucklocator-57350',
+    storageBucket: 'trucklocator-57350.appspot.com',
+    messagingSenderId: '200209514241'
   }
 };
+
+

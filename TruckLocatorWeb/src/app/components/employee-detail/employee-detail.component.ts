@@ -75,9 +75,8 @@ export class EmployeeDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.db.list('/companies/softec').valueChanges().subscribe(drivers => {
+    this.db.list('/UPC/Drivers').valueChanges().subscribe(drivers => {
       this.employeeList = drivers;
-      this.employeeList.splice(-1, 1);
       this.countRoles();
       console.log(this.employeeList);
     });
