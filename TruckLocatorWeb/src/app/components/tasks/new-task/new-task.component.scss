@@ -33,8 +33,20 @@
         margin: 0;
         padding-top: 15px;
     }
+    mat-expansion-panel {
+        padding: 0 !important;
+        margin: 25px 0 10px 0;
+        box-shadow: none;
+        h4 {
+            padding: 0;
+        }
+        mat-expansion-panel-header {
+            padding: 0;
+        }
+    }
 }
 .right {
     float: right;
 }
+
 

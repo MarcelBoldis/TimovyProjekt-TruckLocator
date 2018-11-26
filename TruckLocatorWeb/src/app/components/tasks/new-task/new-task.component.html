@@ -1,47 +1,61 @@
 <div class="wrapper">
-
   <mat-card>
     <h2>Vytvorenie novej trasy</h2>
     <mat-divider></mat-divider>
     <div class="card-content">
       <form class="example-form" [formGroup]="addNewTaskForm">
-        <h4>Vytvorenie trasy</h4>
-        <mat-form-field>
-          <input matInput placeholder="Názov trasy" value="" formControlName="wayName">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-select placeholder="Vodič" formControlName="driverName">
-            <mat-option *ngFor="let driver of driversList" [value]="driver.firstName">{{driver.firstName}} {{driver.lastName}}</mat-option>
-          </mat-select>
-        </mat-form-field>
+        <mat-expansion-panel [expanded]="openExpand">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+                <h4>Vytvorenie trasy</h4>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          
+          <mat-form-field>
+            <input matInput placeholder="Názov trasy" value="" formControlName="wayName">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select placeholder="Vodič" formControlName="driverName">
+              <mat-option *ngFor="let driver of driversList" [value]="driver.firstName">{{driver.firstName}}
+                {{driver.lastName}}</mat-option>
+            </mat-select>
+          </mat-form-field>
 
-        <mat-form-field>
-          <mat-select placeholder="Automobil" formControlName="carName">
-            <mat-option *ngFor="let truck of truckList;" [value]="truck.brand">{{truck.brand}}</mat-option>
-          </mat-select>
-        </mat-form-field>
+          <mat-form-field>
+            <mat-select placeholder="Automobil" formControlName="carName">
+              <mat-option *ngFor="let truck of truckList;" [value]="truck.brand">{{truck.brand}}</mat-option>
+            </mat-select>
+          </mat-form-field>
 
-        <mat-form-field>
-          <input matInput [matDatepicker]="picker" placeholder="Dátum" formControlName="wayDate">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
+          <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="Dátum" formControlName="wayDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
 
-        <mat-form-field>
-          <input matInput placeholder="Adresa štartu" formControlName="addressStart">
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Adresa cieľa" formControlName="addressFinish">
-        </mat-form-field>
-        <mat-form-field class="textarea">
-          <textarea matInput placeholder="Popis" formControlName="wayDescript"></textarea>
-        </mat-form-field>
-        
-        <button mat-raised-button color="primary" (click)="addRoute()" [disabled]="!addNewTaskForm.valid"><mat-icon >add_circle_outline</mat-icon>Pridaj úlohu</button>
-        <button mat-raised-button class="right" color="secondary" (click)="createTrack()" [disabled]="!addNewTaskForm.valid"><mat-icon >add_circle_outline</mat-icon>Vytvor trasu</button>
+          <mat-form-field>
+            <input matInput placeholder="Adresa štartu" formControlName="addressStart">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Adresa cieľa" formControlName="addressFinish">
+          </mat-form-field>
+          <mat-form-field class="textarea">
+            <textarea matInput placeholder="Popis" formControlName="wayDescript"></textarea>
+          </mat-form-field>
+        </mat-expansion-panel>
+
+        <button mat-raised-button color="primary" (click)="addRoute()" [disabled]="!addNewTaskForm.valid">
+          <mat-icon>add_circle_outline</mat-icon>Pridaj úlohu
+        </button>
+        <button mat-raised-button class="right" color="primary" (click)="createTrack()" [disabled]="!addNewTaskForm.valid">
+          <mat-icon>add_circle_outline</mat-icon>Vytvor trasu
+        </button>
         <!-- <button mat-raised-button color="primary" class="addRoute">Pridaj trasu</button> -->
       </form>
     </div>
+
+
+
   </mat-card>
 
 

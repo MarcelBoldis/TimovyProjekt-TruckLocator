@@ -12,7 +12,7 @@ export class NewTaskComponent implements OnInit {
   persons = [];
   driversList = [];
   truckList = [];
-
+  openExpand = true;
   constructor(public db: AngularFireDatabase,
     public fbService: FirebaseService,
     public fb: FormBuilder) { }
@@ -39,6 +39,7 @@ export class NewTaskComponent implements OnInit {
 
   addRoute() {
     console.log(this.addNewTaskForm.value);
+    this.openExpand = false;
   }
   createTrack() {
     console.log(this.addNewTaskForm.value);
