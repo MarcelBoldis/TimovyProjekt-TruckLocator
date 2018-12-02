@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.js';
 import 'leaflet-control-geocoder';
-import { FirebaseService } from 'src/app/services/firebase.service.js';
-import { GeolocationsModel } from 'src/app/services/GeolocationsModel.js';
+import { FirebaseService } from '../../../services/firebase.service';
+import { IGeolocation } from '../../../../models/geolocation';
 declare var L: any;
 
 @Component({
@@ -11,7 +11,7 @@ declare var L: any;
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit, OnChanges {
-  geoTestData: GeolocationsModel[] = [];
+  geoTestData: IGeolocation[] = [];
   map = null;
   dataInitialized = false;
   @Input() routeId: number = 0;

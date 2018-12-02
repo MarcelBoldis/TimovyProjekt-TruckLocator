@@ -1,6 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { EmployeeListDetailDialogComponent } from 'src/app/dialogs/employee-list-detail-dialog/employee-list-detail-dialog.component';
+import { EmployeeListDetailDialogComponent } from '../../../dialogs/employee-list-detail-dialog/employee-list-detail-dialog.component';
+import { FirebaseService } from '../../../services/firebase.service';
 
 @Component({
   selector: 'app-employee-list',
@@ -9,10 +10,12 @@ import { EmployeeListDetailDialogComponent } from 'src/app/dialogs/employee-list
 })
 export class EmployeeListComponent implements OnInit {
   activeDrivers = [];
+  drivers = [];
   @Output() driverClick = new EventEmitter();
-  constructor( public dialog: MatDialog ) { }
+  constructor( public dialog: MatDialog, private dbService: FirebaseService) { }
 
   ngOnInit() {
+    // this.dbService.getEmployeeList()
     this.activeDrivers.push({'name': 'Jan Novak', 'route': 'BA - KE', 'routeId': 1});
     this.activeDrivers.push({'name': 'Jozef Stary', 'route': 'BA - KE', 'routeId': 2});
     this.activeDrivers.push({'name': 'Juraj Peterka', 'route': 'BA - KE', 'routeId': 3});
@@ -34,7 +37,9 @@ export class EmployeeListComponent implements OnInit {
   driverButtonClicked(index: number) {
       const dialogRef = this.dialog.open(EmployeeListDetailDialogComponent, {
         width: '800px',
-        data: {name: this.activeDrivers[index].name, route: this.activeDrivers[index].route}
+        data: {
+          name: this.activeDrivers[index].name, 
+          route: this.activeDrivers[index].route}
       });
 
       dialogRef.afterClosed().subscribe(result => {

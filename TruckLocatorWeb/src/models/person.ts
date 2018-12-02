@@ -1,10 +1,11 @@
 export interface IPerson {
+    address: string;
+    birthDate: Date;
+    birthNumber: string;
     firstName: string;
     lastName: string;
-    birthNumber: string;
     idNumber: string;
-    birthDate: Date;
-    specialisation: number;
-    address: string;
+    specialisation: string;
+    tracks: string;
     photo: string;
 }

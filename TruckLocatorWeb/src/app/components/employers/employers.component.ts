@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { NewEmployeeComponent } from 'src/app/dialogs/new-employee/new-employee.component';
-import { IPerson } from 'src/models/person';
+import { NewEmployeeComponent } from '../../dialogs/new-employee/new-employee.component';
+import { IPerson } from '../../../models/person';
 
 @Component({
   selector: 'app-employers',

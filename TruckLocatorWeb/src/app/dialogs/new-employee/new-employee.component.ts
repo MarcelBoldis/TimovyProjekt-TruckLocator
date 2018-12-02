@@ -2,6 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AngularFireList, AngularFireDatabase } from 'angularfire2/database';
+import { FirebaseService } from '../../services/firebase.service';
+import { IPerson } from '../../../models/person';
 
 @Component({
   selector: 'app-new-employee',
@@ -14,9 +16,11 @@ export class NewEmployeeComponent implements OnInit {
   showEditInputs: boolean;
   constructor(public dialogRef: MatDialogRef<NewEmployeeComponent>,
               public fb: FormBuilder,
+              private fbService: FirebaseService,
               private af: AngularFireDatabase,
               @Inject(MAT_DIALOG_DATA) public data) { }
-    employee: AngularFireList<any[]>;
+
+    employee: AngularFireList<IPerson[]>;
     newEmployeeForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -30,7 +34,7 @@ export class NewEmployeeComponent implements OnInit {
   ngOnInit() {
     this.title = 'Pridanie zamestnanca';
     this.showEditInputs = true;
-    this.employee = this.af.list('/UPC/Drivers');
+    this.employee = this.fbService.getEmployeeListWritable();
 
     if (this.data) {
       if (this.data.edit) {
@@ -68,9 +72,6 @@ export class NewEmployeeComponent implements OnInit {
       .update(this.newEmployeeForm.value);
     }
     this.dialogRef.close();
-
   }
-
-
 
 }

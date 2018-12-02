@@ -149,11 +149,12 @@ section {
     cursor: pointer;
 }
 
-.box a:hover {
+.box:hover {
     color: black;
-    transition: all 0.2s linear;
-    border-bottom: 1px solid black;
+    transition: all 0.3s linear;
+    transform: scale(1.1);
 }
+
 
 #marcel {
     position: relative;
@@ -209,7 +210,7 @@ section {
 }
 
 .contact-block {
-    margin-top: 60px;
+    margin-top: 40px;
     text-align: center;
 }
 

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { FirebaseService } from 'src/app/services/firebase.service';
+import { FirebaseService } from '../../../services/firebase.service';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
+import { IPerson } from 'src/models/person';
+import { ITruck } from 'src/models/truck';
 
 @Component({
   selector: 'app-new-task',
@@ -9,38 +10,40 @@ import { FormBuilder, Validators, FormArray } from '@angular/forms';
   styleUrls: ['./new-task.component.scss']
 })
 export class NewTaskComponent implements OnInit {
-  persons = [];
+  persons: IPerson[];
   driversList = [];
-  truckList = [];
+  truckList: ITruck[];
   openExpand = true;
-  constructor(public db: AngularFireDatabase,
-    public fbService: FirebaseService,
-    public fb: FormBuilder) { }
-    addNewTaskForm = this.fb.group({
-      wayName: ['', Validators.required],
-      driverName: ['', Validators.required],
-      carName: ['', Validators.required],
-      wayDate: ['', Validators.required],
-      addressStart: ['', Validators.required],
-      addressFinish: ['', Validators.required],
-      wayDescript: ['', Validators.required],
-    });
+  addNewTaskForm = this.fb.group({
+    wayName: ['', Validators.required],
+    driverName: ['', Validators.required],
+    carName: ['', Validators.required],
+    wayDate: ['', Validators.required],
+    addressStart: ['', Validators.required],
+    addressFinish: ['', Validators.required],
+    wayDescript: ['', Validators.required],
+  });
+
+  constructor(public fbService: FirebaseService,
+              public fb: FormBuilder) { }
+
+
   ngOnInit() {
-    this.db.list('/UPC/Trucks').valueChanges().subscribe(trucks => {
+    this.fbService.getTruckListReadable().subscribe(trucks => {
       this.truckList = trucks;
     });
 
-    this.db.list('/UPC/Drivers').valueChanges().subscribe(drivers => {
+    this.fbService.getEmployeeListReadable().subscribe(drivers => {
       this.persons = drivers;
       this.filtredDrivers(this.persons);
     });
-
   }
 
   addRoute() {
     console.log(this.addNewTaskForm.value);
     this.openExpand = false;
   }
+
   createTrack() {
     console.log(this.addNewTaskForm.value);
   }
