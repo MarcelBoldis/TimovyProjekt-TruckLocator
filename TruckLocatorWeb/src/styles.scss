@@ -17,6 +17,6 @@ body {
 .leaflet-routing-container.leaflet-bar.leaflet-routing-container-hide.leaflet-control {
     display: none;
 }
-// .mat-expansion-panel-body {
-//     padding: 0 !important;
-// }
+.no-padd .mat-expansion-panel-body {
+    padding: 0 !important;
+}

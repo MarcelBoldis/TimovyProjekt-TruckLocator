@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from '../../../services/firebase.service';
-import { FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
 import { IPerson } from 'src/models/person';
 import { ITruck } from 'src/models/truck';
 
@@ -22,6 +22,7 @@ export class NewTaskComponent implements OnInit {
     addressStart: ['', Validators.required],
     addressFinish: ['', Validators.required],
     wayDescript: ['', Validators.required],
+    tasks: this.fb.array([])
   });
 
   constructor(public fbService: FirebaseService,
@@ -42,6 +43,20 @@ export class NewTaskComponent implements OnInit {
   addRoute() {
     console.log(this.addNewTaskForm.value);
     this.openExpand = false;
+    this.tasks.push(this.createItem());
+  }
+
+  get tasks() {
+    return this.addNewTaskForm.get('tasks') as FormArray;
+  }
+
+  createItem(): FormGroup {
+    return this.fb.group({
+      taskAddress: ['', Validators.required],
+      taskDate: ['', Validators.required],
+      taskDescription: ['', Validators.required],
+      taskTime: ['', Validators.required]
+    });
   }
 
   createTrack() {
