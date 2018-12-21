@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 
@@ -10,24 +10,31 @@ export class ChatComponent {
 
   messages: Observable<any[]>;
   newMessage: string;
-  myDate:any;
-
-  constructor(private db: AngularFireDatabase) {
-    this.messages = this.db.list('/UPC/Drivers/' + 'Maros Lipa/chat').valueChanges();
+  myDate: any;
+  userName: string;
+  @ViewChild('messagesArea') messageArea: ElementRef;
+  @Input() set setuserName(fullName: any) {
+    this.userName = fullName[0] + " " + fullName[1];
+    this.messages = this.db.list('/UPC/Drivers/' + this.userName + '/chat').valueChanges();
+    this.messages.subscribe(() => this.scrollToBottomInMessageArea());
     this.newMessage = "";
     this.myDate = new Date();
   }
 
+  constructor(private db: AngularFireDatabase) { }
+
   addMessageToChat() {
     if (this.newMessage != '') {
-      this.db.list('/UPC/Drivers/' + 'Maros Lipa/chat').push({
+      this.db.list('/UPC/Drivers/' + this.userName + '/chat').push({
         time: new Date().getTime(),
-        from: 'driver',
+        from: this.userName,
         text: this.newMessage
       });
       this.newMessage = "";
     }
   }
-
+  scrollToBottomInMessageArea() {
+    this.messageArea.nativeElement.scrollTop = this.messageArea.nativeElement.scrollHeight;
+  }
 
 }

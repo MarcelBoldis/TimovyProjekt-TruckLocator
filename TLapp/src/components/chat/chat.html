@@ -1,9 +1,11 @@
 <ion-card padding>
-  <h2 padding >Správy</h2>
-  <div *ngIf="messages | async as messagesAsnc">
-    <div *ngFor="let currMessage of messagesAsnc">
-      <i>{{currMessage.time | date: 'H:mm'}}</i> <br>
-      <p [ngClass]="(currMessage.from =='driver') ? 'yourMessage':'outsideMessage'">{{currMessage.text}}</p>
+  <h2 padding>Správy</h2>
+  <div #messagesArea class="chatCard">
+    <div *ngIf="messages | async as messagesAsnc">
+      <div *ngFor="let currMessage of messagesAsnc">
+        <i>{{currMessage.time | date: 'dd.MMMM'}} ({{userName}})</i> <br>
+        <p [ngClass]="(currMessage.from == userName) ? 'yourMessage':'outsideMessage'">{{currMessage.text}}</p>
+      </div>
     </div>
   </div>
   <ion-grid>

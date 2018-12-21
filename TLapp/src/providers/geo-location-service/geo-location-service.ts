@@ -6,6 +6,11 @@ import { DriverDataServiceProvider } from '../driver-data-service/driver-data-se
 export class GeoLocationServiceProvider {
   
   private allTrackCoordinations: any[];
+  driversName: string;
+
+  setDriversName(name: string){
+    this.driversName = ""+name;
+  }
 
   constructor(private backgroundGeolocation: BackgroundGeolocation, private driverDataService: DriverDataServiceProvider  ) {
     this.allTrackCoordinations = [];
@@ -23,8 +28,8 @@ export class GeoLocationServiceProvider {
 
     this.backgroundGeolocation.configure(config)
       .subscribe((location: BackgroundGeolocationResponse) => {
-        this.driverDataService.updateTrackCoordinations(location.latitude, location.longitude);
-        this.allTrackCoordinations.push({latitude: location.latitude, longitude: location.longitude});
+        this.driverDataService.updateTrackCoordinations(location.latitude, location.longitude, this.driversName);
+        this.allTrackCoordinations.push({ latitude: location.latitude, longitude: location.longitude });
       });
 
     this.backgroundGeolocation.start();
@@ -36,7 +41,7 @@ export class GeoLocationServiceProvider {
   }
 
   manuallyUpdateCoordinations(){
-    this.driverDataService.changeAllTrackCoordinations(this.allTrackCoordinations);
+    this.driverDataService.changeAllTrackCoordinations(this.allTrackCoordinations, this.driversName);
   }
 
 }

@@ -33,8 +33,7 @@ export class LoginPage {
     try{
       const result = this.ofAuth.auth.signInWithEmailAndPassword(user.userName, user.password);
       if(result){
-        console.log(result);
-        this.navCtrl.push('HomePage');
+        this.navCtrl.push('HomePage', { username: user.userName });
       }else{
         this.user.userName = "";
         this.user.password = "";

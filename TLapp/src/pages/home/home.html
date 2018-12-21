@@ -15,7 +15,7 @@
         </ion-avatar>
         <h2>{{trackInfo.direction}}</h2>
         <h3>{{trackInfo.date}}</h3>
-        <i (click)="openFuelCostsModal()" item-right class="material-icons">
+        <i item-right (click)="openFuelCostsModal()" class="material-icons">
           local_gas_station
         </i>
       </ion-item>
@@ -35,7 +35,7 @@
       </ion-row>
     </div>
 
-    <geo-location></geo-location>
+    <geo-location [userName]="userName"></geo-location>
 
     <ion-card *ngIf="openTask">
       <div *ngFor="let taskItem of trackInfo.tasks; let i = index ">
@@ -52,5 +52,7 @@
       </div>
     </ion-card>
   </ion-card>
-  <chat-component></chat-component>
+  <div *ngIf="usernameFormated">
+    <chat-component [setuserName]="userName"></chat-component>
+  </div>
 </ion-content>
