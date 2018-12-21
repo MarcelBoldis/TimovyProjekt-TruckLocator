@@ -1,48 +1,83 @@
 <div class="wrapper">
-
   <mat-card>
     <h2>Vytvorenie novej trasy</h2>
     <mat-divider></mat-divider>
     <div class="card-content">
-      <form class="example-form">
-        <mat-form-field>
+      <form class="example-form" [formGroup]="addNewTaskForm">
+        <mat-expansion-panel [expanded]="openExpand" class="no-padd">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <h4>Vytvorenie trasy</h4>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
 
-          <mat-select placeholder="Kamionista">
-            <mat-option *ngFor="let driver of drivers" [value]="driver.name">{{driver.name}}</mat-option>
-          </mat-select>
-        </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Názov trasy" value="" formControlName="wayName">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select placeholder="Vodič" formControlName="driverName">
+              <mat-option *ngFor="let driver of driversList" [value]="driver.firstName">{{driver.firstName}}
+                {{driver.lastName}}</mat-option>
+            </mat-select>
+          </mat-form-field>
 
-        <mat-form-field>
-          <mat-select placeholder="Auto">
-            <mat-option>Truck1</mat-option>
-            <mat-option>Truck2</mat-option>
-            <mat-option>Truck3</mat-option>
-          </mat-select>
-        </mat-form-field>
+          <mat-form-field>
+            <mat-select placeholder="Automobil" formControlName="carName">
+              <mat-option *ngFor="let truck of truckList;" [value]="truck.brand">{{truck.brand}}</mat-option>
+            </mat-select>
+          </mat-form-field>
 
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Favorite food" value="Sushi">
-        </mat-form-field>
+          <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="Dátum" formControlName="wayDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
 
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Favorite food" value="Sushi">
-        </mat-form-field>
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Favorite food" value="Sushi">
-        </mat-form-field>
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Favorite food" value="Sushi">
-        </mat-form-field>
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Favorite food" value="Sushi">
-        </mat-form-field>
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Favorite food" value="Sushi">
-        </mat-form-field>
-
-        <button mat-raised-button color="primary">Pridaj trasu</button>
+          <mat-form-field>
+            <input matInput placeholder="Adresa štartu" formControlName="addressStart">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Adresa cieľa" formControlName="addressFinish">
+          </mat-form-field>
+          <mat-form-field class="textarea">
+            <textarea matInput placeholder="Popis" formControlName="wayDescript"></textarea>
+          </mat-form-field>
+        </mat-expansion-panel>
+        <div formArrayName="tasks">
+          <div *ngFor="let address of tasks.controls; let i=index">
+            <!-- The repeated alias template -->
+            <div [formGroupName]="i">
+              <h6>Uloha {{i+1}}</h6>
+              <mat-form-field>
+                <input matInput formControlName="taskAddress" placeholder="Adresa">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput [matDatepicker]="picker" placeholder="Dátum" formControlName="taskDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Čas" type="time" min="00:00" max="23:59" formControlName="taskTime">
+              </mat-form-field>
+              <mat-form-field class="textarea">
+                <textarea matInput placeholder="Popis" formControlName="taskDescription"></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <button mat-raised-button color="primary" (click)="addRoute()" [disabled]="!addNewTaskForm.valid">
+          <mat-icon>add_circle_outline</mat-icon>Pridaj úlohu
+        </button>
+        <button mat-raised-button class="right" color="primary" (click)="createTrack()" [disabled]="!addNewTaskForm.valid">
+          <mat-icon>add_circle_outline</mat-icon>Vytvor trasu
+        </button>
+        <!-- <button mat-raised-button color="primary" class="addRoute">Pridaj trasu</button> -->
       </form>
+      <p>{{addNewTaskForm.value | json}}</p>
     </div>
+
+
+
   </mat-card>
 
 

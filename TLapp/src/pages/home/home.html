@@ -3,6 +3,11 @@
     <ion-title>
       TruckLocator
     </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="logOut()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -40,7 +45,7 @@
     <ion-card *ngIf="openTask">
       <div *ngFor="let taskItem of trackInfo.tasks; let i = index ">
         <ion-item class="ionTaskItem" [ngClass]="taskItem.done ? 'taksDone' : 'taskInProgress'">
-          <div (click)="updateCucumber(i, taskItem.done)">
+          <div (click)="updateTasks(i, taskItem.done)">
             {{taskItem.place}}
             <P>{{taskItem.fullAdress}}</P>
             <span>

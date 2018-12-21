@@ -24,7 +24,7 @@ import { EmployeeInfoComponent } from './dialogs/employee-info/employee-info.com
 import { TruckDetailComponent } from './components/trucks/truck-detail/truck-detail.component';
 import { NewTruckComponent } from './dialogs/new-truck/new-truck.component';
 import { NewEmployeeComponent } from './dialogs/new-employee/new-employee.component';
-import { TaskListComponent } from './components/tasks/task-list/task-list.component';
+import { StatisticsComponent } from './components/statistics/statistics.component';
 import { NewTaskComponent } from './components/tasks/new-task/new-task.component';
 
 
@@ -46,7 +46,7 @@ import { NewTaskComponent } from './components/tasks/new-task/new-task.component
     TruckDetailComponent,
     NewTruckComponent,
     NewEmployeeComponent,
-    TaskListComponent,
+    StatisticsComponent,
     NewTaskComponent,
   ],
   imports: [

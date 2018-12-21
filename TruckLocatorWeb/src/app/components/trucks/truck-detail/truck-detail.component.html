@@ -3,23 +3,21 @@
     <mat-placeholder>
       <mat-icon>search</mat-icon> Hľadaj
     </mat-placeholder>
-    <input matInput aria-label="State" [matAutocomplete]="auto" [formControl]="stateCtrl">
+    <input matInput [matAutocomplete]="auto" [formControl]="trucksControl">
 
     <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let state of filteredStates | async" [value]="state.name">
-        <img class="example-option-img" aria-hidden [src]="state.flag" height="25">
-        <span>{{state.name}}</span> |
-        <small>Population: {{state.population}}</small>
+      <mat-option *ngFor="let truck of filteredTrucks | async" [value]="truck.brand">
+        <span>{{truck.brand}}</span>
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
 </div>
 
 
-<mat-card class="truckCard" *ngFor="let truck of truckList; let index = index;">
+<mat-card class="truckCard" *ngFor="let truck of filteredTrucks | async; let index = index;">
   <img src="../../../../imgs/truck2.png" alt="photo">
-  <h1>{{truck.name}}</h1>
-  <h2>{{truck.function}}</h2>
+  <h1>{{truck.brand}}</h1>
+  <h2>{{truck.km}} km</h2>
   <div [class]=truck.state>
     <mat-icon id="state" >fiber_manual_record</mat-icon>
   </div>

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import {IonicPage, NavController, ModalController, Modal, NavParams} from 'ionic-angular';
+import { IonicPage, NavController, ModalController, Modal, NavParams } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { FuelCostsInterface } from '../../interfaces/trackInterface';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @IonicPage()
 @Component({
@@ -16,17 +17,25 @@ export class HomePage {
   userName: string[] = [];
   usernameFormated: boolean;
 
-  constructor(public navCtrl: NavController,  private db: AngularFireDatabase,
+  constructor(public navCtrl: NavController, private db: AngularFireDatabase,
     private modalControler: ModalController,
+    private ofAuth: AngularFireAuth,
     public navParams: NavParams) {
     this.usernameFormated = false;
-    this.getNameFromEmailForm(navParams.data.username);
-    this.trackDataInfo = this.db.object('/UPC/Drivers/' + this.userName[0] + " " + this.userName[1] + '/tracks/track0').valueChanges();
-    this.trackDataInfo.subscribe()
+
+    // this.userName[0] = "Igor";
+    // this.userName[1] = "Rosa";
+    // this.usernameFormated = true;
+
+    if (ofAuth.auth.currentUser) {
+      this.getNameFromEmailForm(ofAuth.auth.currentUser.email);
+      this.trackDataInfo = this.db.object('/UPC/Drivers/' + this.userName[0] + " " + this.userName[1] + '/tracks/track0').valueChanges();
+      this.trackDataInfo.subscribe()
+    }
   }
-  openFuelCostsModal(){
-    const dataForModal = {dataMessage: "hey LaLALALa"};
-    const fuelCostsModal: Modal = this.modalControler.create('FuelCostsPage',{ data: dataForModal});
+  openFuelCostsModal() {
+    const dataForModal = { dataMessage: "hey LaLALALa" };
+    const fuelCostsModal: Modal = this.modalControler.create('FuelCostsPage', { data: dataForModal });
     fuelCostsModal.present();
     fuelCostsModal.onDidDismiss((data) => {
       this.updateFuelCosts(data);
@@ -44,7 +53,7 @@ export class HomePage {
     this.openTask = !this.openTask;
   }
 
-  updateFuelCosts(updatedFuelCosts: FuelCostsInterface){
+  updateFuelCosts(updatedFuelCosts: FuelCostsInterface) {
     this.db.object('/UPC/Drivers/' + this.userName[0] + " " + this.userName[1] + '/tracks/track0/fuelCosts/').update({
       fuelAmount: updatedFuelCosts.fuelAmount,
       price: updatedFuelCosts.price,
@@ -52,9 +61,16 @@ export class HomePage {
     });
   }
 
-  updateCucumber(index: number, checkedStatus: boolean) {
-    this.db.object('/UPC/Drivers/' + this.userName[0] + " " + this.userName[1] + '/tracks/track0' + index).update({
+  updateTasks(index: number, checkedStatus: boolean) {
+    this.db.object('/UPC/Drivers/' + this.userName[0] + " " + this.userName[1] + '/tracks/track0/tasks/' + index).update({
       done: !checkedStatus
+    });
+  }
+
+  logOut() {
+    var that = this;
+    this.ofAuth.auth.signOut().then(success => {
+      that.navCtrl.setRoot("LoginPage");
     });
   }
 }

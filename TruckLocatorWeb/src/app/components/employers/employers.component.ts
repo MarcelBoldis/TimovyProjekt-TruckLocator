@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { NewEmployeeComponent } from 'src/app/dialogs/new-employee/new-employee.component';
-import { IPerson } from 'src/models/person';
+import { NewEmployeeComponent } from '../../dialogs/new-employee/new-employee.component';
+import { IPerson } from '../../../models/person';
 
 @Component({
   selector: 'app-employers',
@@ -38,7 +38,6 @@ export class EmployersComponent implements OnInit {
     let newEmployee = <IPerson>{};
     const dialogRef = this.dialog.open(NewEmployeeComponent, {
       width: '50%',
-      data: {newEmployee}
     });
     dialogRef.afterClosed().subscribe(result => {
       newEmployee = result;

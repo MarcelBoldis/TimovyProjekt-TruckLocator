@@ -13,3 +13,10 @@ body {
 .mat-dialog-container {
     padding: 0 !important;
 }
+
+.leaflet-routing-container.leaflet-bar.leaflet-routing-container-hide.leaflet-control {
+    display: none;
+}
+.no-padd .mat-expansion-panel-body {
+    padding: 0 !important;
+}

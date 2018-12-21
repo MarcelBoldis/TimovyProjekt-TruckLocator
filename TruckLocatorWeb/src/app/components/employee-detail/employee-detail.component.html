@@ -1,62 +1,26 @@
-<!-- <div class="container">
-
-  <div class="wrap">
-    <mat-form-field class="example-full-width">
-        <mat-placeholder>
-            <mat-icon>search</mat-icon> Hladaj
-        </mat-placeholder>
-      <input matInput  aria-label="State" [matAutocomplete]="auto" [formControl]="stateCtrl">
-      
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let state of filteredStates | async" [value]="state.name">
-          <img class="example-option-img" aria-hidden [src]="state.flag" height="25">
-          <span>{{state.name}}</span> |
-          <small>Population: {{state.population}}</small>
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-  </div>
-
-
-  <mat-card *ngFor="let employee of employeeList; let index = index;">
-    <img src="../../../../imgs/img1.jpg" alt="photo">
-    <h1>{{employee.name}}</h1>
-    <h2>{{employee.function}}</h2>
-    <button mat-raised-button (click)="showInfo(index)" class="info">
-      <mat-icon>info</mat-icon>
-    </button>
-    <button mat-raised-button (click)="deleteEmployee(index)" class="delete">
-      <mat-icon>delete</mat-icon>
-    </button>
-  </mat-card>
-
-</div> -->
-
 <div class="wrap">
   <mat-form-field class="example-full-width">
     <mat-placeholder>
       <mat-icon>search</mat-icon> Hľadaj
     </mat-placeholder>
-    <input matInput aria-label="State" [matAutocomplete]="auto" [formControl]="stateCtrl">
+    <input matInput [matAutocomplete]="auto" [formControl]="employeesControl">
 
     <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let state of filteredStates | async" [value]="state.name">
-        <img class="example-option-img" aria-hidden [src]="state.flag" height="25">
-        <span>{{state.name}}</span> |
-        <small>Population: {{state.population}}</small>
+      <mat-option *ngFor="let employee of filteredEmployees | async" value="{{employee.firstName}} {{employee.lastName}}">
+        <span>{{employee.firstName}} {{employee.lastName}}</span>
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
 </div>
 
 
-<mat-card *ngFor="let employee of employeeList; let index = index;">
+<mat-card #driverBox *ngFor="let employee of filteredEmployees | async; let index = index;" class="driverBox">
   <img [ngClass]="[employee.specialisation == 'Vodič' ? 'driverBorder' : '',  employee.specialisation == 'Manažér' ? 'managerBorder' : '',  employee.specialisation == 'Dispečér' ? 'dispatcherBorder' : '']" src="../../../../imgs/img1.jpg" alt="photo">
   <h1>{{employee.firstName}} {{employee.lastName}}</h1>
   <h2>{{employee.specialisation}}</h2>
     <div class="actions group">
       <div class="action" (click)="showInfo(index)" ><mat-icon>info</mat-icon></div>
       <div class="action" (click)="showEdit(index)" ><mat-icon>edit</mat-icon></div>
-      <div class="action" (click)="deleteEmployee(index)" ><mat-icon>delete</mat-icon></div>
+      <div class="action" (click)="deleteEmployee($event, index)" ><mat-icon>delete</mat-icon></div>
   </div>
 </mat-card>

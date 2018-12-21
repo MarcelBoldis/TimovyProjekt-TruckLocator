@@ -1,0 +1,64 @@
+@import '../../../assets/global-css/variables.scss';
+
+.container {
+    width: 95%;
+    margin: 0 auto;
+
+    margin-top: 5vh;
+
+    .left-content {
+        float: left;
+        width: 29%;
+        margin-left: 2vh;
+    }
+    .right-content {
+        float: right;
+        box-sizing: border-box;
+        padding: 15px;
+        width: 69%;
+        overflow: auto;
+        background-color: $background-charts;
+        overflow: hidden;
+    }
+
+}
+
+.legedCard {
+    padding: 0;
+    
+    h2 {
+        margin: 0;
+        padding: 10px;
+
+    }
+}
+.legend {
+    padding: 10px;
+
+    .wrapGroup {
+        line-height: 25px;
+        mat-icon{
+            font-size: 25px;
+            position: relative;
+            top: 6px;
+            margin-right: 8px;
+        }
+        span {
+            color: black;
+        }
+    }
+
+    .wrapGroup:hover {
+        cursor: pointer;
+        background-color: rgba($color: $nav-color  , $alpha: .2)
+    }
+}
+
+
+#chartDivko, 
+#chartDivko2 {
+    height: 100%;
+    width: 100%;
+}
+
+

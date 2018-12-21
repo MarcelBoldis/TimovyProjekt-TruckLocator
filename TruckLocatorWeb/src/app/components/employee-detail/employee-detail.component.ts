@@ -1,16 +1,12 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import {FormControl} from '@angular/forms';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import { Component, OnInit, Output, EventEmitter, ElementRef, ViewChild, ViewChildren } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
-import { EmployeeInfoComponent } from 'src/app/dialogs/employee-info/employee-info.component';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { FirebaseService } from 'src/app/services/firebase.service';
-export interface State {
-  flag: string;
-  name: string;
-  population: string;
-}
+import { FirebaseService } from '../../services/firebase.service';
+import { NewEmployeeComponent } from '../../dialogs/new-employee/new-employee.component';
+import { IPerson } from '../../../models/person';
+
 
 @Component({
   selector: 'app-employee-detail',
@@ -18,68 +14,46 @@ export interface State {
   styleUrls: ['./employee-detail.component.scss']
 })
 export class EmployeeDetailComponent implements OnInit {
-
-  employeeList = [];
+  employeeMetadataList: any = [];
+  employeeList: IPerson[];
   managerCount = 0;
   driverCount = 0;
   dispatcherCount = 0;
-  stateCtrl = new FormControl();
-  filteredStates: Observable<State[]>;
-  tmp: any;
+  employeesControl = new FormControl();
+  filteredEmployees: Observable<IPerson[]>;
+
   @Output() managers = new EventEmitter<number>();
   @Output() drivers = new EventEmitter<number>();
   @Output() dispatchers = new EventEmitter<number>();
+  @ViewChildren('driverBox') driverBox: ElementRef;
 
-  states: State[] = [
-    {
-      name: 'Arkansas',
-      population: '2.978M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_Arkansas.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/9/9d/Flag_of_Arkansas.svg'
-    },
-    {
-      name: 'California',
-      population: '39.14M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_California.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/0/01/Flag_of_California.svg'
-    },
-    {
-      name: 'Florida',
-      population: '20.27M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_Florida.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Florida.svg'
-    },
-    {
-      name: 'Texas',
-      population: '27.47M',
-      // https://commons.wikimedia.org/wiki/File:Flag_of_Texas.svg
-      flag: 'https://upload.wikimedia.org/wikipedia/commons/f/f7/Flag_of_Texas.svg'
-    }
-  ];
 
   constructor(public dialog: MatDialog,
-              public db: AngularFireDatabase,
-              public fbService: FirebaseService) {
-    this.filteredStates = this.stateCtrl.valueChanges
-      .pipe(
-        startWith(''),
-        map(state => state ? this._filterStates(state) : this.states.slice())
-      );
-  }
+    public fbService: FirebaseService) { }
 
-  private _filterStates(value: string): State[] {
+  private _filterEmployees(value: string): IPerson[] {
     const filterValue = value.toLowerCase();
-
-    return this.states.filter(state => state.name.toLowerCase().indexOf(filterValue) === 0);
+    return this.employeeList.filter(employee =>  
+      (employee.lastName.toLowerCase().indexOf(filterValue) === 0) 
+      || (employee.firstName.toLowerCase().indexOf(filterValue) === 0)
+      || (employee.firstName + " " + employee.lastName).toLowerCase().indexOf(filterValue) === 0)
   }
 
   ngOnInit() {
-    this.db.list('/companies/softec').valueChanges().subscribe(drivers => {
+    this.fbService.getEmployeeListReadable().subscribe(drivers => {
       this.employeeList = drivers;
+      this.filteredEmployees = this.employeesControl.valueChanges
+      .pipe(startWith(''),
+        map(inputText => inputText ? this._filterEmployees(inputText) : this.employeeList)
+      );
       this.countRoles();
+      console.log(this.employeeList);
     });
 
-    // this.employeeList = this.fbService.getEmployeeList().;
+    this.fbService.getEmployeeListMetadata().subscribe(drivers => {
+      this.employeeMetadataList = drivers;
+      console.log(this.employeeMetadataList);
+    });
   }
 
   countRoles() {
@@ -101,25 +75,37 @@ export class EmployeeDetailComponent implements OnInit {
     this.managers.emit(this.managerCount);
     this.drivers.emit(this.driverCount);
     this.dispatchers.emit(this.dispatcherCount);
-
   }
 
   showInfo(index: number) {
-    const dialogRef = this.dialog.open(EmployeeInfoComponent, {
-      width: '500px',
-      data: {employee: this.employeeList[index]}
+    const dialogRef = this.dialog.open(NewEmployeeComponent, {
+      width: '50%',
+      data: {
+        data: this.employeeList[index],
+        edit: false
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
     });
   }
+
   showEdit(index: number) {
-    const dialogRef = this.dialog.open(EmployeeInfoComponent, {
-      width: '500px',
-      data: {employee: this.employeeList[index]}
+    const dialogRef = this.dialog.open(NewEmployeeComponent, {
+      width: '50%',
+      data: {
+        data: this.employeeList[index],
+        edit: true,
+        clickedIndex: this.employeeMetadataList[index].key
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
     });
   }
 
-  deleteEmployee(index: number) {
-    this.employeeList.splice(index, 1);
+  deleteEmployee(event: any, index: number) {
+    const driverBox = document.getElementsByClassName('driverBox')[index];
+    driverBox.classList.add('inactive');
   }
-
-
 }

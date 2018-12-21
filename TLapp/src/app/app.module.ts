@@ -14,23 +14,27 @@ import { LoginPage } from '../pages/login/login';
 import { GeoLocationServiceProvider } from '../providers/geo-location-service/geo-location-service';
 import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
 import { DriverDataServiceProvider } from '../providers/driver-data-service/driver-data-service';
+import { LoginPageModule } from '../pages/login/login.module';
+import { HomePageModule } from '../pages/home/home.module';
+
 
 @NgModule({
   declarations: [
     MyApp,
-    LoginPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(FIREBASE_CREDENTIALS),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    LoginPageModule,
+    HomePageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    LoginPage
+    // LoginPage
   ],
   providers: [
     StatusBar,

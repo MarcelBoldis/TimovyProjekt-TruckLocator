@@ -9,15 +9,35 @@ $(document).ready(function () {
             scrollTop: $("#members").offset().top
         }, 800);
     });
+    $("#toState").click(function () {
+        $('html, body').animate({
+            scrollTop: $("#state").offset().top
+        }, 800);
+    });
     $("#toDocs").click(function () {
         $('html, body').animate({
             scrollTop: $("#docs").offset().top
+        }, 800);
+    });
+    $("#toPhotos").click(function () {
+        $('html, body').animate({
+            scrollTop: $("#photos").offset().top
+        }, 800);
+    });
+    $("#toContact").click(function () {
+        $('html, body').animate({
+            scrollTop: $("#contact").offset().top
         }, 800);
     });
     $("#up").click(function () {
         $('html, body').animate({
             scrollTop: $("#intro").offset().top
         }, 800);
+    });
+    $('.collapse').on('show.bs.collapse', function () {
+        $('.collapse.in').each(function(){
+            $(this).collapse('hide');
+        });
     });
 
     $(window).scroll(function (event) {

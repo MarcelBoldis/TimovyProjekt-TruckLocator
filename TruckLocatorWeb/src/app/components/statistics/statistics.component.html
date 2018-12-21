@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="left-content">
+
+        <mat-card class="legedCard">
+            <h2>Vyberte štatistiku:</h2>
+            <mat-divider></mat-divider>
+            <div class="legend">
+                <div class="wrapGroup" (click)="showGraph(0, 'chartDivko')">
+                    <span>Graf 1</span>
+                </div>
+                <div class="wrapGroup" (click)="showGraph(1, 'chartDivko2')">
+                    <span>Graf 2</span>
+                </div>
+                <!-- <div class="wrapGroup" (click)="showGraph(2, 'chartDivko2')">
+                    <span>Graf 3</span>
+                </div>
+                <div class="wrapGroup" (click)="showGraph(3, 'chartDivko')">
+                    <span>Graf 4</span>
+                </div> -->
+            </div>
+        </mat-card>
+    </div>
+    <mat-card  class="right-content">
+        <div id='chartDivko'>
+            <canvas  id='myChart'></canvas>
+        </div>
+    </mat-card>
+</div>

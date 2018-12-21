@@ -6,10 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  mapRouteId: number = 0;
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  showRoute(id) {
+    this.mapRouteId = id;
   }
 
 }
