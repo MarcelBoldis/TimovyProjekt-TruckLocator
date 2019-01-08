@@ -37,6 +37,7 @@ export class NewEmployeeComponent implements OnInit {
     specialisation: ['', Validators.required],
     address: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
+    state: ''
   });
 
   ngOnInit() {
@@ -86,7 +87,5 @@ export class NewEmployeeComponent implements OnInit {
   uploadPhoto(event: any) {
     this.selectedFile = event.target.files[0];
     console.log(this.selectedFile);
-    
-    
   }
 }
