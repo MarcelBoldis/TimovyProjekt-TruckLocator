@@ -60,6 +60,8 @@ export class EmployeeDetailComponent implements OnInit {
     this.driverCount = 0;
     this.managerCount = 0;
     this.dispatcherCount = 0;
+    console.log(this.employeeList);
+    
     this.employeeList.filter(value => {
       if (value.specialisation === 'Vodič') {
         this.driverCount++;

@@ -7,5 +7,7 @@ export interface IPerson {
     idNumber: string;
     specialisation: string;
     tracks: string;
+    email: string;
     photo: string;
+    state: string;
 }
