@@ -16,16 +16,14 @@
         box-sizing: border-box;
         padding: 15px;
         width: 69%;
-        overflow: auto;
         background-color: $background-charts;
         overflow: hidden;
     }
-
 }
 
 .legedCard {
     padding: 0;
-    
+
     h2 {
         margin: 0;
         padding: 10px;
@@ -36,6 +34,7 @@
     padding: 10px;
 
     .wrapGroup {
+      padding-left: 8px;
         line-height: 25px;
         mat-icon{
             font-size: 25px;
@@ -49,13 +48,16 @@
     }
 
     .wrapGroup:hover {
-        cursor: pointer;
-        background-color: rgba($color: $nav-color  , $alpha: .2)
+      cursor: pointer;
+      background-color: $nav-color;
+      span {
+        color: $background-charts;
+      }
     }
 }
 
 
-#chartDivko, 
+#chartDivko,
 #chartDivko2 {
     height: 100%;
     width: 100%;
