@@ -113,16 +113,16 @@ export class StatisticsComponent implements OnInit {
     console.log('ok');
   }
   sendEmail() {
-    Email.send({
-      Host : 'smtp.elasticemail.com',
-      Username : 'trucklocatortp@gmail.com',
-      Password : '37f33959-3167-4c3a-a36f-3e4edff3f6f7',
-      To : 'marcelboldis@gmail.com',
-      From : 'trucklocatortp@gmail.com',
-      Subject : 'This is the subject',
-      Body : 'And this is the body'
-    }).then(
-      message => alert(message)
-    );
+    // Email.send({
+    //   Host : 'smtp.elasticemail.com',
+    //   Username : 'trucklocatortp@gmail.com',
+    //   Password : '37f33959-3167-4c3a-a36f-3e4edff3f6f7',
+    //   To : 'marcelboldis@gmail.com',
+    //   From : 'trucklocatortp@gmail.com',
+    //   Subject : 'This is the subject',
+    //   Body : 'And this is the body'
+    // }).then(
+    //   message => alert(message)
+    // );
   }
 }
