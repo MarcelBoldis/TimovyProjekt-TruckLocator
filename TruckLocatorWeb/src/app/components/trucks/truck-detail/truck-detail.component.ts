@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
-import { EmployeeInfoComponent } from 'src/app/dialogs/employee-info/employee-info.component';
+import { NewTruckComponent } from 'src/app/dialogs/new-truck/new-truck.component';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { ITruck } from '../../../../models/truck';
 
@@ -19,7 +19,8 @@ export class TruckDetailComponent implements OnInit {
   truckList: ITruck[];
   trucksControl = new FormControl();
   filteredTrucks: Observable<ITruck[]>;
-  
+  truckMetadataList: any = [];
+
   constructor(public dialog: MatDialog,
               public fbService: FirebaseService) { }
 
@@ -35,23 +36,34 @@ export class TruckDetailComponent implements OnInit {
       .pipe(startWith(''),
         map(inputText => inputText ? this._filterTrucks(inputText) : this.truckList)
       );
-    });    
+    });
+
+    this.fbService.getTruckListMetadata().subscribe(trucks => {
+      this.truckMetadataList = trucks;
+    });
   }
 
   showInfo(index: number) {
-    const dialogRef = this.dialog.open(EmployeeInfoComponent, {
+    const dialogRef = this.dialog.open(NewTruckComponent, {
       width: '500px',
-      data: { employee: this.truckList[index] }
+      data: {
+        data: this.truckList[index],
+        edit: false
+      }
     });
   }
 
   showEdit(index: number) {
-    const dialogRef = this.dialog.open(EmployeeInfoComponent, {
+    const dialogRef = this.dialog.open(NewTruckComponent, {
       width: '500px',
-      data: { employee: this.truckList[index] }
+      data: {
+        data: this.truckList[index],
+        edit: true,
+        clickedIndex: this.truckMetadataList[index].key
+      }
     });
   }
-  
+
   deleteTruck(index: number) {
     this.truckList.splice(index, 1);
   }

@@ -44,7 +44,6 @@ export class NewEmployeeComponent implements OnInit {
     this.title = 'Pridanie zamestnanca';
     this.showEditInputs = true;
     this.fbService.getEmployeeListReadable().subscribe(drivers => {
-      console.log("employeelist");
       this.employeeList = drivers;
       this.employeeList.filter( value => { this.counter++; });
     });

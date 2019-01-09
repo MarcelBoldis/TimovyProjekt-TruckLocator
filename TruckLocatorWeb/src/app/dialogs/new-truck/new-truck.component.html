@@ -1,6 +1,6 @@
 <div class="dialog">
 
-  <h1>Pridanie vozidla</h1>
+  <h1>{{title}}</h1>
   <mat-divider></mat-divider>
   <mat-icon (click)="closeDialog()" class="close">close</mat-icon>
   <div class="content-wrapper">
@@ -28,13 +28,17 @@
           <mat-option value="N3">N3</mat-option>
         </mat-select>
       </mat-form-field>
+      <mat-form-field style="display: none">
+        <mat-select placeholder="Kategória" formControlName="state" >
+          <mat-option value="available" >available</mat-option>
+        </mat-select>
+      </mat-form-field>
     </form>
 
     <div [fileUploadInputFor]="fileUploadQueue" class="upload-drop-zone">
       <p>Vložte fotku vozidla</p>
     </div>
 
-    <p>{{newTruckForm.value | json}}</p>
     <div style="width: 500px">
       <mat-file-upload-queue #fileUploadQueue [fileAlias]="'file'" [httpUrl]="'http://localhost:8180/jax-rs-jersey-application-sample'"
         multiple>
