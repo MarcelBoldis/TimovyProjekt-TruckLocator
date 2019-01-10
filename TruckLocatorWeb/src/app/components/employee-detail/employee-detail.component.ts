@@ -8,6 +8,7 @@ import { NewEmployeeComponent } from '../../dialogs/new-employee/new-employee.co
 import { IPerson } from '../../../models/person';
 import * as firebase from 'firebase/app';
 import 'firebase/storage';
+import {AngularFireDatabase} from 'angularfire2/database';
 
 @Component({
   selector: 'app-employee-detail',
@@ -15,6 +16,7 @@ import 'firebase/storage';
   styleUrls: ['./employee-detail.component.scss']
 })
 export class EmployeeDetailComponent implements OnInit {
+  company = 'UPC';
   employeeMetadataList: any = [];
   employeeList: IPerson[];
   managerCount = 0;
@@ -30,7 +32,8 @@ export class EmployeeDetailComponent implements OnInit {
 
 
   constructor(public dialog: MatDialog,
-    public fbService: FirebaseService) { }
+    public fbService: FirebaseService,
+    private af: AngularFireDatabase) { }
 
   private _filterEmployees(value: string): IPerson[] {
     const filterValue = value.toLowerCase();
@@ -118,7 +121,8 @@ export class EmployeeDetailComponent implements OnInit {
   }
 
   deleteEmployee(event: any, index: number) {
-    const driverBox = document.getElementsByClassName('driverBox')[index];
-    driverBox.classList.add('inactive');
+    const specificKey = this.employeeMetadataList[index].key;
+    this.af.object(`${this.company}/historyData/Employee/${specificKey}`).set(this.employeeList[index]);
+    this.af.object(`${this.company}/Drivers/${specificKey}`).remove();
   }
 }
