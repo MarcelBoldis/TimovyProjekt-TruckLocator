@@ -11,8 +11,9 @@ export class GeoLocationServiceProvider {
     this.allTrackCoordinations = [];
   }
 
-  startTracking() {
-    this.driverDataService.setDriversActiviryStatus(true);
+  startTracking(trackKey:string) {
+    
+    this.driverDataService.setTrackToActive(trackKey);
     const config: BackgroundGeolocationConfig = {
       desiredAccuracy: 10,
       stationaryRadius: 20,
@@ -24,22 +25,18 @@ export class GeoLocationServiceProvider {
 
     this.backgroundGeolocation.configure(config)
       .subscribe((location: BackgroundGeolocationResponse) => {
-        this.driverDataService.updateTrackCoordinations(location.latitude, location.longitude);
+        this.driverDataService.updateTrackCoordinations(location.latitude, location.longitude, trackKey);
         this.allTrackCoordinations.push({ latitude: location.latitude, longitude: location.longitude });
       });
-
     this.backgroundGeolocation.start();
+    this.driverDataService.setDriversActiviryStatus(true);
   }
 
-  stopTracking() {
+  stopTracking(trackKey:string) {
     this.backgroundGeolocation.finish();
     this.backgroundGeolocation.stop();
     this.driverDataService.setDriversActiviryStatus(false);
-    this.driverDataService.activeTrackWasFinished();
-  }
-
-  manuallyUpdateCoordinations(){
-    this.driverDataService.changeAllTrackCoordinations(this.allTrackCoordinations);
+    this.driverDataService.activeTrackWasFinished(trackKey);
   }
 
 }

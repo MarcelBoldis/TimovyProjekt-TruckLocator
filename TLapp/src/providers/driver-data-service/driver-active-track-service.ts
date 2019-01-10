@@ -9,22 +9,22 @@ export class DriverActiveTrackServiceProvider {
   constructor(private db: AngularFireDatabase, private driversProfileService: DriversProfileServiceProvider) { }
 
 
-  updateTrackCoordinations(latitude: number, longitude: number) {
-    this.db.list(this.driversProfileService.driversURL + '/tracks/' + this.driversProfileService.activeTrackKey + '/coordinations').push({
+  updateTrackCoordinations(latitude: number, longitude: number, trackKey: string) {
+    this.db.list(this.driversProfileService.driversURL + '/tracks/' + trackKey + '/coordinations').push({
       latitude: latitude,
       longitude: longitude
     });
   }
-
-  changeAllTrackCoordinations(allTrackCoordinations: any[]) {
-    this.db.object(this.driversProfileService.driversURL + '/tracks/' + this.driversProfileService.activeTrackKey + '/coordinations').set(allTrackCoordinations);
-  }
-  activeTrackWasFinished(){
-    this.driversProfileService.activeTrackWasFinished();
+  activeTrackWasFinished(trackKey:string) {
+    this.driversProfileService.activeTrackWasFinished(trackKey);
   }
 
-  setDriversActiviryStatus(isActive: boolean){
+  setDriversActiviryStatus(isActive: boolean) {
     this.db.object(this.driversProfileService.driversURL + '/isActive').set(isActive);
   }
+  setTrackToActive(trackKey: string) {
+    this.db.object(this.driversProfileService.driversURL + '/tracks/' + trackKey + '/isActive').set(true);
+  }
+
 
 }

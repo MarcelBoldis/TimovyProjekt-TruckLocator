@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { GeoLocationServiceProvider } from '../../providers/geo-location-service/geo-location-service';
 import { ToastController } from 'ionic-angular';
 
@@ -8,22 +8,24 @@ import { ToastController } from 'ionic-angular';
 })
 export class GeoLocationComponent {
 
-  buttonTitle: string;
+  @Input() trackKey: string;
+  @Input() buttonTitle: string;
   
-  constructor(private geoLocationService: GeoLocationServiceProvider, private toastCtrl: ToastController) { this.buttonTitle = "start"}
+  constructor(private geoLocationService: GeoLocationServiceProvider, private toastCtrl: ToastController) { 
+  }
   geolocationButtonClicked() {
     if (this.buttonTitle === 'start') { this.startTracking() }
     else { this.stopTracking() }
   }
   startTracking() {
-    this.geoLocationService.startTracking();
     this.buttonTitle = "stop";
+    this.geoLocationService.startTracking(this.trackKey);    
     this.presentToastAboutTrackingStatus("You are beeing tracked!");
   }
 
   stopTracking() {
-    this.geoLocationService.stopTracking();
     this.buttonTitle = "start";
+    this.geoLocationService.stopTracking(this.trackKey);
     this.presentToastAboutTrackingStatus("Tracking stopped!");
   }
 
@@ -35,7 +37,5 @@ export class GeoLocationComponent {
     });
     toast.present();
   }
-
-  setCoordinationsManually(){ this.geoLocationService.manuallyUpdateCoordinations(); }
 
 }

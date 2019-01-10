@@ -12,25 +12,27 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-card *ngIf="driversProfileService.activeTrackData as trackInfo">
+  <ion-card *ngFor="let trackInfo of driversProfileService.allTracks">
+
+    <div *ngIf="!isDriverActive || isDriverActive && trackInfo.payload.val().isActive">
     <div>
       <ion-item color="light">
         <ion-avatar item-start>
-          <img src="{{trackInfo.image}}">
+          <img src="{{trackInfo.payload.val().image}}">
         </ion-avatar>
-        <h2>{{trackInfo.direction}}</h2>
-        <h3>{{trackInfo.date}}</h3>
-        <i item-right (click)="openFuelCostsModal()" class="material-icons">
+        <h2>{{trackInfo.payload.val().direction}}</h2>
+        <h3>{{trackInfo.payload.val().date}}</h3>
+        <i item-right (click)="openFuelCostsModal(trackInfo.key)" class="material-icons">
           local_gas_station
         </i>
       </ion-item>
-      <p class="description">{{trackInfo.description}}</p>
+      <p class="description">{{trackInfo.payload.val().description}}</p>
     </div>
     <div>
       <ion-row>
         <div class="driverInfo">
-          <h3>{{trackInfo.truckDriver}}</h3>
-          <h3>{{trackInfo.truck}}</h3>
+          <h3>{{trackInfo.payload.val().truckDriver}}</h3>
+          <h3>{{trackInfo.payload.val().truck}}</h3>
         </div>
         <div>
           <i class="material-icons" (click)="openTasks()">
@@ -39,11 +41,10 @@
         </div>
       </ion-row>
     </div>
-
-    <geo-location></geo-location>
+    <geo-location [trackKey]='trackInfo.key' [buttonTitle]='trackInfo.payload.val().isActive ? "stop" : "start"'></geo-location>
 
     <ion-card *ngIf="openTask">
-      <div *ngFor="let taskItem of trackInfo.tasks; let i = index ">
+      <div *ngFor="let taskItem of trackInfo.payload.val().tasks; let i = index ">
         <ion-item class="ionTaskItem" [ngClass]="taskItem.done ? 'taksDone' : 'taskInProgress'">
           <div (click)="updateTasks(i, taskItem.done)">
             {{taskItem.place}}
@@ -56,8 +57,9 @@
         </ion-item>
       </div>
     </ion-card>
+  </div>
   </ion-card>
-  <ion-card *ngIf="!driversProfileService.activeTrackData as trackInfo">
+  <ion-card *ngIf="!driversProfileService.allTracks">
     <h2 class="noActiveTrack">Nemáte pridelenú trasu!</h2>
   </ion-card>
   <div *ngIf="driversProfileService.driversURL">

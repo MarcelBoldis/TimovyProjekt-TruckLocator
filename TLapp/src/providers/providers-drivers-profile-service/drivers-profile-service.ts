@@ -8,8 +8,7 @@ export class DriversProfileServiceProvider {
   driversURL: string;
   driversKey: string;
   driversEmployerCompany: string;
-  activeTrackKey: string;
-  activeTrackData: TrackInterface;
+  allTracks: any;
 
   constructor(private db: AngularFireDatabase) {
   }
@@ -21,30 +20,24 @@ export class DriversProfileServiceProvider {
     this.driversURL = '/'+ this.driversEmployerCompany +'/Drivers/' + this.driversKey;
   }
 
-  findActiveTrack(){
+  loadTracks(){
     this.db.list(this.driversURL + '/tracks/').snapshotChanges().subscribe(items => {
-      if(items[0]){
-        this.activeTrackKey = items[0].key;
-        this.activeTrackData =items[0].payload.val();
-      }else{this.activeTrackKey = null}
+      this.allTracks = items;
     });
   }
 
-  removeActiveTrackAndFinedNew(){
-    this.db.list(this.driversURL + '/tracks/').remove(this.activeTrackKey).then(() => {
-      this.activeTrackKey = null;
-      this.findActiveTrack();
-    });
-    console.log("removing...");
+  removeActiveTrack(trackKey:string){
+    this.db.list(this.driversURL + '/tracks/').remove(trackKey);
   }
 
-  activeTrackWasFinished(){
-    this.db.list('/'+this.driversEmployerCompany + '/stats/finishedTacks/').push(this.activeTrackData).then(
-     () =>{
-      this.activeTrackData = null;
-      this.removeActiveTrackAndFinedNew();
-     }
-    );
+  activeTrackWasFinished(trackKey:string){
+    this.allTracks.forEach((track:any) => {
+      if(track.key === trackKey){
+        this.db.list('/'+this.driversEmployerCompany + '/stats/finishedTacks/').push(track.payload.val()).then(
+           () =>{ this.removeActiveTrack(trackKey);}
+          );
+      }
+    });
     
   }
 

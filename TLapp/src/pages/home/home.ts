@@ -15,6 +15,7 @@ export class HomePage {
   truckerData: Observable<any[]>;
   trackDataInfo: any;
   openTask: boolean = false;
+  isDriverActive: boolean;
 
   constructor(public navCtrl: NavController, private db: AngularFireDatabase,
     private modalControler: ModalController,
@@ -23,15 +24,16 @@ export class HomePage {
     public navParams: NavParams) {
     if (ofAuth.auth.currentUser) {
       driversProfileService.setDriversURL(ofAuth.auth.currentUser.email);
-      driversProfileService.findActiveTrack();
+      driversProfileService.loadTracks();
+      this.db.object(this.driversProfileService.driversURL + '/isActive').valueChanges().subscribe((val:boolean) => this.isDriverActive = val);
     }
   }
-  openFuelCostsModal() {
+  openFuelCostsModal(trackKey: string) {
     const dataForModal = { dataMessage: "hey LaLALALa" };
     const fuelCostsModal: Modal = this.modalControler.create('FuelCostsPage', { data: dataForModal });
     fuelCostsModal.present();
     fuelCostsModal.onDidDismiss((data) => {
-      this.updateFuelCosts(data);
+      this.updateFuelCosts(data , trackKey);
     });
   }
 
@@ -39,16 +41,17 @@ export class HomePage {
     this.openTask = !this.openTask;
   }
 
-  updateFuelCosts(updatedFuelCosts: FuelCostsInterface) {
-    this.db.object(this.driversProfileService.driversURL + '/tracks/' + this.driversProfileService.activeTrackKey + '/fuelCosts/').update({
+  updateFuelCosts(updatedFuelCosts: FuelCostsInterface, trackKey:string) {
+    console.log(updatedFuelCosts);
+    this.db.object(this.driversProfileService.driversURL + '/tracks/' + trackKey + '/fuelCosts/').update({
       fuelAmount: updatedFuelCosts.fuelAmount,
       price: updatedFuelCosts.price,
       gasStation: updatedFuelCosts.gasStation
     });
   }
 
-  updateTasks(index: number, checkedStatus: boolean) {
-    this.db.object(this.driversProfileService + '/tracks/' + this.driversProfileService.activeTrackKey + '/tasks/' + index).update({
+  updateTasks(index: number, checkedStatus: boolean, trackKey:string) {
+    this.db.object(this.driversProfileService + '/tracks/' + trackKey + '/tasks/' + index).update({
       done: !checkedStatus
     });
   }
