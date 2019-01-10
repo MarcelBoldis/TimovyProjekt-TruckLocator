@@ -34,8 +34,8 @@ export class EmployeeDetailComponent implements OnInit {
 
   private _filterEmployees(value: string): IPerson[] {
     const filterValue = value.toLowerCase();
-    return this.employeeList.filter(employee =>  
-      (employee.lastName.toLowerCase().indexOf(filterValue) === 0) 
+    return this.employeeList.filter(employee =>
+      (employee.lastName.toLowerCase().indexOf(filterValue) === 0)
       || (employee.firstName.toLowerCase().indexOf(filterValue) === 0)
       || (employee.firstName + " " + employee.lastName).toLowerCase().indexOf(filterValue) === 0)
   }
@@ -54,7 +54,6 @@ export class EmployeeDetailComponent implements OnInit {
 
     this.fbService.getEmployeeListMetadata().subscribe(drivers => {
       this.employeeMetadataList = drivers;
-      console.log(this.employeeMetadataList);
     });
   }
 
@@ -65,7 +64,7 @@ export class EmployeeDetailComponent implements OnInit {
     pathReference.getDownloadURL().then(function(url) {
       driver.image = url;
       });
-    });  
+    });
   }
 
   countRoles() {
@@ -73,7 +72,7 @@ export class EmployeeDetailComponent implements OnInit {
     this.managerCount = 0;
     this.dispatcherCount = 0;
     console.log(this.employeeList);
-    
+
     this.employeeList.filter(value => {
       if (value.specialisation === 'Vodič') {
         this.driverCount++;
