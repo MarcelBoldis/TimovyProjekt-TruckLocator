@@ -6,7 +6,8 @@ import { MatDialog } from '@angular/material';
 import { FirebaseService } from '../../services/firebase.service';
 import { NewEmployeeComponent } from '../../dialogs/new-employee/new-employee.component';
 import { IPerson } from '../../../models/person';
-
+import * as firebase from 'firebase/app';
+import 'firebase/storage';
 
 @Component({
   selector: 'app-employee-detail',
@@ -48,12 +49,23 @@ export class EmployeeDetailComponent implements OnInit {
       );
       this.countRoles();
       console.log(this.employeeList);
+      this.readDriversPhotos(this.employeeList);
     });
 
     this.fbService.getEmployeeListMetadata().subscribe(drivers => {
       this.employeeMetadataList = drivers;
       console.log(this.employeeMetadataList);
     });
+  }
+
+  readDriversPhotos(drivers) {
+    drivers.forEach(driver => {
+    var storage = firebase.storage();
+    var pathReference = storage.ref("Centarova.jpg");
+    pathReference.getDownloadURL().then(function(url) {
+      driver.image = url;
+      });
+    });  
   }
 
   countRoles() {

@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { Ng2ImgMaxModule } from 'ng2-img-max';
 
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment.prod';
@@ -57,6 +58,7 @@ import { NewTaskComponent } from './components/tasks/new-task/new-task.component
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
+    Ng2ImgMaxModule
   ],
   providers: [],
   entryComponents: [EmployeeListDetailDialogComponent, EmployeeInfoComponent, NewTruckComponent, NewEmployeeComponent],

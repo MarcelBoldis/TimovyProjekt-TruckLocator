@@ -4,7 +4,7 @@
     <mat-divider></mat-divider>
     <mat-icon (click)="closeDialog()" class="close">close</mat-icon>
     <div class="content-wrapper">
-      <form id="newTruckForm" [formGroup]="newEmployeeForm">
+      <form id="newEmployeeForm" [formGroup]="newEmployeeForm">
 
         <mat-form-field class="example-full-width">
           <input matInput placeholder="Meno" formControlName="firstName">
@@ -50,7 +50,10 @@
         </mat-file-upload-queue>
       </div> -->
 
-      <input type="file" (change)="uploadPhoto($event)" value="Vlož fotku">
+      <input type="file" (change)="uploadPhoto($event)" value="Vlož fotku" accept="image/*">      
+      
+      <!-- Tu si mozes pozriet preview pridaneho obrazku -->
+      <!-- <img *ngIf="imagePreview" [src]="sanitizer.bypassSecurityTrustUrl(imagePreview)"> -->
 
       <div class="btn" *ngIf="showEditInputs" >
         <button mat-raised-button [disabled]="!newEmployeeForm.valid" (click)="sendEmployee()" class="submitButton" color="primary">Pridaj</button>
