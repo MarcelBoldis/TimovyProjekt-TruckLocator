@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material';
 import { NewTruckComponent } from 'src/app/dialogs/new-truck/new-truck.component';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { ITruck } from '../../../../models/truck';
+import {AngularFireDatabase} from 'angularfire2/database';
 
 
 @Component({
@@ -15,14 +16,16 @@ import { ITruck } from '../../../../models/truck';
 })
 
 export class TruckDetailComponent implements OnInit {
-
+  company = 'UPC';
   truckList: ITruck[];
   trucksControl = new FormControl();
   filteredTrucks: Observable<ITruck[]>;
   truckMetadataList: any = [];
 
   constructor(public dialog: MatDialog,
-              public fbService: FirebaseService) { }
+              public fbService: FirebaseService,
+              private af: AngularFireDatabase) {
+  }
 
   private _filterTrucks(value: string): ITruck[] {
     const filterValue = value.toLowerCase();
@@ -33,9 +36,9 @@ export class TruckDetailComponent implements OnInit {
     this.fbService.getTruckListReadable().subscribe(trucks => {
       this.truckList = trucks;
       this.filteredTrucks = this.trucksControl.valueChanges
-      .pipe(startWith(''),
-        map(inputText => inputText ? this._filterTrucks(inputText) : this.truckList)
-      );
+        .pipe(startWith(''),
+          map(inputText => inputText ? this._filterTrucks(inputText) : this.truckList)
+        );
     });
 
     this.fbService.getTruckListMetadata().subscribe(trucks => {
@@ -65,6 +68,8 @@ export class TruckDetailComponent implements OnInit {
   }
 
   deleteTruck(index: number) {
-    this.truckList.splice(index, 1);
+    const specificKey = this.truckMetadataList[index].key;
+    this.af.object(`${this.company}/historyData/Trucks/${specificKey}`).set(this.truckList[index]);
+    this.af.object(`${this.company}/Trucks/${specificKey}`).remove();
   }
 }

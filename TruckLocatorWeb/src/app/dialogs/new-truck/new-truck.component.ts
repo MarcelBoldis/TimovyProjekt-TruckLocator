@@ -60,7 +60,7 @@ export class NewTruckComponent implements OnInit {
       const specificKey = this.newTruckForm.get('carNumber').value;
       this.af.object(`${this.company}/Trucks/${specificKey}`).set(this.newTruckForm.value);
     } else if (this.data) {
-      this.af.object(`${this.company}/Drivers/${this.data.clickedIndex}`)
+      this.af.object(`${this.company}/Trucks/${this.data.clickedIndex}`)
         .update(this.newTruckForm.value);
     }
     this.dialogRef.close();
