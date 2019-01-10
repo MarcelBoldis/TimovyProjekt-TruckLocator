@@ -34,7 +34,7 @@ export class EmployeeDetailComponent implements OnInit {
 
   private _filterEmployees(value: string): IPerson[] {
     const filterValue = value.toLowerCase();
-    return this.employeeList.filter(employee =>  
+    return this.employeeList.filter(employee => 
       (employee.lastName.toLowerCase().indexOf(filterValue) === 0) 
       || (employee.firstName.toLowerCase().indexOf(filterValue) === 0)
       || (employee.firstName + " " + employee.lastName).toLowerCase().indexOf(filterValue) === 0)
@@ -43,6 +43,10 @@ export class EmployeeDetailComponent implements OnInit {
   ngOnInit() {
     this.fbService.getEmployeeListReadable().subscribe(drivers => {
       this.employeeList = drivers;
+      console.log("here");
+      
+      console.log(this.employeeList);
+      
       this.filteredEmployees = this.employeesControl.valueChanges
       .pipe(startWith(''),
         map(inputText => inputText ? this._filterEmployees(inputText) : this.employeeList)

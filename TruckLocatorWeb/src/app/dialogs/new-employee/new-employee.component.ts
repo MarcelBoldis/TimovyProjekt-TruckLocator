@@ -44,7 +44,7 @@ export class NewEmployeeComponent implements OnInit {
     specialisation: ['', Validators.required],
     address: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
-    state: ''
+   
   });
 
   ngOnInit() {
@@ -56,11 +56,17 @@ export class NewEmployeeComponent implements OnInit {
     })
 
     if (this.data) {
+      console.log(this.data.data);
+      console.log(this.newEmployeeForm.value);
+      
+      
       if (this.data.edit) {
-        this.newEmployeeForm.setValue(this.data.data);
+        // this.newEmployeeForm.setValue(this.data.data);
+        this.fillFormControl(this.data.data);
         this.title = 'Editácia zamestnanca';
       } else {
-        this.newEmployeeForm.setValue(this.data.data);
+        // this.newEmployeeForm.setValue(this.data.data);
+        this.fillFormControl(this.data.data);
         this.newEmployeeForm.disable();
         this.title = 'Info o zamestnancovi';
         this.showEditInputs = false;
@@ -124,6 +130,20 @@ export class NewEmployeeComponent implements OnInit {
     reader.onload = () => {
       this.imagePreview = reader.result.toString();
     };
+  }
+
+  fillFormControl(data: any) {
+    this.newEmployeeForm.patchValue({
+      firstName:data.firstName,
+      lastName:data.lastName,
+      birthNumber:data.birthDate,
+      idNumber:data.idNumber,
+      birthDate:data.birthDate,
+      specialisation:data.specialisation,
+      address:data.address,
+      email:data.email,
+    })
+
   }
 
 }

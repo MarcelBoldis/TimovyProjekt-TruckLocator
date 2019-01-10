@@ -8,6 +8,6 @@ export interface IPerson {
     specialisation: string;
     tracks: string;
     email: string;
-    photo: string;
-    state: string;
+    // photo: string;
+    isActive: boolean;
 }
