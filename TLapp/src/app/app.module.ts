@@ -13,9 +13,10 @@ import { FIREBASE_CREDENTIALS } from './firebase.credentials';
 import { LoginPage } from '../pages/login/login';
 import { GeoLocationServiceProvider } from '../providers/geo-location-service/geo-location-service';
 import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
-import { DriverDataServiceProvider } from '../providers/driver-data-service/driver-data-service';
+import { DriverActiveTrackServiceProvider } from '../providers/driver-data-service/driver-active-track-service';
 import { LoginPageModule } from '../pages/login/login.module';
 import { HomePageModule } from '../pages/home/home.module';
+import { DriversProfileServiceProvider } from '../providers/providers-drivers-profile-service/drivers-profile-service';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { HomePageModule } from '../pages/home/home.module';
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     GeoLocationServiceProvider,
     BackgroundGeolocation,
-    DriverDataServiceProvider
+    DriverActiveTrackServiceProvider,
+    DriversProfileServiceProvider
   ]
 })
 export class AppModule { }

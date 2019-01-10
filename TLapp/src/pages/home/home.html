@@ -12,7 +12,7 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-card *ngIf="trackDataInfo | async as trackInfo">
+  <ion-card *ngIf="driversProfileService.activeTrackData as trackInfo">
     <div>
       <ion-item color="light">
         <ion-avatar item-start>
@@ -40,7 +40,7 @@
       </ion-row>
     </div>
 
-    <geo-location [userName]="userName"></geo-location>
+    <geo-location></geo-location>
 
     <ion-card *ngIf="openTask">
       <div *ngFor="let taskItem of trackInfo.tasks; let i = index ">
@@ -57,7 +57,10 @@
       </div>
     </ion-card>
   </ion-card>
-  <div *ngIf="usernameFormated">
-    <chat-component [setuserName]="userName"></chat-component>
+  <ion-card *ngIf="!driversProfileService.activeTrackData as trackInfo">
+    <h2 class="noActiveTrack">Nemáte pridelenú trasu!</h2>
+  </ion-card>
+  <div *ngIf="driversProfileService.driversURL">
+    <chat-component></chat-component>
   </div>
 </ion-content>

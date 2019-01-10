@@ -25,4 +25,10 @@ page-home {
     .taskInProgress{
         background: #f4f4f4;
     }
+    .noActiveTrack{
+        text-align: center;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        color: color($colors, danger);
+    }
 }

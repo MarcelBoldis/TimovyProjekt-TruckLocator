@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { GeoLocationServiceProvider } from '../../providers/geo-location-service/geo-location-service';
 import { ToastController } from 'ionic-angular';
 
@@ -9,11 +9,9 @@ import { ToastController } from 'ionic-angular';
 export class GeoLocationComponent {
 
   buttonTitle: string;
-  @Input() userName: any;
   
   constructor(private geoLocationService: GeoLocationServiceProvider, private toastCtrl: ToastController) { this.buttonTitle = "start"}
   geolocationButtonClicked() {
-    this.geoLocationService.setDriversName(this.userName[0] + " " + this.userName[1])
     if (this.buttonTitle === 'start') { this.startTracking() }
     else { this.stopTracking() }
   }

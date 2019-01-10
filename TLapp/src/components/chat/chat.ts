@@ -1,6 +1,7 @@
-import { Component, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
+import { DriversProfileServiceProvider } from '../../providers/providers-drivers-profile-service/drivers-profile-service';
 
 @Component({
   selector: 'chat-component',
@@ -11,23 +12,24 @@ export class ChatComponent {
   messages: Observable<any[]>;
   newMessage: string;
   myDate: any;
-  userName: string;
   @ViewChild('messagesArea') messageArea: ElementRef;
-  @Input() set setuserName(fullName: any) {
-    this.userName = fullName[0] + " " + fullName[1];
-    this.messages = this.db.list('/UPC/Drivers/' + this.userName + '/chat').valueChanges();
+
+  constructor(private db: AngularFireDatabase, private driversProfileService: DriversProfileServiceProvider) {
+    this.initializeMessages();
+  }
+
+  initializeMessages() {
+    this.messages = this.db.list(this.driversProfileService.driversURL + '/chat').valueChanges();
     this.messages.subscribe(() => this.scrollToBottomInMessageArea());
     this.newMessage = "";
     this.myDate = new Date();
   }
 
-  constructor(private db: AngularFireDatabase) { }
-
   addMessageToChat() {
     if (this.newMessage != '') {
-      this.db.list('/UPC/Drivers/' + this.userName + '/chat').push({
+      this.db.list(this.driversProfileService.driversURL + '/chat').push({
         time: new Date().getTime(),
-        from: this.userName,
+        from: 'driver',
         text: this.newMessage
       });
       this.newMessage = "";
