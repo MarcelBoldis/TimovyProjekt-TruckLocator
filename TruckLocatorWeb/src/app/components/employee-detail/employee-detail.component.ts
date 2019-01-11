@@ -37,25 +37,20 @@ export class EmployeeDetailComponent implements OnInit {
 
   private _filterEmployees(value: string): IPerson[] {
     const filterValue = value.toLowerCase();
-    return this.employeeList.filter(employee => 
-      (employee.lastName.toLowerCase().indexOf(filterValue) === 0) 
+    return this.employeeList.filter(employee =>
+      (employee.lastName.toLowerCase().indexOf(filterValue) === 0)
       || (employee.firstName.toLowerCase().indexOf(filterValue) === 0)
-      || (employee.firstName + " " + employee.lastName).toLowerCase().indexOf(filterValue) === 0)
-  }
+      || (employee.firstName + ' ' + employee.lastName).toLowerCase().indexOf(filterValue) === 0
+    ); }
 
   ngOnInit() {
     this.fbService.getEmployeeListReadable().subscribe(drivers => {
       this.employeeList = drivers;
-      console.log("here");
-      
-      console.log(this.employeeList);
-      
       this.filteredEmployees = this.employeesControl.valueChanges
       .pipe(startWith(''),
         map(inputText => inputText ? this._filterEmployees(inputText) : this.employeeList)
       );
       this.countRoles();
-      console.log(this.employeeList);
       this.readDriversPhotos(this.employeeList);
     });
 
@@ -66,8 +61,8 @@ export class EmployeeDetailComponent implements OnInit {
 
   readDriversPhotos(drivers) {
     drivers.forEach(driver => {
-    var storage = firebase.storage();
-    var pathReference = storage.ref("Centarova.jpg");
+    const storage = firebase.storage();
+    const pathReference = storage.ref('Centarova.jpg');
     pathReference.getDownloadURL().then(function(url) {
       driver.image = url;
       });
@@ -78,7 +73,6 @@ export class EmployeeDetailComponent implements OnInit {
     this.driverCount = 0;
     this.managerCount = 0;
     this.dispatcherCount = 0;
-    console.log(this.employeeList);
 
     this.employeeList.filter(value => {
       if (value.specialisation === 'Vodič') {
@@ -98,29 +92,23 @@ export class EmployeeDetailComponent implements OnInit {
   }
 
   showInfo(index: number) {
-    const dialogRef = this.dialog.open(NewEmployeeComponent, {
+    this.dialog.open(NewEmployeeComponent, {
       width: '50%',
       data: {
         data: this.employeeList[index],
         edit: false
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-    });
   }
 
   showEdit(index: number) {
-    const dialogRef = this.dialog.open(NewEmployeeComponent, {
+    this.dialog.open(NewEmployeeComponent, {
       width: '50%',
       data: {
         data: this.employeeList[index],
         edit: true,
         clickedIndex: this.employeeMetadataList[index].key
       }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
     });
   }
 

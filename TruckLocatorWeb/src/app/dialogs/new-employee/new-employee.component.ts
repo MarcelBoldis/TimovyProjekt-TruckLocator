@@ -44,13 +44,13 @@ export class NewEmployeeComponent implements OnInit {
     specialisation: ['', Validators.required],
     address: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
-   
+
   });
 
   ngOnInit() {
     this.title = 'Pridanie zamestnanca';
     this.showEditInputs = true;
-    this.fbService.getEmployeeListReadable().subscribe(drivers => {
+      this.fbService.getEmployeeListReadable().subscribe(drivers => {
       this.employeeList = drivers;
       this.employeeList.filter(value => { this.counter++; });
     })
@@ -58,8 +58,8 @@ export class NewEmployeeComponent implements OnInit {
     if (this.data) {
       console.log(this.data.data);
       console.log(this.newEmployeeForm.value);
-      
-      
+
+
       if (this.data.edit) {
         // this.newEmployeeForm.setValue(this.data.data);
         this.fillFormControl(this.data.data);
@@ -116,12 +116,12 @@ export class NewEmployeeComponent implements OnInit {
         this.selectedFile = new File([result], result.name);
         console.log(this.selectedFile);
         var storageRef = firebase.storage().ref(this.selectedFile.name);
-        storageRef.put(this.selectedFile);    
+        storageRef.put(this.selectedFile);
       },
       error => {
         console.log('Image could not be resized.', error);
       }
-    );  
+    );
   }
 
   getImagePreview(file: File) {

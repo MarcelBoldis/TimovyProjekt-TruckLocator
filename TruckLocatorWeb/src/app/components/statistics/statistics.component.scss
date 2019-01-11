@@ -34,6 +34,7 @@
   padding: 10px;
 
   .wrapGroup {
+    transition: all 100ms linear;
     padding-left: 8px;
     line-height: 25px;
     mat-icon{
@@ -49,10 +50,7 @@
 
   .wrapGroup:hover {
     cursor: pointer;
-    background-color: $nav-color;
-    span {
-      color: $background-charts;
-    }
+    transform: scale(1.03);
   }
 }
 

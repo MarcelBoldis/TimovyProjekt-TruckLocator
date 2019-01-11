@@ -10,6 +10,7 @@ import {FirebaseService} from '../../services/firebase.service';
 
 export class StatisticsComponent implements OnInit {
   employeeMetadataList: any = [];
+  trucksMetadataList: any = [];
   charts = [true, false, false];
   LineChart = [];
   DoughnutChart = [];
@@ -17,10 +18,12 @@ export class StatisticsComponent implements OnInit {
   constructor(public fbService: FirebaseService) {}
 
   ngOnInit() {
-    // volat pri kazdom grafe, ci pri nacitani stranky?
     this.fbService.getEmployeeListMetadata().subscribe(emploeye => {
       this.employeeMetadataList = emploeye;
-      console.log(this.employeeMetadataList);
+    });
+
+    this.fbService.getTruckListReadable().subscribe(truck => {
+      this.trucksMetadataList = truck;
     });
   }
   actualGraph() {
@@ -71,13 +74,19 @@ export class StatisticsComponent implements OnInit {
       });
     }
     if (this.charts[2]) {
+      const trucksKeys = [];
+      const trucksKm = [];
+      this.trucksMetadataList.map(function(n) {
+        trucksKeys.push(n.brand + ' - ' + n.carNumber);
+        trucksKm.push(n.km);
+      });
       this.BarChart = new Chart('myChart', {
         type: 'bar',
         data: {
-          labels: ['Africa', 'Asia', 'Europe', 'Latin America', 'North America'],
+          labels: trucksKeys,
           datasets: [
             {
-              label: 'Population (millions)',
+              label: 'Počet kilometrov',
               backgroundColor: ['rgba(255, 159, 64, 0.4)', '#8e5ea2', '#3cba9f', '#e8c3b9', '#c45850'],
               borderColor: [
                 'rgba(67, 7, 9, 1)',
@@ -88,7 +97,7 @@ export class StatisticsComponent implements OnInit {
                 'rgba(255, 159, 64, 1)'
               ],
               borderWidth: 2,
-              data: [2478, 5267, 734, 784, 433]
+              data: trucksKm
             }
           ]
         },
@@ -96,7 +105,7 @@ export class StatisticsComponent implements OnInit {
           legend: { display: false },
           title: {
             display: true,
-            text: 'Štatistika pre ...',
+            text: 'Počet najazdených kilometrov vozidiel',
           }
         }
       });
@@ -105,24 +114,8 @@ export class StatisticsComponent implements OnInit {
   showGraph(index: number, para: string) {
     this.charts.fill(false);
     this.charts[index] = true;
-    if (this.employeeMetadataList.length !== 0) {
+    if (this.employeeMetadataList.length !== 0 && this.trucksMetadataList.length !== 0) {
       this.actualGraph();
     }
-  }
-  getDataFromFirebase() {
-    console.log('ok');
-  }
-  sendEmail() {
-    // Email.send({
-    //   Host : 'smtp.elasticemail.com',
-    //   Username : 'trucklocatortp@gmail.com',
-    //   Password : '37f33959-3167-4c3a-a36f-3e4edff3f6f7',
-    //   To : 'marcelboldis@gmail.com',
-    //   From : 'trucklocatortp@gmail.com',
-    //   Subject : 'This is the subject',
-    //   Body : 'And this is the body'
-    // }).then(
-    //   message => alert(message)
-    // );
   }
 }

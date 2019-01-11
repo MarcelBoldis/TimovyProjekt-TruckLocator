@@ -48,7 +48,7 @@ export class TruckDetailComponent implements OnInit {
 
   showInfo(index: number) {
     const dialogRef = this.dialog.open(NewTruckComponent, {
-      width: '500px',
+      width: '50%',
       data: {
         data: this.truckList[index],
         edit: false
@@ -58,7 +58,7 @@ export class TruckDetailComponent implements OnInit {
 
   showEdit(index: number) {
     const dialogRef = this.dialog.open(NewTruckComponent, {
-      width: '500px',
+      width: '50%',
       data: {
         data: this.truckList[index],
         edit: true,
