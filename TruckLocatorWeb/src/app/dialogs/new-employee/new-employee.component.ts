@@ -88,7 +88,7 @@ export class NewEmployeeComponent implements OnInit {
     if (!this.data) {
       this.dialogRef.close(this.newEmployeeForm.value);
       const userId = ++this.counter;
-      const specificKey = this.newEmployeeForm.get('firstName').value + '-' + this.newEmployeeForm.get('lastName').value + `-${userId}`;
+      const specificKey = this.newEmployeeForm.get('firstName').value.toLowerCase() + '-' + this.newEmployeeForm.get('lastName').value.toLowerCase() + `-${userId}`;
       this.af.object(`${this.company}/Drivers/${specificKey}`).set(this.newEmployeeForm.value);
     } else if (this.data) {
       this.af.object(`${this.company}/Drivers/${this.data.clickedIndex}`)

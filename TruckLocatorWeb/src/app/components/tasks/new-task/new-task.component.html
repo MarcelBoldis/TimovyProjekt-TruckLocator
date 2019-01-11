@@ -16,8 +16,11 @@
           </mat-form-field>
           <mat-form-field>
             <mat-select placeholder="Vodič" formControlName="driverName">
-              <mat-option *ngFor="let driver of driversList" [value]="driver.firstName">{{driver.firstName}}
-                {{driver.lastName}}</mat-option>
+              <mat-option 
+                *ngFor="let driver of driversList; let index = index;" 
+                [value]="driverKeys[index]">
+                {{driver.firstName}} {{driver.lastName}}
+              </mat-option>
             </mat-select>
           </mat-form-field>
 
@@ -51,11 +54,11 @@
               <mat-form-field>
                 <input matInput formControlName="taskAddress" placeholder="Adresa">
               </mat-form-field>
-              <mat-form-field>
+              <!-- <mat-form-field>
                 <input matInput [matDatepicker]="picker" placeholder="Dátum" formControlName="taskDate">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
-              </mat-form-field>
+              </mat-form-field> -->
               <mat-form-field>
                 <input matInput placeholder="Čas" type="time" min="00:00" max="23:59" formControlName="taskTime">
               </mat-form-field>
