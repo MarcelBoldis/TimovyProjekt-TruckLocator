@@ -68,7 +68,7 @@ export class NewTaskComponent implements OnInit {
   createItem(): FormGroup {
     return this.fb.group({
       taskAddress: ['', Validators.required],
-      // taskDate: ['', Validators.required],
+      taskDate: ['', Validators.required],
       taskDescription: ['', Validators.required],
       taskTime: ['', Validators.required]
     });
@@ -79,10 +79,20 @@ export class NewTaskComponent implements OnInit {
     const specificTrackKey = this.addNewTaskForm.get('wayName').value.toLowerCase() + specificDriverKey + Math.floor(Math.random() * 1000);
     this.addNewTaskForm.get('wayDate').setValue(this.addNewTaskForm.get('wayDate').value.toISOString());
 
-    console.log(specificDriverKey);
+
+    let tasks = []
+    this.addNewTaskForm.get('tasks').value.forEach(element => {
+      element.taskDate = element.taskDate.toISOString();
+      tasks.push(element);
+    });
+    this.addNewTaskForm.get('tasks').setValue(tasks);
     console.log(this.addNewTaskForm.value);
-    
+
     this.af.object(`${this.company}/Drivers/${specificDriverKey}/tracks/${specificTrackKey}`).set(this.addNewTaskForm.value);
+    this.addNewTaskForm.reset();
+    this.addNewTaskForm.setControl('tasks', new FormArray([]));
+    
+    this.openExpand = true;
   }
 
   filtredDrivers(persons) {
