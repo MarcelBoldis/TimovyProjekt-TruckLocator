@@ -1,4 +1,7 @@
+import { ITrack } from "./track";
+
 export interface IPerson {
+    id: string;
     address: string;
     birthDate: Date;
     birthNumber: string;
@@ -6,8 +9,8 @@ export interface IPerson {
     lastName: string;
     idNumber: string;
     specialisation: string;
-    tracks: string;
+    tracks: Array<ITrack>;
     email: string;
-    // photo: string;
+    photo: string;
     isActive: boolean;
 }

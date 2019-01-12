@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, ElementRef, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ElementRef, ViewChildren} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -8,7 +8,7 @@ import { NewEmployeeComponent } from '../../dialogs/new-employee/new-employee.co
 import { IPerson } from '../../../models/person';
 import * as firebase from 'firebase/app';
 import 'firebase/storage';
-import {AngularFireDatabase} from 'angularfire2/database';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @Component({
   selector: 'app-employee-detail',
@@ -41,15 +41,16 @@ export class EmployeeDetailComponent implements OnInit {
       (employee.lastName.toLowerCase().indexOf(filterValue) === 0)
       || (employee.firstName.toLowerCase().indexOf(filterValue) === 0)
       || (employee.firstName + ' ' + employee.lastName).toLowerCase().indexOf(filterValue) === 0
-    ); }
+    );
+  }
 
   ngOnInit() {
     this.fbService.getEmployeeListReadable().subscribe(drivers => {
       this.employeeList = drivers;
       this.filteredEmployees = this.employeesControl.valueChanges
-      .pipe(startWith(''),
-        map(inputText => inputText ? this._filterEmployees(inputText) : this.employeeList)
-      );
+        .pipe(startWith(''),
+          map(inputText => inputText ? this._filterEmployees(inputText) : this.employeeList)
+        );
       this.countRoles();
       this.readDriversPhotos(this.employeeList);
     });
@@ -61,12 +62,14 @@ export class EmployeeDetailComponent implements OnInit {
 
   readDriversPhotos(drivers) {
     drivers.forEach(driver => {
-    const storage = firebase.storage();
-    const pathReference = storage.ref('Centarova.jpg');
-    pathReference.getDownloadURL().then(function(url) {
-      driver.image = url;
-      });
-    });
+      const storage = firebase.storage();
+      if (driver.photo) {
+        const pathReference = storage.ref(driver.id);
+        pathReference.getDownloadURL().then(function(url) {
+          driver.photoUrl = url;
+        });
+      };
+    })
   }
 
   countRoles() {

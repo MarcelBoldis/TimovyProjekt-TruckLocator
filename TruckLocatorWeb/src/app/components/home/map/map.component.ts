@@ -2,7 +2,7 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.js';
 import 'leaflet-control-geocoder';
 import { FirebaseService } from '../../../services/firebase.service';
-import { IGeolocation } from '../../../../models/geolocation';
+import { ITrack } from 'src/models/track';
 declare var L: any;
 
 @Component({
@@ -11,10 +11,10 @@ declare var L: any;
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit, OnChanges {
-  geoTestData: IGeolocation[] = [];
+  //geoTestData: IGeolocation[] = [];
   map = null;
   dataInitialized = false;
-  @Input() routeId: number = 0;
+  @Input() shownTrack: ITrack;
   routingControl = null;
   
   constructor(private dbService: FirebaseService) { }
@@ -29,34 +29,50 @@ export class MapComponent implements OnInit, OnChanges {
       id: 'mapbox.streets',
     }).addTo(this.map);
 
-    this.map.on('click', (e) => {
-      console.log(e.latlng);
-    });
+    // this.map.on('click', (e) => {
+    //   console.log(e.latlng);
+    // });
+    this.dataInitialized = true;
 
-    this.dbService.getGeolocations().subscribe(data => {
-      this.geoTestData = data;
-      console.log(this.geoTestData);
-      this.dataInitialized = true;
-    });
+    // this.dbService.getGeolocations().subscribe(data => {
+    //   this.geoTestData = data;
+    //   console.log(this.geoTestData);
+    //   this.dataInitialized = true;
+    // });
   }
 
   ngOnChanges() {
-    console.log(this.routeId);
+    console.log(this.shownTrack);
     if (this.dataInitialized) {
-      this.showTrackerRoute(this.routeId);
+      this.showTrackerRoute(this.shownTrack);
     }
   }
 
-  showTrackerRoute(id: number) {
+  showTrackerRoute(track: ITrack) {
     if (this.routingControl != null) {
       this.map.removeControl(this.routingControl);
       this.routingControl = null;
     }
+
+    const coordinationsObject = track.coordinations;
     
-    const geolocations = this.geoTestData.filter(data => data.id === id)[0];
+    var coordinations = Object.keys(coordinationsObject).map(function(e){
+      Object.keys(coordinationsObject[e]).forEach(function(k){
+         if(typeof coordinationsObject[e][k] == "object") {
+          coordinationsObject[e][k] = Object.keys(coordinationsObject[e][k]).map(function(l){
+             return coordinationsObject[e][k][l];
+           });
+         }
+      });
+      return coordinationsObject[e];
+    });
+    
+    
+    //const geolocations = this.geoTestData.filter(data => data.id === id)[0];
     var markers = [];
-    geolocations.geolocations.forEach(geolocation => {
-      var marker = L.marker([geolocation.long, geolocation.lat]);
+    console.log(coordinations);
+    coordinations.forEach(geolocation => {
+      var marker = L.marker([geolocation.latitude, geolocation.longitude]);
       markers.push(marker.getLatLng());
     });
 
@@ -103,11 +119,10 @@ export class MapComponent implements OnInit, OnChanges {
       show: false,
       draggableWaypoints: false,
       routeWhileDragging: false,
-      geocoder: L.Control.Geocoder.nominatim()
+      //geocoder: L.Control.Geocoder.nominatim()
     }).addTo(this.map);
     var bounds = new L.latLngBounds(markers);
 
     this.map.fitBounds(bounds);
   }
-
 }

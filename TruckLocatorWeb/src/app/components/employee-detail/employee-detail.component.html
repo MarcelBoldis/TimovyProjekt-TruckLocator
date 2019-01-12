@@ -15,7 +15,7 @@
 
 
 <mat-card #driverBox *ngFor="let employee of filteredEmployees | async; let index = index;" class="driverBox">
-  <img [ngClass]="[employee.specialisation == 'Vodič' ? 'driverBorder' : '',  employee.specialisation == 'Manažér' ? 'managerBorder' : '',  employee.specialisation == 'Dispečér' ? 'dispatcherBorder' : '']" src="{{employee.image}}" alt="photo">
+  <img [ngClass]="[employee.specialisation == 'Vodič' ? 'driverBorder' : '',  employee.specialisation == 'Manažér' ? 'managerBorder' : '',  employee.specialisation == 'Dispečér' ? 'dispatcherBorder' : '']" src="{{employee.photoUrl}}" alt="photo">
   <h1>{{employee.firstName}} {{employee.lastName}}</h1>
   <h2>{{employee.specialisation}}</h2>
     <div class="actions group">

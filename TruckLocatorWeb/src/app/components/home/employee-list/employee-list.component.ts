@@ -2,6 +2,8 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { EmployeeListDetailDialogComponent } from '../../../dialogs/employee-list-detail-dialog/employee-list-detail-dialog.component';
 import { FirebaseService } from '../../../services/firebase.service';
+import { ITrack } from 'src/models/track';
+import { IPerson } from 'src/models/person';
 
 @Component({
   selector: 'app-employee-list',
@@ -9,41 +11,50 @@ import { FirebaseService } from '../../../services/firebase.service';
   styleUrls: ['./employee-list.component.scss']
 })
 export class EmployeeListComponent implements OnInit {
-  activeDrivers = [];
-  drivers = [];
+  activeDrivers: Array<IPerson> = [];
+  shownTrack: ITrack;
   @Output() driverClick = new EventEmitter();
+
   constructor( public dialog: MatDialog, private dbService: FirebaseService) { }
 
   ngOnInit() {
-    // this.dbService.getEmployeeList()
-    this.activeDrivers.push({'name': 'Jan Novak', 'route': 'BA - KE', 'routeId': 1});
-    this.activeDrivers.push({'name': 'Jozef Stary', 'route': 'BA - KE', 'routeId': 2});
-    this.activeDrivers.push({'name': 'Juraj Peterka', 'route': 'BA - KE', 'routeId': 3});
-    this.activeDrivers.push({'name': 'Marek Kutaj', 'route': 'BA - KE', 'routeId': 4});
-    this.activeDrivers.push({'name': 'Ondrej Prazenica', 'route': 'BA - KE', 'routeId': 5});
-    this.activeDrivers.push({'name': 'Cyril Metod', 'route': 'BA - KE', 'routeId': 6});
-    this.activeDrivers.push({'name': 'Cyril Metod', 'route': 'BA - KE', 'routeId': 7});
-    this.activeDrivers.push({'name': 'Cyril Metod', 'route': 'BA - KE', 'routeId': 8});
-    this.activeDrivers.push({'name': 'Cyril Metod', 'route': 'BA - KE', 'routeId': 9});
-    this.activeDrivers.push({'name': 'Cyril Metod', 'route': 'BA - KE', 'routeId': 10});
-    this.activeDrivers.push({'name': 'Cyril Metod', 'route': 'BA - KE', 'routeId': 11});
-    this.activeDrivers.push({'name': 'Cyril Metod', 'route': 'BA - KE', 'routeId': 12});
+    this.dbService.getActiveEmployees().subscribe(drivers => {
+      this.activeDrivers = drivers;
+      console.log(this.activeDrivers);
+    })
   }
 
-  showRoute(driver: number) {
-    this.driverClick.emit(this.activeDrivers[driver].routeId);
-  }
 
   driverButtonClicked(index: number) {
       const dialogRef = this.dialog.open(EmployeeListDetailDialogComponent, {
         width: '800px',
         data: {
-          name: this.activeDrivers[index].name, 
-          route: this.activeDrivers[index].route}
-      });
+          name: "",//this.activeDrivers[index].name, 
+          route: 1 //this.activeDrivers[index].route}
+      }});
 
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
       });
+  }
+
+  getDriversActiveTrack(driverId) {    
+    const tracksObject = this.activeDrivers.find(driver => driver.id == driverId).tracks;        
+    var tracks = Object.keys(tracksObject).map(function(e){
+      Object.keys(tracksObject[e]).forEach(function(k){
+         if(typeof tracksObject[e][k] == "object") {
+          tracksObject[e][k] = Object.keys(tracksObject[e][k]).map(function(l){
+             return tracksObject[e][k][l];
+           });
+         }
+      });
+      return tracksObject[e];
+    });
+    this.shownTrack = tracks.find(track => track.isActive == true);
+    this.driverClick.emit(this.shownTrack);
+    // this.dbService.getActiveTrackOfEmployee(driverId).subscribe(result => {
+    //   this.shownTrack = result["0"];
+    //   this.driverClick.emit(this.shownTrack);
+    // });
   }
 }

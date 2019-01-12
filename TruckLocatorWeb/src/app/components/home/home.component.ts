@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ITrack } from 'src/models/track';
 
 @Component({
   selector: 'app-home',
@@ -6,15 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  mapRouteId: number = 0;
+  track: ITrack;
 
   constructor() { }
 
   ngOnInit() {
   }
 
-  showRoute(id) {
-    this.mapRouteId = id;
+  showTrack(track) {
+    this.track = track;
   }
 
 }

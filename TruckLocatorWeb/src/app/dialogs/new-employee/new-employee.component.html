@@ -36,6 +36,7 @@
         <mat-form-field>
           <input matInput placeholder="Email" formControlName="email">
         </mat-form-field>
+        <input *ngIf="showEditInputs" formControlName="photo" type="file"(change)="setPhoto($event)" value="Vlož fotku" accept="image/*">  
         <!-- <mat-form-field style="display: none" >
           <input matInput placeholder="isactive" formControlName="isActive" >
         </mat-form-field>
@@ -56,8 +57,6 @@
         </mat-file-upload-queue>
       </div> -->
 
-      <input *ngIf="showEditInputs" type="file" (change)="uploadPhoto($event)" value="Vlož fotku" accept="image/*">      
-      
       <!-- Tu si mozes pozriet preview pridaneho obrazku -->
       <!-- <img *ngIf="imagePreview" [src]="sanitizer.bypassSecurityTrustUrl(imagePreview)"> -->
 
