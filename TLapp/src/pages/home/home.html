@@ -18,21 +18,21 @@
     <div>
       <ion-item color="light">
         <ion-avatar item-start>
-          <img src="{{trackInfo.payload.val().image}}">
+          <img src="https://darbis.lt/wp-content/themes/woopress-child/images/orange-truck.png">
         </ion-avatar>
-        <h2>{{trackInfo.payload.val().direction}}</h2>
-        <h3>{{trackInfo.payload.val().date}}</h3>
+        <h2>{{trackInfo.payload.val().addressStart}} - {{trackInfo.payload.val().addressFinish}}</h2>
+        <h3>{{trackInfo.payload.val().wayDate | date}}</h3>
         <i item-right (click)="openFuelCostsModal(trackInfo.key)" class="material-icons">
           local_gas_station
         </i>
       </ion-item>
-      <p class="description">{{trackInfo.payload.val().description}}</p>
+      <p class="description">{{trackInfo.payload.val().wayDescript}}</p>
     </div>
     <div>
       <ion-row>
         <div class="driverInfo">
-          <h3>{{trackInfo.payload.val().truckDriver}}</h3>
-          <h3>{{trackInfo.payload.val().truck}}</h3>
+          <h3>{{trackInfo.payload.val().wayName}}</h3>
+          <h3>{{trackInfo.payload.val().carName}}</h3>
         </div>
         <div>
           <i class="material-icons" (click)="openTasks()">
@@ -46,11 +46,11 @@
     <ion-card *ngIf="openTask">
       <div *ngFor="let taskItem of trackInfo.payload.val().tasks; let i = index ">
         <ion-item class="ionTaskItem" [ngClass]="taskItem.done ? 'taksDone' : 'taskInProgress'">
-          <div (click)="updateTasks(i, taskItem.done)">
-            {{taskItem.place}}
-            <P>{{taskItem.fullAdress}}</P>
+          <div (click)="updateTasks(i, taskItem.done, trackInfo.key)">
+            {{taskItem.taskTime}}
+            <P>{{taskItem.taskAddress}}</P>
             <span>
-              - {{taskItem.description}}
+              - {{taskItem.taskDescription}}
             </span>
             <p item-right *ngIf="taskItem.done">Hotovo!</p>
           </div>
@@ -65,4 +65,5 @@
   <div *ngIf="driversProfileService.driversURL">
     <chat-component></chat-component>
   </div>
+  <!-- <button (click)="addFekeTrack()"> add feke tack</button> -->
 </ion-content>

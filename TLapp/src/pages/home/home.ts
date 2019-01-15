@@ -51,7 +51,7 @@ export class HomePage {
   }
 
   updateTasks(index: number, checkedStatus: boolean, trackKey:string) {
-    this.db.object(this.driversProfileService + '/tracks/' + trackKey + '/tasks/' + index).update({
+    this.db.object(this.driversProfileService.driversURL + '/tracks/' + trackKey + '/tasks/' + index).update({
       done: !checkedStatus
     });
   }
@@ -61,5 +61,10 @@ export class HomePage {
     this.ofAuth.auth.signOut().then(success => {
       that.navCtrl.setRoot("LoginPage");
     });
+  }
+  addFekeTrack(){
+    // this.db.object('/UPC/stats/finishedTacks/').valueChanges().subscribe(item => {
+    //   this.db.object("/UPC/Drivers/jojo-kojo-5/"+ '/tracks/').update(item);
+    // });
   }
 }
