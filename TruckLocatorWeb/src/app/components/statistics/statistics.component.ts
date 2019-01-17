@@ -36,6 +36,7 @@ export class StatisticsComponent implements OnInit {
   }
   actualGraph() {
     if (this.charts[0]) {
+      this.cleanFunction();
       this.LineChart = new Chart('myChart', {
         type: 'line',
         data: {
@@ -52,6 +53,7 @@ export class StatisticsComponent implements OnInit {
           ]
         },
         options: {
+          scales: {yAxes: [{ticks: {beginAtZero: true}}]},
           legend: {
             display: false
           },
@@ -63,6 +65,7 @@ export class StatisticsComponent implements OnInit {
       });
     }
     if (this.charts[1]) {
+      this.cleanFunction();
       this.DoughnutChart = new Chart('myChart', {
         type: 'doughnut',
         data: {
@@ -82,6 +85,7 @@ export class StatisticsComponent implements OnInit {
       });
     }
     if (this.charts[2]) {
+      this.cleanFunction();
       const trucksKeys = [];
       const trucksKm = [];
       this.trucksMetadataList.map(function(n) {
@@ -111,6 +115,7 @@ export class StatisticsComponent implements OnInit {
         },
         options: {
           legend: { display: false },
+          scales: {yAxes: [{ticks: {beginAtZero: true}}]},
           title: {
             display: true,
             text: 'Počet najazdených kilometrov vozidiel',
@@ -118,6 +123,15 @@ export class StatisticsComponent implements OnInit {
         }
       });
     }
+  }
+  cleanFunction() {
+    const element = document.getElementById('chartDivko');
+    while (element.firstChild) {
+      element.removeChild(element.firstChild);
+    }
+    const mycanvas = document.createElement('canvas');
+    mycanvas.id = 'myChart';
+    element.appendChild(mycanvas);
   }
   showGraph(index: number, para: string) {
     this.charts.fill(false);
