@@ -18,6 +18,7 @@ import 'firebase/storage';
 export class NewEmployeeComponent implements OnInit {
   company = 'UPC';
   counter = 0;
+  fileName = '';
   employeeList: IPerson[];
   title: string;
   showEditInputs: boolean;
@@ -58,8 +59,8 @@ export class NewEmployeeComponent implements OnInit {
       console.log(this.newEmployeeForm.value);
 
       if (this.data.edit) {
-        this.newEmployeeForm.controls["photo"].clearValidators();    
-        this.fillFormControl(this.data.data);        
+        this.newEmployeeForm.controls["photo"].clearValidators();
+        this.fillFormControl(this.data.data);
         this.title = 'Editácia zamestnanca';
       } else {
         this.fillFormControl(this.data.data);
@@ -91,7 +92,7 @@ export class NewEmployeeComponent implements OnInit {
     } else if (this.data) {
       if (this.uploadedImage) {
         this.uploadPhoto(this.uploadedImage, this.data.clickedIndex);
-      }      
+      }
       this.af.object(`${this.company}/Drivers/${this.data.clickedIndex}`)
         .update(this.createNewEmployeeFromForm(this.newEmployeeForm.value, this.data.clickedIndex));
     }
@@ -116,7 +117,8 @@ export class NewEmployeeComponent implements OnInit {
 
   setPhoto(event: any) {
     this.uploadedImage = event.target.files[0];
-    console.log(this.uploadedImage);
+    this.fileName = this.uploadedImage.name;
+    console.log(this.uploadedImage.name);
   }
 
   uploadPhoto(image: File, name: string) {
