@@ -27,6 +27,7 @@ import { NewTruckComponent } from './dialogs/new-truck/new-truck.component';
 import { NewEmployeeComponent } from './dialogs/new-employee/new-employee.component';
 import { StatisticsComponent } from './components/statistics/statistics.component';
 import { NewTaskComponent } from './components/tasks/new-task/new-task.component';
+import { ChatComponent } from './components/chat/chat.component';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import { NewTaskComponent } from './components/tasks/new-task/new-task.component
     NewEmployeeComponent,
     StatisticsComponent,
     NewTaskComponent,
+    ChatComponent,
   ],
   imports: [
     BrowserModule,

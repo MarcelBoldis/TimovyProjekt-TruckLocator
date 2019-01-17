@@ -1,0 +1,48 @@
+@import '../../../assets/global-css/variables.scss';    
+.yourMessage{
+    background: $nav-color;
+    padding: 5px 5px 5px 10px;
+    border-radius: 10px;
+}
+.outsideMessage{
+    background-color: $background-color;
+    padding: 5px 10px 5px 5px;
+    border-radius: 10px;
+    text-align: end;
+}
+#changeT{
+    color: white;
+}
+.inputNewMessage{
+    width: 100%;
+}
+.sendIcon{
+    padding: 5px;
+    font-size: 20px;
+}
+i{
+    font-size: 10px;
+}
+.chatCard{
+    overflow: scroll;
+    padding-right: 5px; 
+    min-height: 30px;
+    max-height: 200px;
+}
+
+/*Scroll bar*/
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: white;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: $nav-color; 
+    border-radius: 10px;
+}
