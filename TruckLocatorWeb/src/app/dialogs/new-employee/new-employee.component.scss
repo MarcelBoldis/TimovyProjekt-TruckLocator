@@ -12,14 +12,36 @@ h1 {
         box-sizing: border-box;
         padding: 0 5%;
     }
-}
 
-.upload-drop-zone {
-    margin: 5px 5%;
-    border: 1px dashed rgba(0, 0, 0, 0.568);
-    text-align: center;
-    p {
-        padding: 20px;
+    .inputfile {
+      margin: 2%;
+      padding: 0 5%;
+      box-sizing: border-box;
+      input[type="file"] {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+      }
+
+      .photoIcon{
+        position: relative;
+        top: 3px;
+      }
+
+      .file + label {
+        font-size: 1.25em;
+        font-weight: 700;
+        display: inline-block;
+        padding: 5px;
+      }
+
+      .file:focus + label,
+      .file + label:hover {
+        cursor: pointer;
+      }
     }
 }
 
@@ -45,3 +67,4 @@ h1 {
 h1 {
     font-size: 1.4em;
 }
+

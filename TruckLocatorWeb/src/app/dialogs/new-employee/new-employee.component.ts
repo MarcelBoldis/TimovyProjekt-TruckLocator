@@ -19,8 +19,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
 })
 export class NewEmployeeComponent implements OnInit {
   company = 'UPC';
-  counter = 0;
-  employeeList: IPerson[];
+  employeeKeys: string[];
+  fileName = '';
   title: string;
   showEditInputs: boolean;
   isCreateMode: boolean;
@@ -54,18 +54,30 @@ export class NewEmployeeComponent implements OnInit {
   ngOnInit() {
     this.title = 'Pridanie zamestnanca';
     this.showEditInputs = true;
-    this.fbService.getEmployeeListReadable().subscribe(drivers => {
-      this.employeeList = drivers;
-      this.employeeList.filter(value => { this.counter++; });
-    })
+    let employeeWorkersKeys = [];
+    let employeeFiredWorkersKeys = [];
+
+    this.fbService.getEmployeeListMetadata().subscribe(drivers => {
+      employeeWorkersKeys = drivers.map(function (obj: any) {
+        return obj.key;
+      });
+    });
+    this.fbService.getEmployeeFiredListMetadata().subscribe(drivers => {
+      employeeFiredWorkersKeys = drivers.map(function (obj: any) {
+        return obj.key;
+      });
+      this.employeeKeys = employeeWorkersKeys.concat(employeeFiredWorkersKeys);
+      console.log(this.employeeKeys);
+      
+    });
 
     if (this.data) {
       console.log(this.data.data);
       console.log(this.newEmployeeForm.value);
 
       if (this.data.edit) {
-        this.newEmployeeForm.controls["photo"].clearValidators();    
-        this.fillFormControl(this.data.data);        
+        this.newEmployeeForm.controls["photo"].clearValidators();
+        this.fillFormControl(this.data.data);
         this.title = 'Editácia zamestnanca';
       } else {
         this.fillFormControl(this.data.data);
@@ -91,27 +103,36 @@ export class NewEmployeeComponent implements OnInit {
       this.newEmployeeForm.get('birthDate').setValue(this.newEmployeeForm.get('birthDate').value.toISOString());
     }
     if (!this.data) {
-      var that = this;
-      this.afAuth.auth.createUserWithEmailAndPassword(
+        var that = this;
+        this.afAuth.auth.createUserWithEmailAndPassword(
         this.newEmployeeForm.get('email').value, this.newEmployeeForm.get('password').value)
         .then(function(success){
           that.dialogRef.close(that.newEmployeeForm.value);
-          const userId = ++that.counter;
-          const specificKey = that.newEmployeeForm.get('firstName').value.toLowerCase() + '-' + that.newEmployeeForm.get('lastName').value.toLowerCase() + `-${userId}`;
-          that.uploadPhoto(that.uploadedImage, specificKey);
-          that.af.object(`${that.company}/Drivers/${specificKey}`).set(that.createNewEmployeeFromForm(that.newEmployeeForm.value, specificKey));
+          that.dialogRef.close(that.newEmployeeForm.value);
+      
+          const name = that.newEmployeeForm.get('firstName').value.toLowerCase();
+          const surName = that.newEmployeeForm.get('lastName').value.toLowerCase();
+      
+          var found = that.employeeKeys.filter(function(element) {
+          return (element.includes(`${name}-${surName}`));
+          });
+      
+          const specificKey = name + '-' + surName + '-' + found.length;
+          this.uploadPhoto(this.uploadedImage, specificKey);
+          this.af.object(`${this.company}/Drivers/${specificKey}`).set(this.createNewEmployeeFromForm(this.newEmployeeForm.value, specificKey));
         })
         .catch(function(error) {
         // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log(errorCode + "       " + errorMessage);
-      });
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          console.log(errorCode + "       " + errorMessage);
+        });
       
+
     } else if (this.data) {
       if (this.uploadedImage) {
         this.uploadPhoto(this.uploadedImage, this.data.clickedIndex);
-      }      
+      }
       this.af.object(`${this.company}/Drivers/${this.data.clickedIndex}`)
         .update(this.createNewEmployeeFromForm(this.newEmployeeForm.value, this.data.clickedIndex));
     }
@@ -136,7 +157,8 @@ export class NewEmployeeComponent implements OnInit {
 
   setPhoto(event: any) {
     this.uploadedImage = event.target.files[0];
-    console.log(this.uploadedImage);
+    this.fileName = this.uploadedImage.name;
+    console.log(this.uploadedImage.name);
   }
 
   uploadPhoto(image: File, name: string) {
@@ -146,7 +168,7 @@ export class NewEmployeeComponent implements OnInit {
         console.log(this.selectedFile);
         //this.getImagePreview(this.selectedFile);
         var storageRef = firebase.storage().ref(name);
-            storageRef.put(this.selectedFile);
+        storageRef.put(this.selectedFile);
         // this.ng2ImgMax.resizeImage(image, 100, 100).subscribe(
         //   result => {
         //     this.selectedFile = new File([result], result.name);

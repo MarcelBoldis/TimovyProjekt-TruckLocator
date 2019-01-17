@@ -17,6 +17,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 })
 export class EmployeeDetailComponent implements OnInit {
   company = 'UPC';
+  employeeKeys: string[];
   employeeMetadataList: any = [];
   employeeList: IPerson[];
   managerCount = 0;
@@ -57,6 +58,10 @@ export class EmployeeDetailComponent implements OnInit {
 
     this.fbService.getEmployeeListMetadata().subscribe(drivers => {
       this.employeeMetadataList = drivers;
+      
+      this.employeeKeys =  this.employeeMetadataList .map(function ( obj: any ) {
+        return obj.key;
+      });
     });
   }
 

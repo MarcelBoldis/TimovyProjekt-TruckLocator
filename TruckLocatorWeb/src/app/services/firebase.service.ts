@@ -26,6 +26,9 @@ export class FirebaseService {
   getEmployeeListMetadata() {
     return this.db.list<IPerson>('/UPC/Drivers').snapshotChanges();
   }
+  getEmployeeFiredListMetadata() {
+    return this.db.list<IPerson>('/UPC/historyData/Employee').snapshotChanges();
+  }
 
   getTruckListReadable(): Observable<ITruck[]> {
     return this.db.list<ITruck>('/UPC/Trucks').valueChanges();
