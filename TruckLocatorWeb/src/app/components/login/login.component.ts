@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AngularFireAuth } from 'angularfire2/auth';
+
 
 @Component({
   selector: 'app-login',
@@ -9,25 +11,34 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  login = 'admin';
-  password = 'admin';
+  login = '';
+  password = '';
 
   constructor(private fb: FormBuilder,
-              private router: Router) { }
+              private router: Router,
+              public afAuth: AngularFireAuth) { }
+
+
 
   loginForm = this.fb.group({
-    login: [''],
-    password: ['']
+    login: this.login,
+    password: this.password
   });
 
-
   ngOnInit() {
+    
   }
-
-  checkInputs(): void {
-    if ((this.loginForm.get('login').value === this.login) && (this.loginForm.get('password').value === this.password)) {
-      this.router.navigateByUrl('/home');
-    }
+  
+  authLogin(): void{
+    var that=this;
+    this.afAuth.auth.signInWithEmailAndPassword(this.loginForm.get('login').value, this.loginForm.get('password').value).then(function (success){
+      that.router.navigateByUrl('/home');
+    }).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log(errorCode + "    " + errorMessage);
+      // ...
+    });
   }
-
 }

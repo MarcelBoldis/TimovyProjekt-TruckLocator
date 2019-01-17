@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
   selector: 'app-tasks',
@@ -7,7 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TasksComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router,
+              private afAuth: AngularFireAuth) {
+    if (!afAuth.auth.currentUser) {
+      router.navigateByUrl('/login');
+    }
+   }
 
   ngOnInit() {
   }

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NewEmployeeComponent } from '../../dialogs/new-employee/new-employee.component';
 import { IPerson } from '../../../models/person';
+import { Router } from '@angular/router';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
   selector: 'app-employers',
@@ -15,7 +17,13 @@ export class EmployersComponent implements OnInit {
   dispatchers = 0;
 
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog,
+              private router: Router,
+              private afAuth: AngularFireAuth) {
+        if (!afAuth.auth.currentUser) {
+            router.navigateByUrl('/login');
+        }
+  }
 
   ngOnInit() {
   }

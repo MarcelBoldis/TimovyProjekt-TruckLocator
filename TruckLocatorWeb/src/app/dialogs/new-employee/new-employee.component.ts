@@ -8,6 +8,8 @@ import { Ng2ImgMaxService } from 'ng2-img-max';
 import { DomSanitizer } from '@angular/platform-browser';
 import * as firebase from 'firebase/app';
 import 'firebase/storage';
+import { Router } from '@angular/router';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 
 @Component({
@@ -21,6 +23,7 @@ export class NewEmployeeComponent implements OnInit {
   employeeList: IPerson[];
   title: string;
   showEditInputs: boolean;
+  isCreateMode: boolean;
   imagePreview: string;
   selectedFile: File = null;
   uploadedImage: File;
@@ -31,7 +34,9 @@ export class NewEmployeeComponent implements OnInit {
     private af: AngularFireDatabase,
     @Inject(MAT_DIALOG_DATA) public data,
     private ng2ImgMax: Ng2ImgMaxService,
-    public sanitizer: DomSanitizer) { }
+    public sanitizer: DomSanitizer,
+    private router: Router,
+    private afAuth: AngularFireAuth) { }
 
   newEmployeeForm = this.fb.group({
     firstName: ['', Validators.required],
@@ -42,6 +47,7 @@ export class NewEmployeeComponent implements OnInit {
     specialisation: ['', Validators.required],
     address: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required]],
     photo: ['', Validators.required]
   });
 
@@ -67,6 +73,8 @@ export class NewEmployeeComponent implements OnInit {
         this.title = 'Info o zamestnancovi';
         this.showEditInputs = false;
       }
+    }else{
+      this.isCreateMode = true;
     }
   }
 
@@ -83,11 +91,23 @@ export class NewEmployeeComponent implements OnInit {
       this.newEmployeeForm.get('birthDate').setValue(this.newEmployeeForm.get('birthDate').value.toISOString());
     }
     if (!this.data) {
-      this.dialogRef.close(this.newEmployeeForm.value);
-      const userId = ++this.counter;
-      const specificKey = this.newEmployeeForm.get('firstName').value.toLowerCase() + '-' + this.newEmployeeForm.get('lastName').value.toLowerCase() + `-${userId}`;
-      this.uploadPhoto(this.uploadedImage, specificKey);
-      this.af.object(`${this.company}/Drivers/${specificKey}`).set(this.createNewEmployeeFromForm(this.newEmployeeForm.value, specificKey));
+      var that = this;
+      this.afAuth.auth.createUserWithEmailAndPassword(
+        this.newEmployeeForm.get('email').value, this.newEmployeeForm.get('password').value)
+        .then(function(success){
+          that.dialogRef.close(that.newEmployeeForm.value);
+          const userId = ++that.counter;
+          const specificKey = that.newEmployeeForm.get('firstName').value.toLowerCase() + '-' + that.newEmployeeForm.get('lastName').value.toLowerCase() + `-${userId}`;
+          that.uploadPhoto(that.uploadedImage, specificKey);
+          that.af.object(`${that.company}/Drivers/${specificKey}`).set(that.createNewEmployeeFromForm(that.newEmployeeForm.value, specificKey));
+        })
+        .catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log(errorCode + "       " + errorMessage);
+      });
+      
     } else if (this.data) {
       if (this.uploadedImage) {
         this.uploadPhoto(this.uploadedImage, this.data.clickedIndex);

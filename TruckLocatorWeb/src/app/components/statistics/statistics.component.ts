@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js';
 import {FirebaseService} from '../../services/firebase.service';
+import { Router } from '@angular/router';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
   selector: 'app-statistics',
@@ -15,7 +17,13 @@ export class StatisticsComponent implements OnInit {
   LineChart = [];
   DoughnutChart = [];
   BarChart = [];
-  constructor(public fbService: FirebaseService) {}
+  constructor(public fbService: FirebaseService,
+              private router: Router,
+              private afAuth: AngularFireAuth) {
+                if (!afAuth.auth.currentUser) {
+                  router.navigateByUrl('/login');
+                }
+              }
 
   ngOnInit() {
     this.fbService.getEmployeeListMetadata().subscribe(emploeye => {

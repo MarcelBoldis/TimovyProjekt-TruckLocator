@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ITrack } from 'src/models/track';
+import { Router } from '@angular/router';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +11,12 @@ import { ITrack } from 'src/models/track';
 export class HomeComponent implements OnInit {
   track: ITrack;
 
-  constructor() { }
+  constructor(private router: Router,
+              private afAuth: AngularFireAuth) {
+                if (!afAuth.auth.currentUser) {
+                  router.navigateByUrl('/login');
+                }
+              }
 
   ngOnInit() {
   }
