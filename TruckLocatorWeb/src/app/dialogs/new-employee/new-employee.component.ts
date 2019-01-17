@@ -18,6 +18,7 @@ import 'firebase/storage';
 export class NewEmployeeComponent implements OnInit {
   company = 'UPC';
   employeeKeys: string[];
+  fileName = '';
   title: string;
   showEditInputs: boolean;
   imagePreview: string;
@@ -135,7 +136,8 @@ export class NewEmployeeComponent implements OnInit {
 
   setPhoto(event: any) {
     this.uploadedImage = event.target.files[0];
-    console.log(this.uploadedImage);
+    this.fileName = this.uploadedImage.name;
+    console.log(this.uploadedImage.name);
   }
 
   uploadPhoto(image: File, name: string) {
