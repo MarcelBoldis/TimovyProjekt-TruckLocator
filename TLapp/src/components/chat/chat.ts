@@ -19,7 +19,7 @@ export class ChatComponent {
   }
 
   initializeMessages() {
-    this.messages = this.db.list(this.driversProfileService.driversURL + '/chat').valueChanges();
+    this.messages = this.db.list(this.driversProfileService.driversEmployerCompany + '/Chat/' + this.driversProfileService.driversKey ).valueChanges();
     this.messages.subscribe(() => this.scrollToBottomInMessageArea());
     this.newMessage = "";
     this.myDate = new Date();
@@ -27,7 +27,7 @@ export class ChatComponent {
 
   addMessageToChat() {
     if (this.newMessage != '') {
-      this.db.list(this.driversProfileService.driversURL + '/chat').push({
+      this.db.list(this.driversProfileService.driversEmployerCompany + '/Chat/' + this.driversProfileService.driversKey).push({
         time: new Date().getTime(),
         from: 'driver',
         text: this.newMessage
