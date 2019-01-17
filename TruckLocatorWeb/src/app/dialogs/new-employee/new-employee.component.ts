@@ -17,8 +17,7 @@ import 'firebase/storage';
 })
 export class NewEmployeeComponent implements OnInit {
   company = 'UPC';
-  counter = 0;
-  employeeList: IPerson[];
+  employeeKeys: string[];
   title: string;
   showEditInputs: boolean;
   imagePreview: string;
@@ -48,18 +47,30 @@ export class NewEmployeeComponent implements OnInit {
   ngOnInit() {
     this.title = 'Pridanie zamestnanca';
     this.showEditInputs = true;
-    this.fbService.getEmployeeListReadable().subscribe(drivers => {
-      this.employeeList = drivers;
-      this.employeeList.filter(value => { this.counter++; });
-    })
+    let employeeWorkersKeys = [];
+    let employeeFiredWorkersKeys = [];
+
+    this.fbService.getEmployeeListMetadata().subscribe(drivers => {
+      employeeWorkersKeys = drivers.map(function (obj: any) {
+        return obj.key;
+      });
+    });
+    this.fbService.getEmployeeFiredListMetadata().subscribe(drivers => {
+      employeeFiredWorkersKeys = drivers.map(function (obj: any) {
+        return obj.key;
+      });
+      this.employeeKeys = employeeWorkersKeys.concat(employeeFiredWorkersKeys);
+      console.log(this.employeeKeys);
+      
+    });
 
     if (this.data) {
       console.log(this.data.data);
       console.log(this.newEmployeeForm.value);
 
       if (this.data.edit) {
-        this.newEmployeeForm.controls["photo"].clearValidators();    
-        this.fillFormControl(this.data.data);        
+        this.newEmployeeForm.controls["photo"].clearValidators();
+        this.fillFormControl(this.data.data);
         this.title = 'Editácia zamestnanca';
       } else {
         this.fillFormControl(this.data.data);
@@ -84,14 +95,22 @@ export class NewEmployeeComponent implements OnInit {
     }
     if (!this.data) {
       this.dialogRef.close(this.newEmployeeForm.value);
-      const userId = ++this.counter;
-      const specificKey = this.newEmployeeForm.get('firstName').value.toLowerCase() + '-' + this.newEmployeeForm.get('lastName').value.toLowerCase() + `-${userId}`;
+      
+      const name = this.newEmployeeForm.get('firstName').value.toLowerCase();
+      const surName = this.newEmployeeForm.get('lastName').value.toLowerCase();
+      
+      var found = this.employeeKeys.filter(function(element) {
+        return (element.includes(`${name}-${surName}`));
+      });
+      
+      const specificKey = name + '-' + surName + '-' + found.length;
       this.uploadPhoto(this.uploadedImage, specificKey);
       this.af.object(`${this.company}/Drivers/${specificKey}`).set(this.createNewEmployeeFromForm(this.newEmployeeForm.value, specificKey));
+    
     } else if (this.data) {
       if (this.uploadedImage) {
         this.uploadPhoto(this.uploadedImage, this.data.clickedIndex);
-      }      
+      }
       this.af.object(`${this.company}/Drivers/${this.data.clickedIndex}`)
         .update(this.createNewEmployeeFromForm(this.newEmployeeForm.value, this.data.clickedIndex));
     }
@@ -126,7 +145,7 @@ export class NewEmployeeComponent implements OnInit {
         console.log(this.selectedFile);
         //this.getImagePreview(this.selectedFile);
         var storageRef = firebase.storage().ref(name);
-            storageRef.put(this.selectedFile);
+        storageRef.put(this.selectedFile);
         // this.ng2ImgMax.resizeImage(image, 100, 100).subscribe(
         //   result => {
         //     this.selectedFile = new File([result], result.name);
