@@ -3,4 +3,5 @@ export interface ITask {
     taskAddress: string;
     taskDescription: string;
     taskTime: string;
+    done?: boolean;
 }

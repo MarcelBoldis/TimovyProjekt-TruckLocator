@@ -1,25 +1,29 @@
-<div class="container">
-  <div class="left-content">
-
-    <mat-card class="legedCard">
-      <h2>Vyberte štatistiku:</h2>
-      <mat-divider></mat-divider>
-      <div class="legend">
-        <div class="wrapGroup" (click)="showGraph(0, 'chartDivko')">
-          <span>Graf 1</span>
-        </div>
-        <div class="wrapGroup" (click)="showGraph(1, 'chartDivko2')">
-          <span>Graf 2</span>
-        </div>
-        <div class="wrapGroup" (click)="showGraph(2, 'chartDivko3')">
-          <span>Počet najazdených kilometrov vozidiel</span>
-        </div>
+<mat-card>
+  <mat-tab-group>
+    <mat-tab label="Štatistiky vodičov">
+      <div class="grid-wrapper">
+        <mat-card>
+          <div class="chartContainer">
+            <canvas #driversDrivenDistanceCanvas></canvas>
+          </div>
+        </mat-card>
+        <mat-card>
+          <div class="chartContainer">
+            <canvas #dnumberOfFinishedTracksCanvas></canvas>
+          </div>
+        </mat-card>
+        <mat-card>
+          <div class="chartContainer">
+            <canvas #taskCompletitionSucces></canvas>
+          </div>
+        </mat-card>
+        <mat-card>
+          <div class="chartContainer">
+            spotreba paliva na 100 km 
+          </div>
+        </mat-card>
       </div>
-    </mat-card>
-  </div>
-  <mat-card  class="right-content">
-    <div id='chartDivko'>
-      <!--<canvas  id='myChart'></canvas>-->
-    </div>
-  </mat-card>
-</div>
+    </mat-tab>
+    <mat-tab label="Štatistiky vozidiel"> Content 2 </mat-tab>
+  </mat-tab-group>
+</mat-card>
