@@ -62,9 +62,4 @@ export class HomePage {
       that.navCtrl.setRoot("LoginPage");
     });
   }
-  addFekeTrack(){
-    // this.db.object('/UPC/stats/finishedTacks/').valueChanges().subscribe(item => {
-    //   this.db.object("/UPC/Drivers/jojo-kojo-5/"+ '/tracks/').update(item);
-    // });
-  }
 }

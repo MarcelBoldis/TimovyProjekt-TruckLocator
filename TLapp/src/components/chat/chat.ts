@@ -39,7 +39,7 @@ export class ChatComponent {
     if (this.newMessage != '') {
       this.db.list(this.driversProfileService.driversEmployerCompany + '/Chat/' + this.driversProfileService.driversKey).push({
         time: new Date().getTime(),
-        from: 'driver',
+        from: 'vodič',
         text: this.newMessage
       });
       this.newMessage = "";

@@ -33,7 +33,7 @@ export class DriversProfileServiceProvider {
   activeTrackWasFinished(trackKey:string){
     this.allTracks.forEach((track:any) => {
       if(track.key === trackKey){
-        this.db.list('/'+this.driversEmployerCompany + '/stats/finishedTacks/').push(track.payload.val()).then(
+        this.db.list('/'+this.driversEmployerCompany + '/stats/finishedTracks/').push(track.payload.val()).then(
            () =>{ this.removeActiveTrack(trackKey);}
           );
       }
