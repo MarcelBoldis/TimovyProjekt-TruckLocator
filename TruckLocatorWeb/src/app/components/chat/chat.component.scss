@@ -1,15 +1,5 @@
 @import '../../../assets/global-css/variables.scss';    
-.yourMessage{
-    background: $nav-color;
-    padding: 5px 5px 5px 10px;
-    border-radius: 10px;
-}
-.outsideMessage{
-    background-color: $background-color;
-    padding: 5px 10px 5px 5px;
-    border-radius: 10px;
-    text-align: end;
-}
+
 #changeT{
     color: white;
 }
@@ -29,6 +19,33 @@ i{
     min-height: 30px;
     max-height: 200px;
 }
+
+.messageWrapper {
+    position: relative;
+
+    .yourMessage{
+        background: $manager-color;
+        padding: 5px 5px 5px 10px;
+        border-radius: 10px;
+        float: right;
+        width: fit-content;
+    }
+    .outsideMessage{
+        background-color: $nav-color;
+        padding: 5px 10px 5px 5px;
+        border-radius: 10px;
+        float: left;
+        width: fit-content;
+    }
+}
+
+.group:before,
+.group:after {
+	content: " " !important;
+	display: table !important;}
+.group:after {clear: both !important;}
+.group {*zoom: 1 !important;}
+
 
 /*Scroll bar*/
 ::-webkit-scrollbar {

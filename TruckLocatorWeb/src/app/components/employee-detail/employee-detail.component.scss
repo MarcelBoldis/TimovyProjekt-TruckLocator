@@ -70,7 +70,20 @@ mat-card {
         width: 100%;
     }
 }
-
+.driverBox {
+    position: relative;
+    mat-icon.chatIcon {
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        color: $chat-color;
+        &:hover{
+            cursor: pointer;
+            transition: all 0.2s linear;
+            transform: scale(1.15);
+        }
+    }
+}
 .driverBorder {
     border: 4px solid $nav-color;
 }

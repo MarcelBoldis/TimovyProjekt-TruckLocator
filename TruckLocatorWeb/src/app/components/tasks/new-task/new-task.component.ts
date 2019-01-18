@@ -105,4 +105,9 @@ export class NewTaskComponent implements OnInit {
       }
     )
   }
+  removeTask(index: number) {
+    console.log(index);
+    const control = <FormArray>this.addNewTaskForm.controls['tasks'];
+    control.removeAt(index);
+  }
 }

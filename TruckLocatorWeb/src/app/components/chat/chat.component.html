@@ -1,8 +1,10 @@
 <mat-card *ngIf="chatMessages">
   <div #scrollMe class="chatCard">
-    <div *ngFor="let currMessage of chatMessages">
+    <div *ngFor="let currMessage of chatMessages" class="group">
       <i>{{currMessage.time | date: 'dd.MMMM'}} ({{currMessage.from}})</i>
-      <p id="changeT" [ngClass]="(currMessage.from === 'boss') ? 'yourMessage':'outsideMessage'">{{currMessage.text}}</p>
+      <div class="messageWrapper group">
+        <p id="changeT" [ngClass]="(currMessage.from === 'boss') ? 'yourMessage':'outsideMessage'">{{currMessage.text}}</p>
+      </div>
     </div>
   </div>
   <mat-card>

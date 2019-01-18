@@ -16,30 +16,30 @@ export class FirebaseService {
   constructor(private db: AngularFireDatabase, private _http: HttpClient) { }
 
   getEmployeeListReadable(): Observable<IPerson[]> {
-    return this.db.list<IPerson>('/UPC/Drivers').valueChanges();
+    return this.db.list<IPerson>(this.basePath + '/Drivers').valueChanges();
   }
 
   getEmployeeListWritable(): AngularFireList<IPerson[]> {
-    return this.db.list('/UPC/Drivers');
+    return this.db.list(this.basePath +'/Drivers');
   }
 
   getEmployeeListMetadata() {
-    return this.db.list<IPerson>('/UPC/Drivers').snapshotChanges();
+    return this.db.list<IPerson>(this.basePath + '/Drivers').snapshotChanges();
   }
   getEmployeeFiredListMetadata() {
-    return this.db.list<IPerson>('/UPC/historyData/Employee').snapshotChanges();
+    return this.db.list<IPerson>(this.basePath + '/historyData/Employee').snapshotChanges();
   }
 
   getTruckListReadable(): Observable<ITruck[]> {
-    return this.db.list<ITruck>('/UPC/Trucks').valueChanges();
+    return this.db.list<ITruck>(this.basePath + '/Trucks').valueChanges();
   }
 
   getTruckListWritable(): AngularFireList<ITruck[]> {
-    return this.db.list('/UPC/Trucks');
+    return this.db.list(this.basePath + '/Trucks');
   }
 
   getTruckListMetadata() {
-    return this.db.list<ITruck>('/UPC/Trucks').snapshotChanges();
+    return this.db.list<ITruck>(this.basePath + '/Trucks').snapshotChanges();
   }
 
   // getGeolocations(): Observable<IGeolocation[]> {
@@ -47,7 +47,7 @@ export class FirebaseService {
   // }
 
   getActiveEmployees(): Observable<IPerson[]> {
-    return this.db.list<IPerson>('/UPC/Drivers', ref => ref.orderByChild('isActive').equalTo(true)).valueChanges();
+    return this.db.list<IPerson>(this.basePath + '/Drivers', ref => ref.orderByChild('isActive').equalTo(true)).valueChanges();
   }
 
   // getActiveTrackOfEmployee(employeeId): Observable<ITrack[]> {

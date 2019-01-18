@@ -28,7 +28,8 @@ export class NewEmployeeComponent implements OnInit {
   selectedFile: File = null;
   uploadedImage: File;
 
-  constructor(public dialogRef: MatDialogRef<NewEmployeeComponent>,
+  constructor(
+    public dialogRef: MatDialogRef<NewEmployeeComponent>,
     public fb: FormBuilder,
     private fbService: FirebaseService,
     private af: AngularFireDatabase,
@@ -47,7 +48,7 @@ export class NewEmployeeComponent implements OnInit {
     specialisation: ['', Validators.required],
     address: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required]],
+    password: '',
     photo: ['', Validators.required]
   });
 
@@ -57,6 +58,8 @@ export class NewEmployeeComponent implements OnInit {
     let employeeWorkersKeys = [];
     let employeeFiredWorkersKeys = [];
 
+    this.newEmployeeForm.get('password').setValue(this.makePassword(10));
+    this.newEmployeeForm.get('password').disable();
     this.fbService.getEmployeeListMetadata().subscribe(drivers => {
       employeeWorkersKeys = drivers.map(function (obj: any) {
         return obj.key;
@@ -89,7 +92,15 @@ export class NewEmployeeComponent implements OnInit {
       this.isCreateMode = true;
     }
   }
-
+  makePassword(length: number): string {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.-@#$%^&*()_+!";
+  
+    for (var i = 0; i < length; i++)
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+  
+    return text;
+  }
   onNoClick(): void {
     this.dialogRef.close();
   }

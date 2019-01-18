@@ -4,11 +4,12 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { FirebaseService } from '../../services/firebase.service';
-import { NewEmployeeComponent } from '../../dialogs/new-employee/new-employee.component';
 import { IPerson } from '../../../models/person';
 import * as firebase from 'firebase/app';
 import 'firebase/storage';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { NewEmployeeComponent } from '../../dialogs/new-employee/new-employee.component';
+import { ChatDialogComponent } from '../../dialogs/chat-dialog/chat-dialog.component';
 
 @Component({
   selector: 'app-employee-detail',
@@ -29,7 +30,6 @@ export class EmployeeDetailComponent implements OnInit {
   @Output() managers = new EventEmitter<number>();
   @Output() drivers = new EventEmitter<number>();
   @Output() dispatchers = new EventEmitter<number>();
-  @ViewChildren('driverBox') driverBox: ElementRef;
 
 
   constructor(public dialog: MatDialog,
@@ -124,5 +124,14 @@ export class EmployeeDetailComponent implements OnInit {
     const specificKey = this.employeeMetadataList[index].key;
     this.af.object(`${this.company}/historyData/Employee/${specificKey}`).set(this.employeeList[index]);
     this.af.object(`${this.company}/Drivers/${specificKey}`).remove();
+  }
+  startChat(index: number) {
+    const specificKey = this.employeeMetadataList[index].key;
+    this.dialog.open(ChatDialogComponent, {
+      width: '50%',
+      data: {
+        specificKey: specificKey
+      }
+    });
   }
 }

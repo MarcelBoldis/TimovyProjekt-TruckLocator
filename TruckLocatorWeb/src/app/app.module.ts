@@ -29,6 +29,7 @@ import { NewEmployeeComponent } from './dialogs/new-employee/new-employee.compon
 import { StatisticsComponent } from './components/statistics/statistics.component';
 import { NewTaskComponent } from './components/tasks/new-task/new-task.component';
 import { ChatComponent } from './components/chat/chat.component';
+import { ChatDialogComponent } from './dialogs/chat-dialog/chat-dialog.component';
 
 
 @NgModule({
@@ -52,6 +53,7 @@ import { ChatComponent } from './components/chat/chat.component';
     StatisticsComponent,
     NewTaskComponent,
     ChatComponent,
+    ChatDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,7 +67,7 @@ import { ChatComponent } from './components/chat/chat.component';
     Ng2ImgMaxModule
   ],
   providers: [],
-  entryComponents: [EmployeeListDetailDialogComponent, EmployeeInfoComponent, NewTruckComponent, NewEmployeeComponent],
+  entryComponents: [EmployeeListDetailDialogComponent, EmployeeInfoComponent, NewTruckComponent, NewEmployeeComponent, ChatDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
