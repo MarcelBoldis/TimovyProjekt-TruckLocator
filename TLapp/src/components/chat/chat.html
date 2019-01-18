@@ -1,9 +1,9 @@
 <ion-card padding>
   <h2 padding>Správy</h2>
-  <div #messagesArea class="chatCard">
+  <div #scrollMe class="chatCard">
     <div *ngIf="messages | async as messagesAsnc">
       <div *ngFor="let currMessage of messagesAsnc">
-        <i>{{currMessage.time | date: 'dd.MMMM'}} {{currMessage.from}}</i> <br>
+        <i>{{currMessage.time | date: 'dd.MMMM'}} ({{currMessage.from}})</i> <br>
         <p id="changeT" [ngClass]="(currMessage.from === 'driver') ? 'yourMessage':'outsideMessage'">{{currMessage.text}}</p>
       </div>
     </div>

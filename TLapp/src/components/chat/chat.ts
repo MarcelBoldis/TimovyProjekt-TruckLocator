@@ -11,16 +11,26 @@ export class ChatComponent {
 
   messages: Observable<any[]>;
   newMessage: string;
-  myDate: any;
-  @ViewChild('messagesArea') messageArea: ElementRef;
+  myDate: Date;
+  oldScrollHeight: number;
+  @ViewChild('scrollMe') private chatScrollView: ElementRef;
 
   constructor(private db: AngularFireDatabase, private driversProfileService: DriversProfileServiceProvider) {
     this.initializeMessages();
   }
 
+  ngDoCheck() {
+    if (this.chatScrollView) {
+      if (this.oldScrollHeight !== this.chatScrollView.nativeElement.scrollHeight) {
+        this.scrollToBottom()
+        this.oldScrollHeight = this.chatScrollView.nativeElement.scrollHeight;
+      }
+    }
+  }
+
   initializeMessages() {
-    this.messages = this.db.list(this.driversProfileService.driversEmployerCompany + '/Chat/' + this.driversProfileService.driversKey ).valueChanges();
-    this.messages.subscribe(() => this.scrollToBottomInMessageArea());
+    this.messages = this.db.list(this.driversProfileService.driversEmployerCompany + '/Chat/' + this.driversProfileService.driversKey).valueChanges();
+    this.messages.subscribe();
     this.newMessage = "";
     this.myDate = new Date();
   }
@@ -35,8 +45,11 @@ export class ChatComponent {
       this.newMessage = "";
     }
   }
-  scrollToBottomInMessageArea() {
-    this.messageArea.nativeElement.scrollTop = this.messageArea.nativeElement.scrollHeight;
+
+  scrollToBottom(): void {
+    try {
+      this.chatScrollView.nativeElement.scrollTop = this.chatScrollView.nativeElement.scrollHeight;
+    } catch (err) { }
   }
 
 }
