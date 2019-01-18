@@ -9,6 +9,8 @@ import { ITruck } from '../../../../models/truck';
 import {AngularFireDatabase} from 'angularfire2/database';
 import { CompanyService } from 'src/app/services/company.service';
 
+import * as firebase from 'firebase/app';
+import 'firebase/storage';
 
 @Component({
   selector: 'app-truck-detail',
@@ -38,6 +40,7 @@ export class TruckDetailComponent implements OnInit {
     this.company = this.companyService.getCompany();
     this.fbService.getTruckListReadable().subscribe(trucks => {
       this.truckList = trucks;
+      this.readTrucksPhotos(this.truckList);
       this.filteredTrucks = this.trucksControl.valueChanges
         .pipe(startWith(''),
           map(inputText => inputText ? this._filterTrucks(inputText) : this.truckList)
@@ -49,8 +52,20 @@ export class TruckDetailComponent implements OnInit {
     });
   }
 
+  readTrucksPhotos(trucks) {
+    trucks.forEach(truck => {
+      const storage = firebase.storage();
+      if (truck.photo) {
+        const pathReference = storage.ref(truck.id);
+        pathReference.getDownloadURL().then(function(url) {
+          truck.photoUrl = url;
+        });
+      };
+    })
+  }
+
   showInfo(index: number) {
-    const dialogRef = this.dialog.open(NewTruckComponent, {
+    this.dialog.open(NewTruckComponent, {
       width: '50%',
       data: {
         data: this.truckList[index],
@@ -67,6 +82,9 @@ export class TruckDetailComponent implements OnInit {
         edit: true,
         clickedIndex: this.truckMetadataList[index].key
       }
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this.readTrucksPhotos(this.truckList);
     });
   }
 

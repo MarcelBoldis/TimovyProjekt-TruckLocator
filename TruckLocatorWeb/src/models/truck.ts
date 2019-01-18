@@ -1,4 +1,5 @@
 export interface ITruck {
+    id: string;
     brand: string;
     model: string;
     carNumber: string;
@@ -6,4 +7,5 @@ export interface ITruck {
     vin: string;
     category: string;
     state: string;
+    photo: string;
 }

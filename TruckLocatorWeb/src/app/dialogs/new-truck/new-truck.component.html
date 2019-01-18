@@ -40,7 +40,7 @@
       </div>
     </form>
 
-    <div class="btn">
+    <div class="btn" *ngIf="showEditInputs">
       <button mat-raised-button class="submitButton" [disabled]="!newTruckForm.valid" (click)="sendData()" color="primary">Pridaj</button>
     </div>
   </div>

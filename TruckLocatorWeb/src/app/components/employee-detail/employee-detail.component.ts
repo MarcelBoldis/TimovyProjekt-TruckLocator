@@ -113,13 +113,16 @@ export class EmployeeDetailComponent implements OnInit {
   }
 
   showEdit(index: number) {
-    this.dialog.open(NewEmployeeComponent, {
+    const dialogRef = this.dialog.open(NewEmployeeComponent, {
       width: '50%',
       data: {
         data: this.employeeList[index],
         edit: true,
         clickedIndex: this.employeeMetadataList[index].key
       }
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this.readDriversPhotos(this.employeeList);
     });
   }
 
