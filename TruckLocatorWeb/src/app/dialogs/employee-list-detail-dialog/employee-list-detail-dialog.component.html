@@ -1,8 +1,42 @@
 <div class="dialog">
+    <h1>Detail</h1>
+    <mat-divider></mat-divider>
+    <mat-icon (click)="closeDialog()" class="close">close</mat-icon>
+    <div class="content-wrapper">
+        <form id="activeRouteForm" [formGroup]="activeRouteForm">
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Meno vodiča" formControlName="name">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Vozidlo" formControlName="carName">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Začiatok trasy" formControlName="addressStart">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Koniec trasy" formControlName="addressFinish">
+            </mat-form-field>
 
-<h1>Detail</h1>
-<mat-divider></mat-divider>
-<p>{{data.name}}</p>
-<p>{{data.route}}</p>
+            <mat-expansion-panel class="taskPanel" *ngFor="let task of tasks; let i = index" (opened)="panelOpenState = true"
+                (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Úloha č.{{i + 1}}</mat-panel-title>
+                    <mat-panel-description>{{task.taskDescription}}</mat-panel-description>
+                </mat-expansion-panel-header>
 
+                <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Koniec trasy" value="{{task.taskAddress}}" disabled="true">
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Koniec trasy" value="{{task.taskDate}}" disabled="true">
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Koniec trasy" value="{{task.taskDescription}}" disabled="true">
+                </mat-form-field>
+                <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Koniec trasy" value="{{task.taskTime}}" disabled="true">
+                </mat-form-field>
+            </mat-expansion-panel>
+        </form>
+    </div>
 </div>

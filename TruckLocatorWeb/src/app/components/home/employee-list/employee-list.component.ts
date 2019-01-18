@@ -25,13 +25,17 @@ export class EmployeeListComponent implements OnInit {
     })
   }
 
-
-  driverButtonClicked(index: number) {
+  driverButtonClicked(driverId: string) {
+    const activeDriver = this.activeDrivers.find(driver => driver.id == driverId);
+    const activeTrack = this.getDriversActiveTrack(driverId);
       const dialogRef = this.dialog.open(EmployeeListDetailDialogComponent, {
         width: '800px',
         data: {
-          name: "",//this.activeDrivers[index].name, 
-          route: 1 //this.activeDrivers[index].route}
+          name: activeDriver.firstName + " " + activeDriver.lastName, 
+          addressStart: activeTrack.addressStart,
+          addressFinish: activeTrack.addressFinish,
+          carName: activeTrack.carName,
+          tasks: activeTrack.tasks
       }});
 
       dialogRef.afterClosed().subscribe(result => {
@@ -46,7 +50,8 @@ export class EmployeeListComponent implements OnInit {
       }
     });
   }
-  getDriversActiveTrack(driverId) {    
+
+  getDriversActiveTrack(driverId): ITrack {    
     const tracksObject = this.activeDrivers.find(driver => driver.id == driverId).tracks;        
     var tracks = Object.keys(tracksObject).map(function(e){
       Object.keys(tracksObject[e]).forEach(function(k){
@@ -58,11 +63,11 @@ export class EmployeeListComponent implements OnInit {
       });
       return tracksObject[e];
     });
-    this.shownTrack = tracks.find(track => track.isActive == true);
+    return tracks.find(track => track.isActive == true);
+  }
+
+  showDriversActiveTrack(driverId) {    
+    this.shownTrack = this.getDriversActiveTrack(driverId);
     this.driverClick.emit(this.shownTrack);
-    // this.dbService.getActiveTrackOfEmployee(driverId).subscribe(result => {
-    //   this.shownTrack = result["0"];
-    //   this.driverClick.emit(this.shownTrack);
-    // });
   }
 }

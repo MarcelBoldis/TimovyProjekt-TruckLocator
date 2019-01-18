@@ -1,14 +1,12 @@
 <mat-expansion-panel *ngFor="let driver of activeDrivers; let i = index;">
-  <mat-expansion-panel-header (click)="getDriversActiveTrack(driver.id)">
+  <mat-expansion-panel-header (click)="showDriversActiveTrack(driver.id)">
     <mat-panel-title>
       <mat-icon>fiber_manual_record</mat-icon>{{driver.firstName}} {{driver.lastName}}
     </mat-panel-title>
   </mat-expansion-panel-header>
   <div class="content">
     <mat-icon class="chatIcon" (click) = "startChat(driver.id)">chat_bubble</mat-icon>
-
-    <button mat-raised-button color="primary" (click)="driverButtonClicked(i)" >Detail</button>
+    <button mat-raised-button color="primary" (click)="driverButtonClicked(driver.id)" >Detail</button>
   </div>
-  <!-- <app-chat [setDriversKey]="driver.id"></app-chat> -->
 </mat-expansion-panel>
 
