@@ -8,7 +8,6 @@ import { Ng2ImgMaxService } from 'ng2-img-max';
 import { DomSanitizer } from '@angular/platform-browser';
 import * as firebase from 'firebase/app';
 import 'firebase/storage';
-import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
 
 
@@ -24,7 +23,6 @@ export class NewEmployeeComponent implements OnInit {
   title: string;
   showEditInputs: boolean;
   isCreateMode: boolean;
-  imagePreview: string;
   selectedFile: File = null;
   uploadedImage: File;
 
@@ -36,7 +34,6 @@ export class NewEmployeeComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data,
     private ng2ImgMax: Ng2ImgMaxService,
     public sanitizer: DomSanitizer,
-    private router: Router,
     private afAuth: AngularFireAuth) { }
 
   newEmployeeForm = this.fb.group({
@@ -71,13 +68,9 @@ export class NewEmployeeComponent implements OnInit {
       });
       this.employeeKeys = employeeWorkersKeys.concat(employeeFiredWorkersKeys);
       console.log(this.employeeKeys);
-
     });
 
     if (this.data) {
-      console.log(this.data.data);
-      console.log(this.newEmployeeForm.value);
-
       if (this.data.edit) {
         this.newEmployeeForm.controls["photo"].clearValidators();
         this.fillFormControl(this.data.data);
@@ -183,35 +176,14 @@ export class NewEmployeeComponent implements OnInit {
       result => {
         this.selectedFile = new File([result], result.name);
         console.log(this.selectedFile);
-        //this.getImagePreview(this.selectedFile);
         var storageRef = firebase.storage().ref(name);
         storageRef.put(this.selectedFile);
-        // this.ng2ImgMax.resizeImage(image, 100, 100).subscribe(
-        //   result => {
-        //     this.selectedFile = new File([result], result.name);
-        //     console.log(this.selectedFile);
-        //     var storageRef = firebase.storage().ref(name);
-        //     storageRef.put(this.selectedFile);
-        //   },
-        //   error => {
-        //     console.log('Image could not be resized.', error);
-        //   }
-        // );
       },
       error => {
         console.log('Image could not be compressed.', error);
       }
     );
-
   }
-
-  // getImagePreview(file: File) {
-  //   const reader: FileReader = new FileReader();
-  //   reader.readAsDataURL(file);
-  //   reader.onload = () => {
-  //     this.imagePreview = reader.result.toString();
-  //   };
-  // }
 
   fillFormControl(data: any) {
     this.newEmployeeForm.patchValue({

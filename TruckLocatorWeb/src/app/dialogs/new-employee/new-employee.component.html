@@ -45,13 +45,8 @@
           <span id="fileName">{{fileName}}</span>
         </div>
       </form>
-
-      <!-- Tu si mozes pozriet preview pridaneho obrazku -->
-      <!-- <img *ngIf="imagePreview" [src]="sanitizer.bypassSecurityTrustUrl(imagePreview)"> -->
-
-      <div class="btn" *ngIf="showEditInputs" >
+      <div class="btn" *ngIf="showEditInputs">
         <button mat-raised-button [disabled]="!newEmployeeForm.valid" (click)="sendEmployee()" class="submitButton" color="primary">Pridaj</button>
       </div>
     </div>
   </div>
-<!-- <p>{{newEmployeeForm.value | json}}</p> -->

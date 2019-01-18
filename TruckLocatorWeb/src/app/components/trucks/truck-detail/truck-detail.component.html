@@ -15,7 +15,7 @@
 
 
 <mat-card class="truckCard" *ngFor="let truck of filteredTrucks | async; let index = index;">
-  <img src="../../../../imgs/truck2.png" alt="photo">
+  <img src="{{truck.photoUrl}}" alt="photo">
   <h1>{{truck.brand}}</h1>
   <h2>{{truck.km}} km</h2>
   <div [class]=truck.state>
