@@ -68,7 +68,7 @@ export class NewEmployeeComponent implements OnInit {
       });
       this.employeeKeys = employeeWorkersKeys.concat(employeeFiredWorkersKeys);
       console.log(this.employeeKeys);
-      
+
     });
 
     if (this.data) {
@@ -85,7 +85,7 @@ export class NewEmployeeComponent implements OnInit {
         this.title = 'Info o zamestnancovi';
         this.showEditInputs = false;
       }
-    }else{
+    } else {
       this.isCreateMode = true;
     }
   }
@@ -103,31 +103,37 @@ export class NewEmployeeComponent implements OnInit {
       this.newEmployeeForm.get('birthDate').setValue(this.newEmployeeForm.get('birthDate').value.toISOString());
     }
     if (!this.data) {
-        var that = this;
-        this.afAuth.auth.createUserWithEmailAndPassword(
-        this.newEmployeeForm.get('email').value, this.newEmployeeForm.get('password').value)
-        .then(function(success){
+      var that = this;
+      var userMail = this.newEmployeeForm.get('email').value;
+      var userPass = this.newEmployeeForm.get('password').value;
+      this.afAuth.auth.createUserWithEmailAndPassword(
+        userMail, userPass)
+        .then(function (success) {
+          console.log("hereeeeeeeeeeeeeeee");
+          
           that.dialogRef.close(that.newEmployeeForm.value);
-          that.dialogRef.close(that.newEmployeeForm.value);
-      
+
           const name = that.newEmployeeForm.get('firstName').value.toLowerCase();
           const surName = that.newEmployeeForm.get('lastName').value.toLowerCase();
-      
-          var found = that.employeeKeys.filter(function(element) {
-          return (element.includes(`${name}-${surName}`));
+
+          var found = that.employeeKeys.filter(function (element) {
+            return (element.includes(`${name}-${surName}`));
           });
-      
+
           const specificKey = name + '-' + surName + '-' + found.length;
           this.uploadPhoto(this.uploadedImage, specificKey);
           this.af.object(`${this.company}/Drivers/${specificKey}`).set(this.createNewEmployeeFromForm(this.newEmployeeForm.value, specificKey));
+          console.log("============================");
+          console.log(specificKey);
+          console.log(that.newEmployeeForm.value);
         })
-        .catch(function(error) {
-        // Handle Errors here.
+        .catch(function (error) {
+          // Handle Errors here.
           var errorCode = error.code;
           var errorMessage = error.message;
           console.log(errorCode + "       " + errorMessage);
         });
-      
+
 
     } else if (this.data) {
       if (this.uploadedImage) {
