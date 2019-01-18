@@ -10,6 +10,7 @@ import 'firebase/storage';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { NewEmployeeComponent } from '../../dialogs/new-employee/new-employee.component';
 import { ChatDialogComponent } from '../../dialogs/chat-dialog/chat-dialog.component';
+import { CompanyService } from 'src/app/services/company.service';
 
 @Component({
   selector: 'app-employee-detail',
@@ -17,7 +18,7 @@ import { ChatDialogComponent } from '../../dialogs/chat-dialog/chat-dialog.compo
   styleUrls: ['./employee-detail.component.scss']
 })
 export class EmployeeDetailComponent implements OnInit {
-  company = 'UPC';
+  company:string = '';
   employeeKeys: string[];
   employeeMetadataList: any = [];
   employeeList: IPerson[];
@@ -34,7 +35,8 @@ export class EmployeeDetailComponent implements OnInit {
 
   constructor(public dialog: MatDialog,
     public fbService: FirebaseService,
-    private af: AngularFireDatabase) { }
+    private af: AngularFireDatabase,
+    public companyService: CompanyService) { }
 
   private _filterEmployees(value: string): IPerson[] {
     const filterValue = value.toLowerCase();
@@ -46,6 +48,7 @@ export class EmployeeDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.company = this.companyService.getCompany();
     this.fbService.getEmployeeListReadable().subscribe(drivers => {
       this.employeeList = drivers;
       this.filteredEmployees = this.employeesControl.valueChanges

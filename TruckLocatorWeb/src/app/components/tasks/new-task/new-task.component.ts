@@ -5,6 +5,7 @@ import { AngularFireList, AngularFireDatabase } from 'angularfire2/database';
 
 import { IPerson } from 'src/models/person';
 import { ITruck } from 'src/models/truck';
+import { CompanyService } from 'src/app/services/company.service';
 
 @Component({
   selector: 'app-new-task',
@@ -19,7 +20,7 @@ export class NewTaskComponent implements OnInit {
   driverKeys = [];
   openExpand = true;
 
-  company = 'UPC';
+  company:string = '';
 
   addNewTaskForm = this.fb.group({
     wayName: ['', Validators.required],
@@ -34,10 +35,12 @@ export class NewTaskComponent implements OnInit {
 
   constructor(public fbService: FirebaseService,
               public fb: FormBuilder,
-              private af: AngularFireDatabase,) { }
+              private af: AngularFireDatabase,
+              public companyService: CompanyService) { }
 
 
   ngOnInit() {
+    this.company = this.companyService.getCompany();
     this.fbService.getTruckListReadable().subscribe(trucks => {
       this.truckList = trucks;
     });

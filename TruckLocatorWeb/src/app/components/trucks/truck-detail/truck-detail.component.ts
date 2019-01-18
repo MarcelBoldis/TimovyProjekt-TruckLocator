@@ -7,6 +7,7 @@ import { NewTruckComponent } from 'src/app/dialogs/new-truck/new-truck.component
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { ITruck } from '../../../../models/truck';
 import {AngularFireDatabase} from 'angularfire2/database';
+import { CompanyService } from 'src/app/services/company.service';
 
 
 @Component({
@@ -16,7 +17,7 @@ import {AngularFireDatabase} from 'angularfire2/database';
 })
 
 export class TruckDetailComponent implements OnInit {
-  company = 'UPC';
+  company: string = '';
   truckList: ITruck[];
   trucksControl = new FormControl();
   filteredTrucks: Observable<ITruck[]>;
@@ -24,7 +25,8 @@ export class TruckDetailComponent implements OnInit {
 
   constructor(public dialog: MatDialog,
               public fbService: FirebaseService,
-              private af: AngularFireDatabase) {
+              private af: AngularFireDatabase,
+              public companyService: CompanyService) {
   }
 
   private _filterTrucks(value: string): ITruck[] {
@@ -33,6 +35,7 @@ export class TruckDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.company = this.companyService.getCompany();
     this.fbService.getTruckListReadable().subscribe(trucks => {
       this.truckList = trucks;
       this.filteredTrucks = this.trucksControl.valueChanges

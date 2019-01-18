@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { CompanyService } from 'src/app/services/company.service';
 
 
 @Component({
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private router: Router,
-              public afAuth: AngularFireAuth) { }
+              public afAuth: AngularFireAuth,
+              public companyService: CompanyService) { }
 
 
 
@@ -32,6 +34,8 @@ export class LoginComponent implements OnInit {
   authLogin(): void{
     var that=this;
     this.afAuth.auth.signInWithEmailAndPassword(this.loginForm.get('login').value, this.loginForm.get('password').value).then(function (success){
+      console.log(success.user.email);
+      this.companyService.setCompany('UPC');
       that.router.navigateByUrl('/home');
     }).catch(function(error) {
       // Handle Errors here.

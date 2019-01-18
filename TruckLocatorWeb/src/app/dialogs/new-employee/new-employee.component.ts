@@ -10,6 +10,7 @@ import * as firebase from 'firebase/app';
 import 'firebase/storage';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { CompanyService } from 'src/app/services/company.service';
 
 
 @Component({
@@ -18,7 +19,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
   styleUrls: ['./new-employee.component.scss']
 })
 export class NewEmployeeComponent implements OnInit {
-  company = 'UPC';
+  company: string = '';
   employeeKeys: string[];
   fileName = '';
   title: string;
@@ -37,7 +38,8 @@ export class NewEmployeeComponent implements OnInit {
     private ng2ImgMax: Ng2ImgMaxService,
     public sanitizer: DomSanitizer,
     private router: Router,
-    private afAuth: AngularFireAuth) { }
+    private afAuth: AngularFireAuth, 
+    public companyService: CompanyService) { }
 
   newEmployeeForm = this.fb.group({
     firstName: ['', Validators.required],
@@ -53,6 +55,7 @@ export class NewEmployeeComponent implements OnInit {
   });
 
   ngOnInit() {
+    this.company = this.companyService.getCompany();
     this.title = 'Pridanie zamestnanca';
     this.showEditInputs = true;
     let employeeWorkersKeys = [];

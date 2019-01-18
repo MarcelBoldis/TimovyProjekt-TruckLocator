@@ -4,6 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import {AngularFireDatabase, AngularFireList} from 'angularfire2/database';
 import { FirebaseService } from '../../services/firebase.service';
 import { ITruck } from '../../../models/truck';
+import { CompanyService } from 'src/app/services/company.service';
 
 @Component({
   selector: 'app-new-truck',
@@ -11,7 +12,7 @@ import { ITruck } from '../../../models/truck';
   styleUrls: ['./new-truck.component.scss']
 })
 export class NewTruckComponent implements OnInit {
-  company = 'UPC';
+  company: string = '';
   title: string;
   showEditInputs: boolean;
   fileName = '';
@@ -21,6 +22,7 @@ export class NewTruckComponent implements OnInit {
     public fb: FormBuilder,
     private af: AngularFireDatabase,
     public fbService: FirebaseService,
+    public companyService: CompanyService,
     @Inject(MAT_DIALOG_DATA) public data) { }
 
   trucks: AngularFireList<ITruck[]>;
@@ -36,6 +38,7 @@ export class NewTruckComponent implements OnInit {
   });
 
   ngOnInit() {
+    this.company = this.companyService.getCompany();
     this.title = 'Pridanie vozidla';
     this.trucks = this.fbService.getTruckListWritable();
     this.showEditInputs = true;

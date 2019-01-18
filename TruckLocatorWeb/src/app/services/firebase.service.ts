@@ -5,15 +5,18 @@ import { HttpClient } from '@angular/common/http';
 import { IPerson } from '../../models/person';
 import { ITruck } from '../../models/truck';
 import { ITrack } from 'src/models/track';
+import { CompanyService } from './company.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
-  private basePath: string = '/UPC';
+  private basePath: string = '';
   //private geolocTestData: string = '../assets/geolocations.json';
 
-  constructor(private db: AngularFireDatabase, private _http: HttpClient) { }
+  constructor(private db: AngularFireDatabase, private _http: HttpClient, public companyService: CompanyService) {
+    this.basePath = this.companyService.getCompany(); 
+   }
 
   getEmployeeListReadable(): Observable<IPerson[]> {
     return this.db.list<IPerson>(this.basePath + '/Drivers').valueChanges();
@@ -51,7 +54,7 @@ export class FirebaseService {
   }
 
   // getActiveTrackOfEmployee(employeeId): Observable<ITrack[]> {
-  //   return this.db.list<ITrack>('/UPC/Drivers/' + employeeId + '/tracks', ref => ref.orderByChild('isActive').equalTo(true)).valueChanges();
+  //   return this.db.list<ITrack>(this.basePath + '/Drivers/' + employeeId + '/tracks', ref => ref.orderByChild('isActive').equalTo(true)).valueChanges();
   // }
 
 }
