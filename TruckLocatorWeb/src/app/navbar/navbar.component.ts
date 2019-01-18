@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { NavServiceService } from '../services/nav-service.service';
 
 @Component({
   selector: 'app-navbar',
@@ -12,9 +13,11 @@ export class NavbarComponent implements OnInit {
 
   constructor(public snackBar: MatSnackBar,
               private router: Router,
-              private afAuth: AngularFireAuth) { }
+              private afAuth: AngularFireAuth,
+              public navService: NavServiceService) { }
 
   ngOnInit() {
+
   }
 
   logOut(): void{
@@ -22,5 +25,6 @@ export class NavbarComponent implements OnInit {
     this.afAuth.auth.signOut().then(success => {
       that.router.navigateByUrl('/login');
     });
+    this.navService.hide();
   }
 }

@@ -1,15 +1,15 @@
 <mat-card *ngIf="chatMessages">
   <div #scrollMe class="chatCard">
     <div *ngFor="let currMessage of chatMessages" class="group">
-      <i>{{currMessage.time | date: 'dd.MMMM'}} ({{currMessage.from}})</i>
       <div class="messageWrapper group">
-        <p id="changeT" [ngClass]="(currMessage.from === 'boss') ? 'yourMessage':'outsideMessage'">{{currMessage.text}}</p>
+        <i [ngClass]="(currMessage.from === 'dispečer') ? 'yourMessageInfo':'outsideMessageInfo'">{{currMessage.time | date: 'dd.MMMM'}} ({{currMessage.from}})</i>
+        <p id="changeT" [ngClass]="(currMessage.from === 'dispečer') ? 'yourMessage':'outsideMessage'">{{currMessage.text}}</p>
       </div>
     </div>
   </div>
-  <mat-card>
+  <!-- <mat-card>
     <mat-form-field class="inputNewMessage">
-      <input matInput placeholder="Piste..." [(ngModel)]="newMessageText" name="newMessageText">
+      <input matInput placeholder="Píšte..." [(ngModel)]="newMessageText" name="newMessageText">
       <button mat-button 
       matSuffix
       *ngIf="newMessageText"
@@ -18,5 +18,12 @@
       <mat-icon>send</mat-icon>
       </button>
     </mat-form-field>
-  </mat-card>
+  </mat-card> -->
+  <div class="sendWrapper group">
+    <textarea matInput placeholder="Píšte..." [(ngModel)]="newMessageText" name="newMessageText"></textarea>
+    <button mat-button matSuffix *ngIf="newMessageText" (click)="sendMessage()" mat-icon-button>
+      <mat-icon>send</mat-icon>
+    </button>
+  </div>
+
 </mat-card>

@@ -1,4 +1,4 @@
-<nav class="group">
+<nav class="group" *ngIf="navService.visible">
   <ul>
     <li><a routerLink="/home">Domov</a></li>
     <li><a routerLink="/employers">Zamestnanci</a></li>
@@ -6,9 +6,12 @@
     <li><a routerLink="/tasks">Trasy</a></li>
     <li><a routerLink="/statistics">Štatistiky</a></li>
   </ul>
-  <mat-icon [matMenuTriggerFor]="menu" >account_circle</mat-icon>
-  <mat-menu #menu="matMenu">
-      <button mat-menu-item>Editácia profilu</button>
-      <button mat-menu-item (click)="logOut()">Odhlásenie</button>
-    </mat-menu>
+  <!-- <mat-icon [matMenuTriggerFor]="menu">account_circle</mat-icon> -->
+  <!-- <mat-menu #menu="matMenu">
+    <button mat-menu-item>Editácia profilu</button>
+    <button mat-menu-item (click)="logOut()">Odhlásenie</button>
+  </mat-menu> -->
+  <mat-icon (click)="logOut()" >
+      power_settings_new
+  </mat-icon>
 </nav>

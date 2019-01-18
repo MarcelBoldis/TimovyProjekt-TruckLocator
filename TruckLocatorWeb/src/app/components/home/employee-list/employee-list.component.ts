@@ -4,6 +4,7 @@ import { EmployeeListDetailDialogComponent } from '../../../dialogs/employee-lis
 import { FirebaseService } from '../../../services/firebase.service';
 import { ITrack } from 'src/models/track';
 import { IPerson } from 'src/models/person';
+import { ChatDialogComponent } from 'src/app/dialogs/chat-dialog/chat-dialog.component';
 
 @Component({
   selector: 'app-employee-list',
@@ -37,7 +38,14 @@ export class EmployeeListComponent implements OnInit {
         console.log('The dialog was closed');
       });
   }
-
+  startChat(key: string) {
+    this.dialog.open(ChatDialogComponent, {
+      width: '50%',
+      data: {
+        specificKey: key
+      }
+    });
+  }
   getDriversActiveTrack(driverId) {    
     const tracksObject = this.activeDrivers.find(driver => driver.id == driverId).tracks;        
     var tracks = Object.keys(tracksObject).map(function(e){

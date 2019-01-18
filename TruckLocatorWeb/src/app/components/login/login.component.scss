@@ -1,4 +1,12 @@
 @import '../../../assets/global-css/variables.scss';
+.wrap {
+    text-align: center;
+    img {
+        margin-top: 4vh;
+        width: 300px;
+        height: auto;
+    }
+}
 .form-card {
     max-width: 30%;
     margin: 0 auto;

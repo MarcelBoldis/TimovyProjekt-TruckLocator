@@ -1,3 +1,5 @@
+@import '../../../../assets/global-css/variables.scss';
+
 mat-icon {
     color: green;
     position: relative;
@@ -16,4 +18,12 @@ button {
     position: absolute;
     right: -10px;
     bottom: -15px;
+}
+.chatIcon {
+    color: $chat-color;
+    &:hover {
+        cursor: pointer;
+        transition: all 0.2s linear;
+        transform: scale(1.15);
+    }
 }
