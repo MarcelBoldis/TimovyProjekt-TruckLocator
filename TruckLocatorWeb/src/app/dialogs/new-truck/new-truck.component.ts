@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, EventEmitter } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
@@ -21,6 +21,7 @@ export class NewTruckComponent implements OnInit {
   fileName = '';
   uploadedImage: File;
   selectedFile: File = null;
+  photoUploaded = new EventEmitter();
 
   constructor(
     public dialogRef: MatDialogRef<NewTruckComponent>,
@@ -71,7 +72,8 @@ export class NewTruckComponent implements OnInit {
       result => {
         this.selectedFile = new File([result], result.name);
         var storageRef = firebase.storage().ref(name);
-        storageRef.put(this.selectedFile);
+        storageRef.put(this.selectedFile)
+                  .then(() => this.photoUploaded.emit());
       },
       error => {
         console.log('Image could not be compressed.', error);

@@ -118,7 +118,7 @@ export class EmployeeDetailComponent implements OnInit {
         clickedIndex: this.employeeMetadataList[index].key
       }
     });
-    dialogRef.afterClosed().subscribe(() => {
+    dialogRef.componentInstance.photoUploaded.subscribe(() => {
       this.readDriversPhotos(this.employeeList);
     });
   }
