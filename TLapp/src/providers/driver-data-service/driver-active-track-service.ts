@@ -39,6 +39,9 @@ export class DriverActiveTrackServiceProvider {
   setTrackToActive(trackKey: string) {
     this.db.object(this.driversProfileService.driversURL + '/tracks/' + trackKey + '/isActive').set(true);
   }
+  setTruckIsActive(truckKey: string, isActive: boolean){
+    this.db.object(this.driversProfileService.driversEmployerCompany + '/Trucks/' + truckKey + '/isActive').set(isActive);
+  }
 
   calculateDistanceBetweenTwoPoints(lat1: number, lon1: number, lat2: number, lon2: number, unit: string): number {
     if ((lat1 == lat2) && (lon1 == lon2)) { return 0; }

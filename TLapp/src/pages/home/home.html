@@ -41,7 +41,7 @@
         </div>
       </ion-row>
     </div>
-    <geo-location [trackKey]='trackInfo.key' [buttonTitle]='trackInfo.payload.val().isActive ? "stop" : "start"'></geo-location>
+    <geo-location [trackKey]='trackInfo.key' [truckKey]='trackInfo.payload.val().carName' [buttonTitle]='trackInfo.payload.val().isActive ? "stop" : "start"'></geo-location>
 
     <ion-card *ngIf="openTask">
       <div *ngFor="let taskItem of trackInfo.payload.val().tasks; let i = index ">

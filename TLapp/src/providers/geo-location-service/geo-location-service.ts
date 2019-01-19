@@ -4,16 +4,17 @@ import { DriverActiveTrackServiceProvider } from '../driver-data-service/driver-
 
 @Injectable()
 export class GeoLocationServiceProvider {
-  
+
   private allTrackCoordinations: any[];
 
-  constructor(private backgroundGeolocation: BackgroundGeolocation, private driverDataService: DriverActiveTrackServiceProvider  ) {
+  constructor(private backgroundGeolocation: BackgroundGeolocation, private driverDataService: DriverActiveTrackServiceProvider) {
     this.allTrackCoordinations = [];
   }
 
-  startTracking(trackKey:string) {
-    
+  startTracking(trackKey: string, truckKey: string) {
+
     this.driverDataService.setTrackToActive(trackKey);
+    this.driverDataService.setTruckIsActive(truckKey, true);
     const config: BackgroundGeolocationConfig = {
       desiredAccuracy: 10,
       stationaryRadius: 20,
@@ -32,11 +33,12 @@ export class GeoLocationServiceProvider {
     this.driverDataService.setDriversActiviryStatus(true);
   }
 
-  stopTracking(trackKey:string) {
+  stopTracking(trackKey: string, truckKey: string) {
     this.backgroundGeolocation.finish();
     this.backgroundGeolocation.stop();
     this.driverDataService.setDriversActiviryStatus(false);
     this.driverDataService.activeTrackWasFinished(trackKey);
+    this.driverDataService.setTruckIsActive(truckKey, false);
   }
 
 }

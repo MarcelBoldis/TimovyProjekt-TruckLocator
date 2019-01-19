@@ -9,6 +9,7 @@ import { ToastController } from 'ionic-angular';
 export class GeoLocationComponent {
 
   @Input() trackKey: string;
+  @Input() truckKey: string;
   @Input() buttonTitle: string;
   
   constructor(private geoLocationService: GeoLocationServiceProvider, private toastCtrl: ToastController) { 
@@ -19,13 +20,13 @@ export class GeoLocationComponent {
   }
   startTracking() {
     this.buttonTitle = "stop";
-    this.geoLocationService.startTracking(this.trackKey);    
+    this.geoLocationService.startTracking(this.trackKey, this.truckKey);    
     this.presentToastAboutTrackingStatus("You are beeing tracked!");
   }
 
   stopTracking() {
     this.buttonTitle = "start";
-    this.geoLocationService.stopTracking(this.trackKey);
+    this.geoLocationService.stopTracking(this.trackKey, this.truckKey);
     this.presentToastAboutTrackingStatus("Tracking stopped!");
   }
 
