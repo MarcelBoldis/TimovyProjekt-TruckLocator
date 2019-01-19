@@ -130,8 +130,8 @@ export class NewEmployeeComponent implements OnInit {
           });
 
           const specificKey = name + '-' + surName + '-' + found.length;
-          this.uploadPhoto(this.uploadedImage, specificKey);
-          this.af.object(`${this.company}/Drivers/${specificKey}`).set(this.createNewEmployeeFromForm(this.newEmployeeForm.value, specificKey));
+          that.uploadPhoto(that.uploadedImage, specificKey);
+          that.af.object(`${that.company}/Drivers/${specificKey}`).set(that.createNewEmployeeFromForm(that.newEmployeeForm.value, specificKey));
           console.log("============================");
           console.log(specificKey);
           console.log(that.newEmployeeForm.value);

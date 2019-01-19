@@ -16,7 +16,7 @@
             <mat-form-field class="example-full-width">
                 <input matInput placeholder="Koniec trasy" formControlName="addressFinish">
             </mat-form-field>
-
+            <mat-accordion>
             <mat-expansion-panel class="taskPanel" *ngFor="let task of tasks; let i = index" (opened)="panelOpenState = true"
                 (closed)="panelOpenState = false">
                 <mat-expansion-panel-header>
@@ -37,6 +37,7 @@
                     <input matInput placeholder="Koniec trasy" value="{{task.taskTime}}" disabled="true">
                 </mat-form-field>
             </mat-expansion-panel>
+        </mat-accordion>
         </form>
     </div>
 </div>

@@ -11,9 +11,6 @@ export class TasksComponent implements OnInit {
 
   constructor(private router: Router,
               private afAuth: AngularFireAuth) {
-    if (!afAuth.auth.currentUser) {
-      router.navigateByUrl('/login');
-    }
    }
 
   ngOnInit() {

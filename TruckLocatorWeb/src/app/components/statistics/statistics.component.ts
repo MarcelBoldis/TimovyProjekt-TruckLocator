@@ -12,17 +12,24 @@ import { StatisticsService } from 'src/app/services/statistics.service';
 })
 
 export class StatisticsComponent implements OnInit {
-  
+
   @ViewChild('dnumberOfFinishedTracksCanvas') dnumberOfFinishedTracksCanvas: ElementRef;
   @ViewChild('driversDrivenDistanceCanvas') driversDrivenDistanceCanvas: ElementRef;
   @ViewChild('taskCompletitionSucces') taskCompletitionSucces: ElementRef;
 
   constructor(private statisticsService: StatisticsService, private router: Router, private afAuth: AngularFireAuth) {
-    if (!afAuth.auth.currentUser) { router.navigateByUrl('/login'); }
   }
 
-  ngOnInit() {
+  ngOnInit() { }
 
+  ngAfterViewChecked() {
+    if (!this.statisticsService.dataDispaliedOnce && this.statisticsService.dataReady) {
+      this.initializeAllGraphs();
+      this.statisticsService.dataDispaliedOnce = true;
+    }
+  }
+
+  initializeAllGraphs() {
     this.createGraphDriversDrivenDistance('doughnut', 'Počet prejdených km',
       this.driversDrivenDistanceCanvas.nativeElement.getContext('2d'),
       this.statisticsService.driversDrivenDistances.dataVals, this.statisticsService.driversDrivenDistances.labels, 142, 94, 162);
@@ -33,11 +40,7 @@ export class StatisticsComponent implements OnInit {
 
     this.createGraphDriversDrivenDistance('bar', 'Úspešnosť ukončenia úlohy',
       this.taskCompletitionSucces.nativeElement.getContext('2d'),
-      this.statisticsService.driversPercentageTaskCompleted.dataVals, this.statisticsService.driversPercentageTaskCompleted.labels, 29, 178, 186);
-  }
-
-  initializeAllGraphs() {
-
+      this.statisticsService.driversPercentageTaskCompleted.dataVals, this.statisticsService.driversPercentageTaskCompleted.labels, 185, 146, 29);
   }
 
 

@@ -39,7 +39,7 @@ export class NewTruckComponent implements OnInit {
     carNumber: ['', Validators.required],
     km: ['', Validators.required],
     vin: ['', Validators.required],
-    state: ['available'],
+    isActive: [false],
     category: ['', Validators.required],
     photo: ['', Validators.required]
   });
@@ -110,7 +110,7 @@ export class NewTruckComponent implements OnInit {
     truck.km = newTruckForm.km;
     truck.vin = newTruckForm.vin;
     truck.category = newTruckForm.category;
-    truck.state = newTruckForm.state;
+    truck.isActive = newTruckForm.isActive;
     truck.photo = specificKey;
     return truck;
   }
@@ -123,7 +123,7 @@ export class NewTruckComponent implements OnInit {
       km: data.km,
       vin: data.vin,
       category: data.category,
-      state: data.state,
+      isActive: data.isActive,
       photo: null
     })
   }

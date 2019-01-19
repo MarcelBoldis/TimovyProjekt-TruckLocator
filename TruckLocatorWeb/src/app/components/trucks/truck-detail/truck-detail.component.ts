@@ -23,6 +23,7 @@ export class TruckDetailComponent implements OnInit {
   trucksControl = new FormControl();
   filteredTrucks: Observable<ITruck[]>;
   truckMetadataList: any = [];
+  picturesAreReady = true;
 
   constructor(public dialog: MatDialog,
               public fbService: FirebaseService,
@@ -38,8 +39,11 @@ export class TruckDetailComponent implements OnInit {
   ngOnInit() {
     this.company = this.fbService.getCompany();
     this.fbService.getTruckListReadable().subscribe(trucks => {
-      this.truckList = trucks;
-      this.readTrucksPhotos(this.truckList);
+      this.truckList = trucks;   
+      if (this.picturesAreReady) {
+        this.readTrucksPhotos(this.truckList); 
+      } 
+       
       this.filteredTrucks = this.trucksControl.valueChanges
         .pipe(startWith(''),
           map(inputText => inputText ? this._filterTrucks(inputText) : this.truckList)
@@ -82,8 +86,10 @@ export class TruckDetailComponent implements OnInit {
         clickedIndex: this.truckMetadataList[index].key
       }
     });
+    this.picturesAreReady = false;
     dialogRef.componentInstance.photoUploaded.subscribe(() => {
       this.readTrucksPhotos(this.truckList);
+      this.picturesAreReady = true;
     });
   }
 

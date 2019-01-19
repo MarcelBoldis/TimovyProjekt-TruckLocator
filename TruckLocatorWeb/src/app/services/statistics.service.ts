@@ -13,11 +13,15 @@ export class StatisticsService {
   driversDrivenDistances: ILabelAndDataForCharts;
   driversFinishedTracksNumber: ILabelAndDataForCharts;
   driversPercentageTaskCompleted: ILabelAndDataForCharts;
+  dataReady: boolean;
+  dataDispaliedOnce: boolean;
 
   constructor(private db: AngularFireDatabase) { this.createDriversStatisticsFromFinishedTracks(); }
 
   createDriversStatisticsFromFinishedTracks() {
     this.db.list('UPC/stats/finishedTracks').valueChanges().subscribe(finishedTracks => {
+      this.dataDispaliedOnce = false;
+      this.dataReady = false;
       this.statisticsByDriver = {};
       finishedTracks.forEach((track: ITrack) => {
         if (this.statisticsByDriver[track.driverName]) {
@@ -57,6 +61,7 @@ export class StatisticsService {
         this.calculatepercentage(this.statisticsByDriver[driversKey].totalNumberOfTasks, this.statisticsByDriver[driversKey].completedTasks));
 
     });
+    this.dataReady = true;
   }
   getNumberOfCompletedTasks(allTasks: ITask[]): number {
     let completedTasks: number = 0;

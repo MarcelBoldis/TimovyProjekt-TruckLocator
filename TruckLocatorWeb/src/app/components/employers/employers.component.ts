@@ -20,9 +20,6 @@ export class EmployersComponent implements OnInit {
   constructor(public dialog: MatDialog,
               private router: Router,
               private afAuth: AngularFireAuth) {
-        if (!afAuth.auth.currentUser) {
-            router.navigateByUrl('/login');
-        }
   }
 
   ngOnInit() {
