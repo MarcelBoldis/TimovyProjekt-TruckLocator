@@ -6,6 +6,6 @@ export interface ITruck {
     km: number;
     vin: string;
     category: string;
-    state: string;
+    isActive: boolean;
     photo: string;
 }
