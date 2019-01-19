@@ -16,7 +16,11 @@ export class StatisticsComponent implements OnInit {
   @ViewChild('dnumberOfFinishedTracksCanvas') dnumberOfFinishedTracksCanvas: ElementRef;
   @ViewChild('driversDrivenDistanceCanvas') driversDrivenDistanceCanvas: ElementRef;
   @ViewChild('taskCompletitionSucces') taskCompletitionSucces: ElementRef;
-
+  @ViewChild('fuelCosts') fuelCosts: ElementRef;
+  @ViewChild('trucksDrivenDistanceCanvas') trucksDrivenDistanceCanvas: ElementRef;
+  @ViewChild('trucksFuelPerKm') trucksFuelPerKm: ElementRef;
+  @ViewChild('trucksOnTasks') trucksOnTasks: ElementRef;
+  
   constructor(private statisticsService: StatisticsService, private router: Router, private afAuth: AngularFireAuth) {
   }
 
@@ -38,10 +42,28 @@ export class StatisticsComponent implements OnInit {
       this.dnumberOfFinishedTracksCanvas.nativeElement.getContext('2d'),
       this.statisticsService.driversFinishedTracksNumber.dataVals, this.statisticsService.driversFinishedTracksNumber.labels, 29, 178, 186);
 
-    this.createGraphDriversDrivenDistance('bar', 'Úspešnosť ukončenia úlohy',
+    this.createGraphDriversDrivenDistance('doughnut', 'Úspešnosť ukončenia úlohy',
       this.taskCompletitionSucces.nativeElement.getContext('2d'),
       this.statisticsService.driversPercentageTaskCompleted.dataVals, this.statisticsService.driversPercentageTaskCompleted.labels, 185, 146, 29);
-  }
+  
+    this.createGraphDriversDrivenDistance('doughnut', 'Spotreba na 100 km',
+      this.fuelCosts.nativeElement.getContext('2d'),
+      this.statisticsService.driversFuel.dataVals, this.statisticsService.driversFuel.labels, 88, 123, 75);
+  
+    this.createGraphDriversDrivenDistance('doughnut', 'Počet najazdených km',
+      this.trucksDrivenDistanceCanvas.nativeElement.getContext('2d'),
+      this.statisticsService.truckDrivenDistance.dataVals, this.statisticsService.truckDrivenDistance.labels, 88, 123, 75);
+  
+    this.createGraphDriversDrivenDistance('doughnut', 'Spotreba na 100 km',
+      this.trucksFuelPerKm.nativeElement.getContext('2d'),
+      this.statisticsService.trucksFuel.dataVals, this.statisticsService.trucksFuel.labels, 185, 146, 29);
+   
+    this.createGraphDriversDrivenDistance('doughnut', 'Splnené úlohy',
+      this.trucksOnTasks.nativeElement.getContext('2d'),
+      this.statisticsService.trucksFinishedTracksNumber.dataVals, this.statisticsService.trucksFinishedTracksNumber.labels, 142, 94, 162);
+    
+    
+    }
 
 
   createGraphDriversDrivenDistance(graphType: string, graphTitile: string, graphHtmlIdContext: any, dataVals: number[], labels: string[], red: number, green: number, blue: number) {

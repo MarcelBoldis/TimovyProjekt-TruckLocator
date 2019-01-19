@@ -20,3 +20,20 @@ body {
 .no-padd .mat-expansion-panel-body {
     padding: 0 !important;
 }
+
+/*Scroll bar*/
+body::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+body::-webkit-scrollbar-track {
+    background: white;
+    border-radius: 10px;
+}
+
+/* Handle */
+body::-webkit-scrollbar-thumb {
+    background: $nav-color; 
+    border-radius: 10px;
+}

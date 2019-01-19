@@ -10,3 +10,21 @@
     margin: 20px;
   }
 }
+
+
+/*Scroll bar*/
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: white;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $nav-color; 
+  border-radius: 10px;
+}
