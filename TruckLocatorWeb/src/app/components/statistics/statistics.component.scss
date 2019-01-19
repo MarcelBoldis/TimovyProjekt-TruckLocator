@@ -1,63 +1,12 @@
 @import '../../../assets/global-css/variables.scss';
 
-.container {
-  width: 95%;
-  margin: 0 auto;
-
-  margin-top: 5vh;
-
-  .left-content {
-    float: left;
-    width: 29%;
-    margin-left: 2vh;
-  }
-  .right-content {
-    float: right;
-    box-sizing: border-box;
-    padding: 15px;
-    width: 69%;
-    background-color: $background-charts;
-    overflow: hidden;
-  }
-}
-
-.legedCard {
-  padding: 0;
-
-  h2 {
-    margin: 0;
-    padding: 10px;
-
-  }
-}
-.legend {
-  padding: 10px;
-
-  .wrapGroup {
-    transition: all 100ms linear;
-    padding-left: 8px;
-    line-height: 25px;
-    mat-icon{
-      font-size: 25px;
-      position: relative;
-      top: 6px;
-      margin-right: 8px;
-    }
-    span {
-      color: black;
-    }
-  }
-
-  .wrapGroup:hover {
-    cursor: pointer;
-    transform: scale(1.03);
-  }
-}
-
-
-#chartDivko,
-#chartDivko2,
-#chartDivko3 {
-  height: 100%;
+.chartContainer{
   width: 100%;
+}
+.grid-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  mat-card{
+    margin: 20px;
+  }
 }

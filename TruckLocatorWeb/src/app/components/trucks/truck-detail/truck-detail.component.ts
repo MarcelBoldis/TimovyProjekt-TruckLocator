@@ -83,7 +83,7 @@ export class TruckDetailComponent implements OnInit {
         clickedIndex: this.truckMetadataList[index].key
       }
     });
-    dialogRef.afterClosed().subscribe(() => {
+    dialogRef.componentInstance.photoUploaded.subscribe(() => {
       this.readTrucksPhotos(this.truckList);
     });
   }

@@ -10,4 +10,5 @@ export interface ITrack {
     isActive: boolean;
     tasks: Array<ITask>;
     coordinations: Array<ICoordinate>;
+    drivenDistance?: number
 }
