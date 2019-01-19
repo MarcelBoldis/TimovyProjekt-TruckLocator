@@ -15,9 +15,6 @@ export class HomeComponent implements OnInit {
   constructor(private router: Router,
               private afAuth: AngularFireAuth,
               public navService: NavServiceService) {
-                if (!afAuth.auth.currentUser) {
-                  router.navigateByUrl('/login');
-                }
               }
 
   ngOnInit() {

@@ -18,7 +18,6 @@ export class StatisticsComponent implements OnInit {
   @ViewChild('taskCompletitionSucces') taskCompletitionSucces: ElementRef;
 
   constructor(private statisticsService: StatisticsService, private router: Router, private afAuth: AngularFireAuth) {
-    if (!afAuth.auth.currentUser) { router.navigateByUrl('/login'); }
   }
 
   ngOnInit() {
