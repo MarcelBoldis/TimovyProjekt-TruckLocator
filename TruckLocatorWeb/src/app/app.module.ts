@@ -32,6 +32,7 @@ import { ChatComponent } from './components/chat/chat.component';
 import { ChatDialogComponent } from './dialogs/chat-dialog/chat-dialog.component';
 import { AuthGuard } from './core/auth.guard';
 import { AngularWebStorageModule } from 'angular-web-storage';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 
 
@@ -57,6 +58,7 @@ import { AngularWebStorageModule } from 'angular-web-storage';
     NewTaskComponent,
     ChatComponent,
     ChatDialogComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     BrowserModule,

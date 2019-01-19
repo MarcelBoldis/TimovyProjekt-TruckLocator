@@ -36,9 +36,6 @@
         <mat-form-field>
           <input matInput placeholder="Email" formControlName="email">
         </mat-form-field>
-        <mat-form-field *ngIf="isCreateMode">
-          <input matInput placeholder="Password" formControlName="password">
-        </mat-form-field>
         <div class="inputfile" *ngIf="showEditInputs">
           <input formControlName="photo" type="file"(change)="setPhoto($event)" name="file" id="file" class="file" accept="image/*">
           <label for="file"><i class="material-icons photoIcon">add_a_photo </i> Vložte fotku</label>
