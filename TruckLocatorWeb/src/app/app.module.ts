@@ -30,7 +30,9 @@ import { StatisticsComponent } from './components/statistics/statistics.componen
 import { NewTaskComponent } from './components/tasks/new-task/new-task.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { ChatDialogComponent } from './dialogs/chat-dialog/chat-dialog.component';
-import {AuthGuard } from './core/auth.guard';
+import { AuthGuard } from './core/auth.guard';
+import { AngularWebStorageModule } from 'angular-web-storage';
+
 
 
 @NgModule({
@@ -65,7 +67,8 @@ import {AuthGuard } from './core/auth.guard';
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
-    Ng2ImgMaxModule
+    Ng2ImgMaxModule,
+    AngularWebStorageModule
   ],
   providers: [AuthGuard],
   entryComponents: [EmployeeListDetailDialogComponent, EmployeeInfoComponent, NewTruckComponent, NewEmployeeComponent, ChatDialogComponent],

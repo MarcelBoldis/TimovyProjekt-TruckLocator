@@ -19,20 +19,5 @@ export class AppComponent {
     db.list('companies').valueChanges().subscribe(items => {
       this.data = items;
     });
-
-    
-    var that = this;
-    afAuth.auth.onAuthStateChanged(function(user){
-      if (user){
-        const splittedLogin = user.email.split("@");
-        const company = splittedLogin[1].substring(0, splittedLogin[1].indexOf(".")).toUpperCase();
-        that.fbService.setCompany(company);
-        router.navigateByUrl('/home');
-      }else{
-        router.navigateByUrl('/login');
-      }
-    }, function(error){
-        console.log(error);
-    });
   }
 }

@@ -12,6 +12,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { Router } from '@angular/router';
 
 
+
 @Component({
   selector: 'app-new-employee',
   templateUrl: './new-employee.component.html',
@@ -135,6 +136,8 @@ export class NewEmployeeComponent implements OnInit {
           console.log("============================");
           console.log(specificKey);
           console.log(that.newEmployeeForm.value);
+          
+           
         })
         .catch(function (error) {
           // Handle Errors here.
