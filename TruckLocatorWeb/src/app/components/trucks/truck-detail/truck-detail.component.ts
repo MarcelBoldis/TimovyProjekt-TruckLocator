@@ -7,6 +7,7 @@ import { NewTruckComponent } from 'src/app/dialogs/new-truck/new-truck.component
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { ITruck } from '../../../../models/truck';
 import {AngularFireDatabase} from 'angularfire2/database';
+
 import * as firebase from 'firebase/app';
 import 'firebase/storage';
 
@@ -17,7 +18,7 @@ import 'firebase/storage';
 })
 
 export class TruckDetailComponent implements OnInit {
-  company = 'UPC';
+  company: string = '';
   truckList: ITruck[];
   trucksControl = new FormControl();
   filteredTrucks: Observable<ITruck[]>;
@@ -26,7 +27,8 @@ export class TruckDetailComponent implements OnInit {
 
   constructor(public dialog: MatDialog,
               public fbService: FirebaseService,
-              private af: AngularFireDatabase) {
+              private af: AngularFireDatabase,
+              ) {
   }
 
   private _filterTrucks(value: string): ITruck[] {
@@ -35,6 +37,7 @@ export class TruckDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.company = this.fbService.getCompany();
     this.fbService.getTruckListReadable().subscribe(trucks => {
       this.truckList = trucks;   
       if (this.picturesAreReady) {

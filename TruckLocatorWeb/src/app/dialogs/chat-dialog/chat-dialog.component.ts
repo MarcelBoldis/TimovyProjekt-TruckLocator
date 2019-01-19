@@ -17,8 +17,6 @@ export class ChatDialogComponent implements OnInit {
 
   ngOnInit() {
     this.specificKey = this.data.specificKey;
-    console.log(this.specificKey);
-    
   }
   onNoClick(): void {
     this.dialogRef.close();

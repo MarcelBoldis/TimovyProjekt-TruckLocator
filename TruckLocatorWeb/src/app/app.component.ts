@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { FirebaseService } from './services/firebase.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,8 @@ export class AppComponent {
   data = [];
   constructor(db: AngularFireDatabase,
               private router: Router,
-              private afAuth: AngularFireAuth) {
+              private afAuth: AngularFireAuth,
+              public fbService: FirebaseService) {
     db.list('companies').valueChanges().subscribe(items => {
       this.data = items;
     });

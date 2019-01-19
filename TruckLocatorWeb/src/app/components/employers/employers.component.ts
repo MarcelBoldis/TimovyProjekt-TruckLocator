@@ -46,7 +46,6 @@ export class EmployersComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       newEmployee = result;
-      console.log(newEmployee);
     });
   }
 }

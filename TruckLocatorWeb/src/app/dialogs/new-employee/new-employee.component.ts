@@ -9,6 +9,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import * as firebase from 'firebase/app';
 import 'firebase/storage';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -17,7 +18,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
   styleUrls: ['./new-employee.component.scss']
 })
 export class NewEmployeeComponent implements OnInit {
-  company = 'UPC';
+  company: string = '';
   employeeKeys: string[];
   fileName = '';
   title: string;
@@ -35,7 +36,9 @@ export class NewEmployeeComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data,
     private ng2ImgMax: Ng2ImgMaxService,
     public sanitizer: DomSanitizer,
-    private afAuth: AngularFireAuth) { }
+    private router: Router,
+    private afAuth: AngularFireAuth, 
+    ) { }
 
   newEmployeeForm = this.fb.group({
     firstName: ['', Validators.required],
@@ -51,6 +54,7 @@ export class NewEmployeeComponent implements OnInit {
   });
 
   ngOnInit() {
+    this.company = this.fbService.getCompany();
     this.title = 'Pridanie zamestnanca';
     this.showEditInputs = true;
     let employeeWorkersKeys = [];

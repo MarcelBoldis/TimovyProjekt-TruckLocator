@@ -15,7 +15,7 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./new-truck.component.scss']
 })
 export class NewTruckComponent implements OnInit {
-  company = 'UPC';
+  company: string = '';
   title: string;
   showEditInputs: boolean;
   fileName = '';
@@ -45,6 +45,7 @@ export class NewTruckComponent implements OnInit {
   });
 
   ngOnInit() {
+    this.company = this.fbService.getCompany();
     this.title = 'Pridanie vozidla';
     this.trucks = this.fbService.getTruckListWritable();
     this.showEditInputs = true;

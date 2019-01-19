@@ -17,7 +17,7 @@ import { ChatDialogComponent } from '../../dialogs/chat-dialog/chat-dialog.compo
   styleUrls: ['./employee-detail.component.scss']
 })
 export class EmployeeDetailComponent implements OnInit {
-  company = 'UPC';
+  company:string = '';
   employeeKeys: string[];
   employeeMetadataList: any = [];
   employeeList: IPerson[];
@@ -34,7 +34,8 @@ export class EmployeeDetailComponent implements OnInit {
 
   constructor(public dialog: MatDialog,
     public fbService: FirebaseService,
-    private af: AngularFireDatabase) { }
+    private af: AngularFireDatabase,
+    ) { }
 
   private _filterEmployees(value: string): IPerson[] {
     const filterValue = value.toLowerCase();
@@ -46,6 +47,7 @@ export class EmployeeDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.company = this.fbService.getCompany();
     this.fbService.getEmployeeListReadable().subscribe(drivers => {
       this.employeeList = drivers;
       this.filteredEmployees = this.employeesControl.valueChanges

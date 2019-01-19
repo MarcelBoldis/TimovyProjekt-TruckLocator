@@ -21,7 +21,6 @@ export class EmployeeListComponent implements OnInit {
   ngOnInit() {
     this.dbService.getActiveEmployees().subscribe(drivers => {
       this.activeDrivers = drivers;
-      console.log(this.activeDrivers);
     })
   }
 
@@ -39,7 +38,6 @@ export class EmployeeListComponent implements OnInit {
       }});
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
       });
   }
   startChat(key: string) {

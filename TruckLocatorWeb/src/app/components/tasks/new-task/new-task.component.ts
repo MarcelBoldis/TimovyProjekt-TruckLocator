@@ -6,6 +6,7 @@ import { AngularFireList, AngularFireDatabase } from 'angularfire2/database';
 import { IPerson } from 'src/models/person';
 import { ITruck } from 'src/models/truck';
 
+
 @Component({
   selector: 'app-new-task',
   templateUrl: './new-task.component.html',
@@ -19,7 +20,7 @@ export class NewTaskComponent implements OnInit {
   driverKeys = [];
   openExpand = true;
 
-  company = 'UPC';
+  company:string = '';
 
   addNewTaskForm = this.fb.group({
     wayName: ['', Validators.required],
@@ -34,10 +35,12 @@ export class NewTaskComponent implements OnInit {
 
   constructor(public fbService: FirebaseService,
               public fb: FormBuilder,
-              private af: AngularFireDatabase,) { }
+              private af: AngularFireDatabase,
+              ) { }
 
 
   ngOnInit() {
+    this.company = this.fbService.getCompany();
     this.fbService.getTruckListReadable().subscribe(trucks => {
       this.truckList = trucks;
     });
@@ -56,7 +59,6 @@ export class NewTaskComponent implements OnInit {
   }
 
   addRoute() {
-    console.log(this.addNewTaskForm.value);
     this.openExpand = false;
     this.tasks.push(this.createItem());
   }
@@ -86,7 +88,6 @@ export class NewTaskComponent implements OnInit {
       tasks.push(element);
     });
     this.addNewTaskForm.get('tasks').setValue(tasks);
-    console.log(this.addNewTaskForm.value);
 
     this.af.object(`${this.company}/Drivers/${specificDriverKey}/tracks/${specificTrackKey}`).set(this.addNewTaskForm.value);
     this.addNewTaskForm.reset();
