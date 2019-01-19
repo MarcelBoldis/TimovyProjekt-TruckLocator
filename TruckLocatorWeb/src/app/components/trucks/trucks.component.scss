@@ -57,9 +57,7 @@
 .available {
     color: $truck-available;
 }
-.inService {
-    color: $truck-in-service;
-}
+
 .inProcess {
     color: $truck-in-process;
 }
@@ -80,6 +78,6 @@
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: $nav-color; 
+    background: $nav-color;
     border-radius: 10px;
 }
