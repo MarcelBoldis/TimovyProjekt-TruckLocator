@@ -4,16 +4,11 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { FirebaseService } from '../../services/firebase.service';
 import { ITruck } from '../../../models/truck';
-<<<<<<< HEAD
 import { CompanyService } from 'src/app/services/company.service';
-import { Ng2ImgMaxService } from 'ng2-img-max';
-import { DomSanitizer } from '@angular/platform-browser';
-=======
 import { Ng2ImgMaxService } from 'ng2-img-max';
 import * as firebase from 'firebase/app';
 import 'firebase/storage';
 import { DomSanitizer } from '@angular/platform-browser';
->>>>>>> 0d6eb221a08c525d659dec3e6e73e8da1f29cafa
 
 @Component({
   selector: 'app-new-truck',
