@@ -17,15 +17,5 @@ export class AppComponent {
     db.list('companies').valueChanges().subscribe(items => {
       this.data = items;
     });
-
-    afAuth.auth.onAuthStateChanged(function(user){
-      if (user){
-        router.navigateByUrl('/home');
-      }else{
-        router.navigateByUrl('/login');
-      }
-    }, function(error){
-        console.log(error);
-    });
   }
 }
