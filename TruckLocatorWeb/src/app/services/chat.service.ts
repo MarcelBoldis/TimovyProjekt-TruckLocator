@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { CompanyService } from './company.service';
+import { FirebaseService } from './firebase.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
   private basePath: string = '';
-  constructor(private db: AngularFireDatabase, public companyService: CompanyService) {
-    this.basePath = this.companyService.getCompany();
+  constructor(private db: AngularFireDatabase, public fbService: FirebaseService) {
+    this.basePath = this.fbService.getCompany();
    }
   sendMessage(messageText: string, driversKey: string){
     this.db.list(this.basePath + '/Chat/' + driversKey).push({

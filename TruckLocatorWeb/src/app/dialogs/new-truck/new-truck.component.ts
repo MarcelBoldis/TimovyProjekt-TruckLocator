@@ -4,7 +4,6 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { FirebaseService } from '../../services/firebase.service';
 import { ITruck } from '../../../models/truck';
-import { CompanyService } from 'src/app/services/company.service';
 import { Ng2ImgMaxService } from 'ng2-img-max';
 import * as firebase from 'firebase/app';
 import 'firebase/storage';
@@ -29,7 +28,6 @@ export class NewTruckComponent implements OnInit {
     public fb: FormBuilder,
     private af: AngularFireDatabase,
     public fbService: FirebaseService,
-    public companyService: CompanyService,
     @Inject(MAT_DIALOG_DATA) public data,
     private ng2ImgMax: Ng2ImgMaxService,
     public sanitizer: DomSanitizer,) { }
@@ -47,7 +45,7 @@ export class NewTruckComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.company = this.companyService.getCompany();
+    this.company = this.fbService.getCompany();
     this.title = 'Pridanie vozidla';
     this.trucks = this.fbService.getTruckListWritable();
     this.showEditInputs = true;

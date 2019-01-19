@@ -4,11 +4,10 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class CompanyService {
-  private company: string = 'UPC';
+  private company: string = '';
   constructor() { }
 
   setCompany(company: string) {
-    alert(company);
     this.company = company;
   }
   getCompany() {

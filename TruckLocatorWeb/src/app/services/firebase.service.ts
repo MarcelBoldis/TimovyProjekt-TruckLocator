@@ -1,21 +1,25 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from "angularfire2/database"; 
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 import { IPerson } from '../../models/person';
 import { ITruck } from '../../models/truck';
-import { ITrack } from 'src/models/track';
-import { CompanyService } from './company.service';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
-  private basePath: string = '';
+  basePath: string;
   //private geolocTestData: string = '../assets/geolocations.json';
 
-  constructor(private db: AngularFireDatabase, private _http: HttpClient, public companyService: CompanyService) {
-    this.basePath = this.companyService.getCompany(); 
+  constructor(private db: AngularFireDatabase) {}
+
+  setCompany(company: string) {
+     this.basePath = company;
+   }
+
+   getCompany() {
+     return this.basePath;
    }
 
   getEmployeeListReadable(): Observable<IPerson[]> {

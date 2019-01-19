@@ -9,7 +9,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 import * as firebase from 'firebase/app';
 import 'firebase/storage';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { CompanyService } from 'src/app/services/company.service';
 import { Router } from '@angular/router';
 
 
@@ -39,7 +38,7 @@ export class NewEmployeeComponent implements OnInit {
     public sanitizer: DomSanitizer,
     private router: Router,
     private afAuth: AngularFireAuth, 
-    public companyService: CompanyService) { }
+    ) { }
 
   newEmployeeForm = this.fb.group({
     firstName: ['', Validators.required],
@@ -55,7 +54,7 @@ export class NewEmployeeComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.company = this.companyService.getCompany();
+    this.company = this.fbService.getCompany();
     this.title = 'Pridanie zamestnanca';
     this.showEditInputs = true;
     let employeeWorkersKeys = [];
