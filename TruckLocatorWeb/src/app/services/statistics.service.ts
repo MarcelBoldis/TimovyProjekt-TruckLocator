@@ -3,6 +3,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { IDriversStatistics, ILabelAndDataForCharts, ITrucksStatistics } from '../interfaces/statistics-interfaces';
 import { ITrack } from 'src/models/track';
 import { ITask } from 'src/models/task';
+import { FirebaseService } from './firebase.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,10 +24,11 @@ export class StatisticsService {
   trucksFuel: ILabelAndDataForCharts;
   trucksFinishedTracksNumber: ILabelAndDataForCharts;
 
-  constructor(private db: AngularFireDatabase) { }
+  constructor(private db: AngularFireDatabase, private fbService: FirebaseService) { }
 
   createDriversStatisticsFromFinishedTracks() {
-    this.db.list('UPC/stats/finishedTracks').valueChanges().subscribe(finishedTracks => {
+    
+    this.db.list(`/${this.fbService.basePath}/stats/finishedTracks`).valueChanges().subscribe(finishedTracks => {
       this.dataDispaliedOnce = false;
       this.dataReady = false;
       this.statisticsByDriver = {};
