@@ -32,6 +32,11 @@ body::-webkit-scrollbar-track {
     border-radius: 10px;
 }
 
+.mat-snack-bar-container {
+    max-width: 50% !important;
+    margin: 20px auto !important;
+  }
+
 /* Handle */
 body::-webkit-scrollbar-thumb {
     background: $nav-color; 

@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, EventEmitter } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { FirebaseService } from '../../services/firebase.service';
@@ -37,6 +37,7 @@ export class NewEmployeeComponent implements OnInit {
     public sanitizer: DomSanitizer,
     private router: Router,
     private afAuth: AngularFireAuth, 
+    private snackBar: MatSnackBar,
     ) { }
 
   newEmployeeForm = this.fb.group({
@@ -67,7 +68,6 @@ export class NewEmployeeComponent implements OnInit {
         return obj.key;
       });
       this.employeeKeys = employeeWorkersKeys.concat(employeeFiredWorkersKeys);
-      console.log(this.employeeKeys);
     });
 
     if (this.data) {
@@ -111,7 +111,6 @@ export class NewEmployeeComponent implements OnInit {
       this.afAuth.auth.createUserWithEmailAndPassword(
         userMail, userPass)
         .then(function (success) {
-          console.log("hereeeeeeeeeeeeeeee");
           
           that.dialogRef.close(that.newEmployeeForm.value);
 
@@ -125,22 +124,22 @@ export class NewEmployeeComponent implements OnInit {
           const specificKey = name + '-' + surName + '-' + found.length;
           that.uploadPhoto(that.uploadedImage, specificKey);
           that.af.object(`${that.company}/Drivers/${specificKey}`).set(that.createNewEmployeeFromForm(that.newEmployeeForm.value, specificKey));
-          console.log("============================");
-          console.log(specificKey);
-          console.log(that.newEmployeeForm.value);
           that.afAuth.auth.sendPasswordResetEmail(userMail)
           .then(function(success) {
-            console.log('uspesne odoslany mail');
+            that.snackBar.open('Uspešne odoslaný e-mail', 'Ok', {
+              duration: 2000,
+            });
           })
           .catch(function(error) {
-            console.log(error.code + "     " + error.message);
+            that.snackBar.open(error.message, 'Ok', {
+              duration: 2000,
+            });
           });
         })
         .catch(function (error) {
-          // Handle Errors here.
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          console.log(errorCode + "       " + errorMessage);
+          that.snackBar.open(error.message, 'Ok', {
+            duration: 2000,
+          });
         });
 
 
@@ -166,27 +165,27 @@ export class NewEmployeeComponent implements OnInit {
     person.specialisation = newEmployeeForm.specialisation;
     person.email = newEmployeeForm.email;
     person.photo = specificKey;
-    console.log(person);
     return person;
   }
 
   setPhoto(event: any) {
     this.uploadedImage = event.target.files[0];
     this.fileName = this.uploadedImage.name;
-    console.log(this.uploadedImage.name);
   }
 
   uploadPhoto(image: File, name: string) {
+    var that = this;
     this.ng2ImgMax.compressImage(image, 0.075).subscribe(
       result => {
         this.selectedFile = new File([result], result.name);
-        console.log(this.selectedFile);
         var storageRef = firebase.storage().ref(name);
         storageRef.put(this.selectedFile)
                   .then(() => this.photoUploaded.emit());
       },
       error => {
-        console.log('Image could not be compressed.', error);
+        that.snackBar.open(error, 'Ok', {
+          duration: 2000,
+        });
       }
     );
   }

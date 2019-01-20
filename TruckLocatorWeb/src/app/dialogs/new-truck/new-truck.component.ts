@@ -5,6 +5,7 @@ import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { FirebaseService } from '../../services/firebase.service';
 import { ITruck } from '../../../models/truck';
 import { Ng2ImgMaxService } from 'ng2-img-max';
+import { MatSnackBar } from '@angular/material';
 import * as firebase from 'firebase/app';
 import 'firebase/storage';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -30,7 +31,8 @@ export class NewTruckComponent implements OnInit {
     public fbService: FirebaseService,
     @Inject(MAT_DIALOG_DATA) public data,
     private ng2ImgMax: Ng2ImgMaxService,
-    public sanitizer: DomSanitizer,) { }
+    public sanitizer: DomSanitizer,
+    public snackBar: MatSnackBar  ) { }
 
   trucks: AngularFireList<ITruck[]>;
   newTruckForm = this.fb.group({
@@ -77,7 +79,9 @@ export class NewTruckComponent implements OnInit {
                   .then(() => this.photoUploaded.emit());
       },
       error => {
-        console.log('Image could not be compressed.', error);
+        this.snackBar.open(error, 'Ok', {
+          duration: 1000,
+        });
       }
     );
   }

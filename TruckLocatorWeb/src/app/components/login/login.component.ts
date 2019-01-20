@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { SessionStorageService } from 'angular-web-storage'
+import {MatSnackBar} from '@angular/material';
 
 
 @Component({
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     public afAuth: AngularFireAuth,
     public fbService: FirebaseService,
-    private session: SessionStorageService) { }
+    private session: SessionStorageService, 
+    private snackBar: MatSnackBar) { }
 
 
 
@@ -37,6 +39,7 @@ export class LoginComponent implements OnInit {
     var that = this;
     var isCompanyUser = this.isCompanyLoged(this.loginForm.get('login').value);
     if(isCompanyUser){
+      var that = this;
       this.afAuth.auth.signInWithEmailAndPassword(this.loginForm.get('login').value, this.loginForm.get('password').value).then(function (success) {
         const company = that.getCompanyFromEmail(success.user.email); 
         that.setSessionCompanyName(company);
@@ -44,10 +47,10 @@ export class LoginComponent implements OnInit {
         that.router.navigateByUrl('/home');
       }).catch(function (error) {
         // Handle Errors here.
-        var errorCode = error.code;
         var errorMessage = error.message;
-        console.log(errorCode + "    " + errorMessage);
-        // ...
+        that.snackBar.open(errorMessage, 'OK', {
+          duration: 2000,
+        });
       });
     }
   }
@@ -58,7 +61,6 @@ export class LoginComponent implements OnInit {
   }
 
   setSessionCompanyName(company: string) {
-    console.log("ukladam : ", company);
     this.session.set('companyNameTruckLocator', company);
   }
   removeSessionCompanyName() {

@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { FirebaseService } from '../services/firebase.service';
 import { SessionStorageService } from '../../../node_modules/angular-web-storage';
 import { NavServiceService } from '../services/nav-service.service';
+import { MatSnackBar } from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class AuthGuard implements CanActivate {
               private router: Router,
               private firebaseService: FirebaseService,
               private session: SessionStorageService,
-              private nav: NavServiceService){
+              private nav: NavServiceService,
+              private snackBar: MatSnackBar){
   }
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -29,7 +31,9 @@ export class AuthGuard implements CanActivate {
               resolve(true); 
             }
             else{
-              console.log("access denied");
+              that.snackBar.open('Pristup zamietnutý', 'Ok', {
+                duration: 2000,
+              });
               this.router.navigateByUrl('/login');
               resolve(false);
             }

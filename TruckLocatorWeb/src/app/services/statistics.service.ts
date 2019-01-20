@@ -3,11 +3,13 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { IDriversStatistics, ILabelAndDataForCharts, ITrucksStatistics } from '../interfaces/statistics-interfaces';
 import { ITrack } from 'src/models/track';
 import { ITask } from 'src/models/task';
+import { FirebaseService } from './firebase.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StatisticsService {
+  company: string = '';
 
   statisticsByDriver: IDriversStatistics;
   statisticsByTruck: ITrucksStatistics;
@@ -22,10 +24,13 @@ export class StatisticsService {
   trucksFuel: ILabelAndDataForCharts;
   trucksFinishedTracksNumber: ILabelAndDataForCharts;
 
-  constructor(private db: AngularFireDatabase) { this.createDriversStatisticsFromFinishedTracks(); }
+  constructor(private db: AngularFireDatabase, private firebaseService: FirebaseService) { 
+    this.createDriversStatisticsFromFinishedTracks(); 
+    this.company = firebaseService.basePath;
+  }
 
   createDriversStatisticsFromFinishedTracks() {
-    this.db.list('UPC/stats/finishedTracks').valueChanges().subscribe(finishedTracks => {
+    this.db.list('/'+this.company+'/stats/finishedTracks').valueChanges().subscribe(finishedTracks => {
       this.dataDispaliedOnce = false;
       this.dataReady = false;
       this.statisticsByDriver = {};
@@ -39,8 +44,6 @@ export class StatisticsService {
           if (track.fuelCosts) {
             this.statisticsByDriver[track.driverName].priceForFuel += +track.fuelCosts.price;
             this.statisticsByDriver[track.driverName].fuelAmount += +track.fuelCosts.fuelAmount;
-            console.log(+this.statisticsByDriver[track.driverName].fuelAmount);
-
           }
           if (track.tasks) {
             this.statisticsByDriver[track.driverName].completedTasks += +this.getNumberOfCompletedTasks(track.tasks);
