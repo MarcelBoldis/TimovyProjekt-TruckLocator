@@ -38,45 +38,49 @@ export class LoginPage {
 
   async login(user : UserInterface){    
     var that= this;
-    try{
-      that.ofAuth.auth.setPersistence("local")
-      .then(function() {
-        // Existing and future Auth states are now persisted in the current
-        // session only. Closing the window would clear any existing state even
-        // if a user forgets to sign out.
-        // ...
-        // New sign-in will be persisted with session persistence.
-        return that.ofAuth.auth.signInWithEmailAndPassword(user.userName, user.password);
-      })
-      .then(success => {
-        //overenie ci je to vodic a nie zamestnavatel
-        if(!success.emailVerified){
-          that.navCtrl.setRoot('HomePage');
-        }else{
+    var splittedLogin = user.userName.split("@");
+    var company = splittedLogin[1].substring(0, splittedLogin[1].indexOf("."));
+    if(!splittedLogin[0].includes(company)){
+      try{
+        that.ofAuth.auth.setPersistence("local")
+        .then(function() {
+          // Existing and future Auth states are now persisted in the current
+          // session only. Closing the window would clear any existing state even
+          // if a user forgets to sign out.
+          // ...
+          // New sign-in will be persisted with session persistence.
+          return that.ofAuth.auth.signInWithEmailAndPassword(user.userName, user.password);
+        })
+        .then(success => {
+          //overenie ci je to vodic a nie zamestnavatel
+            that.navCtrl.setRoot('HomePage');
+        })
+        .catch(error => {
+          // Handle Errors here.
+          console.log(error.code + error.message);
+          user.userName = "";
+          user.password = "";
           that.toast.create({
             message: 'Zadali ste nesprávne prihlasovacie údaje',
             duration: 3000
-           }).present();
-        }
-      })
-      .catch(error => {
-        // Handle Errors here.
-        console.log(error.code + error.message);
-        user.userName = "";
-        user.password = "";
-        that.toast.create({
-          message: 'Zadali ste nesprávne prihlasovacie údaje',
-          duration: 3000
-         }).present();
-      });
-    }catch(e){
-        console.error(e);
-        user.userName = "";
-        user.password = "";
-        that.toast.create({
-          message: 'Zadali ste nesprávne prihlasovacie údaje',
-          duration: 3000
-        }).present();
+          }).present();
+        });
+      }catch(e){
+          console.error(e);
+          user.userName = "";
+          user.password = "";
+          that.toast.create({
+            message: 'Zadali ste nesprávne prihlasovacie údaje',
+            duration: 3000
+          }).present();
+      }
+    }else{
+      user.userName = "";
+      user.password = "";
+      that.toast.create({
+        message: 'Zadali ste nesprávne prihlasovacie údaje',
+        duration: 3000
+      }).present();
     }
   }
 
