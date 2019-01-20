@@ -17,6 +17,7 @@ import { DriverActiveTrackServiceProvider } from '../providers/driver-data-servi
 import { LoginPageModule } from '../pages/login/login.module';
 import { HomePageModule } from '../pages/home/home.module';
 import { DriversProfileServiceProvider } from '../providers/providers-drivers-profile-service/drivers-profile-service';
+import { ResetPasswordPageModule} from '../pages/reset-password/reset-password.module'
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { DriversProfileServiceProvider } from '../providers/providers-drivers-pr
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     LoginPageModule,
-    HomePageModule
+    HomePageModule,
+    ResetPasswordPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

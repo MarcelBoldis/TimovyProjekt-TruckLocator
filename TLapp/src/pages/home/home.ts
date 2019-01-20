@@ -62,4 +62,7 @@ export class HomePage {
       that.navCtrl.setRoot("LoginPage");
     });
   }
+  resetPassword(){
+    this.navCtrl.push("ResetPasswordPage");
+  }
 }
