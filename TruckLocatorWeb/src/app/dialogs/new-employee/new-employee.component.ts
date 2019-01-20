@@ -12,7 +12,6 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { Router } from '@angular/router';
 
 
-
 @Component({
   selector: 'app-new-employee',
   templateUrl: './new-employee.component.html',
@@ -24,7 +23,6 @@ export class NewEmployeeComponent implements OnInit {
   fileName = '';
   title: string;
   showEditInputs: boolean;
-  isCreateMode: boolean;
   selectedFile: File = null;
   uploadedImage: File;
   photoUploaded = new EventEmitter();
@@ -50,7 +48,6 @@ export class NewEmployeeComponent implements OnInit {
     specialisation: ['', Validators.required],
     address: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
-    password: '',
     photo: ['', Validators.required]
   });
 
@@ -60,9 +57,6 @@ export class NewEmployeeComponent implements OnInit {
     this.showEditInputs = true;
     let employeeWorkersKeys = [];
     let employeeFiredWorkersKeys = [];
-
-    this.newEmployeeForm.get('password').setValue(this.makePassword(10));
-    this.newEmployeeForm.get('password').disable();
     this.fbService.getEmployeeListMetadata().subscribe(drivers => {
       employeeWorkersKeys = drivers.map(function (obj: any) {
         return obj.key;
@@ -87,8 +81,6 @@ export class NewEmployeeComponent implements OnInit {
         this.title = 'Info o zamestnancovi';
         this.showEditInputs = false;
       }
-    } else {
-      this.isCreateMode = true;
     }
   }
   makePassword(length: number): string {
@@ -115,7 +107,7 @@ export class NewEmployeeComponent implements OnInit {
     if (!this.data) {
       var that = this;
       var userMail = this.newEmployeeForm.get('email').value;
-      var userPass = this.newEmployeeForm.get('password').value;
+      var userPass = this.makePassword(10);
       this.afAuth.auth.createUserWithEmailAndPassword(
         userMail, userPass)
         .then(function (success) {
@@ -136,8 +128,13 @@ export class NewEmployeeComponent implements OnInit {
           console.log("============================");
           console.log(specificKey);
           console.log(that.newEmployeeForm.value);
-          
-           
+          that.afAuth.auth.sendPasswordResetEmail(userMail)
+          .then(function(success) {
+            console.log('uspesne odoslany mail');
+          })
+          .catch(function(error) {
+            console.log(error.code + "     " + error.message);
+          });
         })
         .catch(function (error) {
           // Handle Errors here.

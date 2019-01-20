@@ -9,6 +9,7 @@ import { LoginComponent } from '../components/login/login.component';
 import { RegistrationComponent } from '../components/registration/registration.component';
 import {StatisticsComponent} from '../components/statistics/statistics.component';
 import { AuthGuard } from '../core/auth.guard';
+import { ResetPasswordComponent } from '../components/reset-password/reset-password.component';
 
 
 const routes: Routes = [
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'tasks', component: TasksComponent, canActivate: [AuthGuard] },
   { path: 'trucks', component: TrucksComponent, canActivate: [AuthGuard] },
   { path: 'statistics', component: StatisticsComponent, canActivate: [AuthGuard] },
+  { path: 'resetPassword', component: ResetPasswordComponent },
 ];
 
 @NgModule({
