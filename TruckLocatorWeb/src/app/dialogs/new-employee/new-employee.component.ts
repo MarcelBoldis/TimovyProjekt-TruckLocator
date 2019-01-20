@@ -10,6 +10,7 @@ import * as firebase from 'firebase/app';
 import 'firebase/storage';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Router } from '@angular/router';
+import { SessionStorageService } from 'angular-web-storage';
 
 
 @Component({
@@ -27,6 +28,7 @@ export class NewEmployeeComponent implements OnInit {
   uploadedImage: File;
   photoUploaded = new EventEmitter();
   addEmployee: boolean;
+  email: string = '';
 
   constructor(
     public dialogRef: MatDialogRef<NewEmployeeComponent>,
@@ -39,6 +41,7 @@ export class NewEmployeeComponent implements OnInit {
     private router: Router,
     private afAuth: AngularFireAuth, 
     private snackBar: MatSnackBar,
+    private session: SessionStorageService,
     ) { }
 
   newEmployeeForm = this.fb.group({
@@ -49,7 +52,7 @@ export class NewEmployeeComponent implements OnInit {
     birthDate: ['', Validators.required],
     specialisation: ['', Validators.required],
     address: ['', Validators.required],
-    email: ['', [Validators.required, Validators.email]],
+    email: [this.email],
     photo: ['', Validators.required]
   });
 
@@ -72,6 +75,7 @@ export class NewEmployeeComponent implements OnInit {
     });
 
     if (this.data) {
+      this.email = this.data.data.email;
       if (this.data.edit) {
         this.addEmployee = false;
         this.newEmployeeForm.controls["photo"].clearValidators();
@@ -87,6 +91,20 @@ export class NewEmployeeComponent implements OnInit {
       this.addEmployee = true;
     }
   }
+
+  createEmail(): void{
+    const name = this.newEmployeeForm.get('firstName').value.toLowerCase();
+    const surName = this.newEmployeeForm.get('lastName').value.toLowerCase();
+
+    var found = this.employeeKeys.filter(function (element) {
+        return (element.includes(`${name}-${surName}`));
+    });
+
+    const specificKey = name + '-' + surName + '-' + found.length;
+    //Karol
+    this.email = specificKey + "@" + this.session.get('companyMail');
+  }
+
   makePassword(length: number): string {
     var text = "";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.-@#$%^&*()_+!";
@@ -110,22 +128,24 @@ export class NewEmployeeComponent implements OnInit {
     }
     if (!this.data) {
       var that = this;
-      var userMail = this.newEmployeeForm.get('email').value;
+
+      const name = this.newEmployeeForm.get('firstName').value.toLowerCase();
+      const surName = this.newEmployeeForm.get('lastName').value.toLowerCase();
+
+      var found = this.employeeKeys.filter(function (element) {
+          return (element.includes(`${name}-${surName}`));
+      });
+
+      const specificKey = name + '-' + surName + '-' + found.length;
+      //Karol
+      var userMail = specificKey + "@" + this.session.get('companyMail');
+      this.email = userMail;
       var userPass = this.makePassword(10);
       this.afAuth.auth.createUserWithEmailAndPassword(
         userMail, userPass)
         .then(function (success) {
           
           that.dialogRef.close(that.newEmployeeForm.value);
-
-          const name = that.newEmployeeForm.get('firstName').value.toLowerCase();
-          const surName = that.newEmployeeForm.get('lastName').value.toLowerCase();
-
-          var found = that.employeeKeys.filter(function (element) {
-            return (element.includes(`${name}-${surName}`));
-          });
-
-          const specificKey = name + '-' + surName + '-' + found.length;
           that.uploadPhoto(that.uploadedImage, specificKey);
           that.af.object(`${that.company}/Drivers/${specificKey}`).set(that.createNewEmployeeFromForm(that.newEmployeeForm.value, specificKey));
           that.afAuth.auth.sendPasswordResetEmail(userMail)

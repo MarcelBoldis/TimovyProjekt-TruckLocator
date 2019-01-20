@@ -43,6 +43,7 @@ export class LoginComponent implements OnInit {
       this.afAuth.auth.signInWithEmailAndPassword(this.loginForm.get('login').value, this.loginForm.get('password').value).then(function (success) {
         const company = that.getCompanyFromEmail(success.user.email); 
         that.setSessionCompanyName(company);
+        that.setSessionCompanyMail(that.loginForm.get('login').value);
         that.fbService.setCompany(company);
         that.router.navigateByUrl('/home');
       }).catch(function (error) {
@@ -63,6 +64,12 @@ export class LoginComponent implements OnInit {
   setSessionCompanyName(company: string) {
     this.session.set('companyNameTruckLocator', company);
   }
+
+  setSessionCompanyMail(userEmail: string) {
+    const mail = userEmail.split('@')[1];
+    this.session.set('companyMail', mail);
+  }
+
   removeSessionCompanyName() {
     this.session.remove('companyNameTruckLocator');
   }
