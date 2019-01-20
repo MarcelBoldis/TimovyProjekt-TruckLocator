@@ -43,7 +43,7 @@
         </div>
       </form>
       <div class="btn" *ngIf="showEditInputs">
-        <button mat-raised-button [disabled]="!newEmployeeForm.valid" (click)="sendEmployee()" class="submitButton" color="primary">Pridaj</button>
+        <button mat-raised-button [disabled]="!newEmployeeForm.valid" (click)="sendEmployee()" class="submitButton" color="primary">{{ addEmployee ? 'Pridať' : 'Uložiť' }}</button>
       </div>
     </div>
   </div>
