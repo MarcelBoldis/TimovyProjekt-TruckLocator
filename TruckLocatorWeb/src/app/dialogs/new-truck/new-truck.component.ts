@@ -57,7 +57,7 @@ export class NewTruckComponent implements OnInit {
       } else {
         this.fillFormControl(this.data.data);
         this.newTruckForm.disable();
-        this.title = 'Info o vozidle';
+        this.title = 'Informácie o vozidle';
         this.showEditInputs = false;
       }
     }
