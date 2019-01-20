@@ -11,6 +11,7 @@ import 'firebase/storage';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Router } from '@angular/router';
 import { SessionStorageService } from 'angular-web-storage';
+import { SessionCryptoService } from 'src/app/services/session-crypto.service';
 
 
 @Component({
@@ -42,6 +43,7 @@ export class NewEmployeeComponent implements OnInit {
     private afAuth: AngularFireAuth, 
     private snackBar: MatSnackBar,
     private session: SessionStorageService,
+    private cryptoservice: SessionCryptoService
     ) { }
 
   newEmployeeForm = this.fb.group({
@@ -101,8 +103,7 @@ export class NewEmployeeComponent implements OnInit {
     });
 
     const specificKey = name + '-' + surName + '-' + found.length;
-    //Karol
-    this.email = specificKey + "@" + this.session.get('companyMail');
+    this.email = specificKey + "@" + this.cryptoservice.getPlainText(this.session.get('companyMail'), 'kajovKlucNaSeesionPreTruckLocator');
   }
 
   makePassword(length: number): string {
@@ -137,8 +138,7 @@ export class NewEmployeeComponent implements OnInit {
       });
 
       const specificKey = name + '-' + surName + '-' + found.length;
-      //Karol
-      var userMail = specificKey + "@" + this.session.get('companyMail');
+      var userMail = specificKey + "@" + this.cryptoservice.getPlainText(this.session.get('companyMail'), 'kajovKlucNaSeesionPreTruckLocator')
       this.email = userMail;
       var userPass = this.makePassword(10);
       this.afAuth.auth.createUserWithEmailAndPassword(

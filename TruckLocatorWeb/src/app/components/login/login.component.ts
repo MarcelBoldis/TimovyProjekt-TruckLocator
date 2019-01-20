@@ -26,16 +26,12 @@ export class LoginComponent implements OnInit {
     private cryptoservice: SessionCryptoService,
     private snackBar: MatSnackBar) { }
 
-
-
   loginForm = this.fb.group({
     login: this.login,
     password: this.password
   });
 
-  ngOnInit() {
-
-  }
+  ngOnInit() { }
 
   authLogin(): void {
     var that = this;
@@ -49,7 +45,6 @@ export class LoginComponent implements OnInit {
         that.fbService.setCompany(company);
         that.router.navigateByUrl('/home');
       }).catch(function (error) {
-        // Handle Errors here.
         var errorMessage = error.message;
         that.snackBar.open(errorMessage, 'OK', {
           duration: 2000,
@@ -69,7 +64,8 @@ export class LoginComponent implements OnInit {
 
   setSessionCompanyMail(userEmail: string) {
     const mail = userEmail.split('@')[1];
-    this.session.set('companyMail', mail);
+    console.log(mail);
+    this.session.set('companyMail', this.cryptoservice.encriptPlainText(mail, 'kajovKlucNaSeesionPreTruckLocator'));
   }
 
   removeSessionCompanyName() {
