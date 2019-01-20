@@ -59,7 +59,7 @@ export class StatisticsComponent implements OnInit {
       this.trucksFuelPerKm.nativeElement.getContext('2d'),
       this.statisticsService.trucksFuel.dataVals, this.statisticsService.trucksFuel.labels, 185, 146, 29);
    
-    this.createGraphDriversDrivenDistance('doughnut', 'Splnené úlohy',
+    this.createGraphDriversDrivenDistance('doughnut', 'Počet ukončených rozvozov',
       this.trucksOnTasks.nativeElement.getContext('2d'),
       this.statisticsService.trucksFinishedTracksNumber.dataVals, this.statisticsService.trucksFinishedTracksNumber.labels, 142, 94, 162);
     

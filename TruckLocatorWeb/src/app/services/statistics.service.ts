@@ -26,7 +26,6 @@ export class StatisticsService {
 
   createDriversStatisticsFromFinishedTracks() {
     this.db.list('UPC/stats/finishedTracks').valueChanges().subscribe(finishedTracks => {
-      console.log("loadingdata....");
       this.dataDispaliedOnce = false;
       this.dataReady = false;
       this.statisticsByDriver = {};
@@ -39,7 +38,6 @@ export class StatisticsService {
           if (track.fuelCosts) {
             this.statisticsByDriver[track.driverName].priceForFuel += +track.fuelCosts.price;
             this.statisticsByDriver[track.driverName].fuelAmount += +track.fuelCosts.fuelAmount;
-            console.log(+this.statisticsByDriver[track.driverName].fuelAmount);
 
           }
           if (track.tasks) {
@@ -56,17 +54,17 @@ export class StatisticsService {
             totalNumberOfTasks = track.tasks.length;
           }
           if (track.fuelCosts) {
-            priceForFuel = track.fuelCosts.price;
-            fuelAmount = track.fuelCosts.fuelAmount;
+            priceForFuel = +track.fuelCosts.price;
+            fuelAmount = +track.fuelCosts.fuelAmount;
           }
           this.statisticsByDriver[track.driverName] = {
             driversId: track.driverName,
             numberOfFinishedTracks: 1,
-            totalDrivenDistance: track.drivenDistance,
-            completedTasks: completedTasks,
-            totalNumberOfTasks: totalNumberOfTasks,
-            priceForFuel: priceForFuel,
-            fuelAmount: fuelAmount
+            totalDrivenDistance: +track.drivenDistance,
+            completedTasks: +completedTasks,
+            totalNumberOfTasks: +totalNumberOfTasks,
+            priceForFuel: +priceForFuel,
+            fuelAmount: +fuelAmount
           };
         }
 
@@ -115,7 +113,7 @@ export class StatisticsService {
       this.driversFinishedTracksNumber.dataVals.push(this.statisticsByDriver[driversKey].numberOfFinishedTracks)
 
       this.driversFuel.labels.push(driversKey)
-      this.driversFuel.dataVals.push(Math.round(100 * this.statisticsByDriver[driversKey].fuelAmount / this.statisticsByDriver[driversKey].totalDrivenDistance));
+      this.driversFuel.dataVals.push(Math.round((100 * this.statisticsByDriver[driversKey].fuelAmount) / this.statisticsByDriver[driversKey].totalDrivenDistance));
 
       this.driversPercentageTaskCompleted.labels.push(driversKey)
       this.driversPercentageTaskCompleted.dataVals.push(
