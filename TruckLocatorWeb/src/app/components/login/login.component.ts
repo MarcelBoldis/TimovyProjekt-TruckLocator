@@ -35,18 +35,21 @@ export class LoginComponent implements OnInit {
 
   authLogin(): void {
     var that = this;
-    this.afAuth.auth.signInWithEmailAndPassword(this.loginForm.get('login').value, this.loginForm.get('password').value).then(function (success) {
-      const company = that.getCompanyFromEmail(success.user.email); 
-      that.setSessionCompanyName(company);
-      that.fbService.setCompany(company);
-      that.router.navigateByUrl('/home');
-    }).catch(function (error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(errorCode + "    " + errorMessage);
-      // ...
-    });
+    var isCompanyUser = this.isCompanyLoged(this.loginForm.get('login').value);
+    if(isCompanyUser){
+      this.afAuth.auth.signInWithEmailAndPassword(this.loginForm.get('login').value, this.loginForm.get('password').value).then(function (success) {
+        const company = that.getCompanyFromEmail(success.user.email); 
+        that.setSessionCompanyName(company);
+        that.fbService.setCompany(company);
+        that.router.navigateByUrl('/home');
+      }).catch(function (error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log(errorCode + "    " + errorMessage);
+        // ...
+      });
+    }
   }
 
   getCompanyFromEmail(userEmail: string): string {
@@ -60,5 +63,10 @@ export class LoginComponent implements OnInit {
   }
   removeSessionCompanyName() {
     this.session.remove('companyNameTruckLocator');
+  }
+  isCompanyLoged(email: string){
+    const splittedLogin = email.split('@');
+    const company = splittedLogin[1].substring(0, splittedLogin[1].indexOf("."));
+    return splittedLogin[0].includes(company);
   }
 }
