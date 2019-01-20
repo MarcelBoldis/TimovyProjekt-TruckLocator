@@ -72,3 +72,11 @@ h1 {
 .dialog {
     position: relative;
 }
+.loader{
+    mat-spinner{
+        display: inline-block;
+    }
+    text-align: center;
+    margin: 30px;
+    font-size: 30px;
+}

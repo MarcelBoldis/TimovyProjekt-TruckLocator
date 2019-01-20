@@ -87,10 +87,6 @@ export class TruckDetailComponent implements OnInit {
       }
     });
     this.picturesAreReady = false;
-    dialogRef.componentInstance.photoUploaded.subscribe(() => {
-      this.readTrucksPhotos(this.truckList);
-      this.picturesAreReady = true;
-    });
   }
 
   deleteTruck(index: number) {

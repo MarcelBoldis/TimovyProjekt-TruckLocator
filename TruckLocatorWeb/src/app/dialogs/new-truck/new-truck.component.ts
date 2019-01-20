@@ -23,7 +23,8 @@ export class NewTruckComponent implements OnInit {
   uploadedImage: File;
   selectedFile: File = null;
   photoUploaded = new EventEmitter();
-
+  waithingForDataSave: boolean;
+  
   constructor(
     public dialogRef: MatDialogRef<NewTruckComponent>,
     public fb: FormBuilder,
@@ -102,7 +103,7 @@ export class NewTruckComponent implements OnInit {
       this.af.object(`${this.company}/Trucks/${this.data.clickedIndex}`)
         .update(this.createNewTruckFromForm(this.newTruckForm.value, this.data.clickedIndex));
     }
-    this.dialogRef.close();
+    this.waithingForDataSave = true;
   }
 
   createNewTruckFromForm(newTruckForm, specificKey): ITruck {

@@ -1,47 +1,55 @@
 <div class="dialog">
+  <div *ngIf="!waithingForDataSave">
+    <button (click)="onButtonClick()">emit</button>
 
-  <h1>{{title}}</h1>
-  <mat-divider></mat-divider>
-  <mat-icon (click)="closeDialog()" class="close">close</mat-icon>
-  <div class="content-wrapper">
-    <form id="newTruckForm" [formGroup]="newTruckForm">
+    <h1>{{title}}</h1>
+    <mat-divider></mat-divider>
+    <mat-icon (click)="closeDialog()" class="close">close</mat-icon>
+    <div class="content-wrapper">
+      <form id="newTruckForm" [formGroup]="newTruckForm">
 
-      <mat-form-field class="example-full-width">
-        <input matInput placeholder="Výrobca" formControlName="brand">
-      </mat-form-field>
-      <mat-form-field class="example-full-width">
-        <input matInput placeholder="Model" formControlName="model">
-      </mat-form-field>
-      <mat-form-field class="example-full-width">
-        <input matInput placeholder="EVČ vozidla" formControlName="carNumber">
-      </mat-form-field>
-      <mat-form-field class="example-full-width">
-        <input matInput placeholder="Najazdené km" formControlName="km">
-      </mat-form-field>
-      <mat-form-field class="example-full-width">
-        <input matInput placeholder="VIN číslo" formControlName="vin">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-select placeholder="Kategória" formControlName="category">
-          <mat-option value="N1">N1</mat-option>
-          <mat-option value="N2">N2</mat-option>
-          <mat-option value="N3">N3</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field style="display: none">
-        <mat-select placeholder="isActive" formControlName="isActive" >
-          <mat-option value="false" >available</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <div class="inputfile" *ngIf="showEditInputs">
-        <input formControlName="photo" type="file"(change)="setPhoto($event)" name="file" id="file" class="file" accept="image/*">
-        <label for="file"><i class="material-icons photoIcon">add_a_photo </i> Vložte fotku</label>
-        <span id="fileName">{{fileName}}</span>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Výrobca" formControlName="brand">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Model" formControlName="model">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="EVČ vozidla" formControlName="carNumber">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Najazdené km" formControlName="km">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="VIN číslo" formControlName="vin">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Kategória" formControlName="category">
+            <mat-option value="N1">N1</mat-option>
+            <mat-option value="N2">N2</mat-option>
+            <mat-option value="N3">N3</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field style="display: none">
+          <mat-select placeholder="isActive" formControlName="isActive">
+            <mat-option value="false">available</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="inputfile" *ngIf="showEditInputs">
+          <input formControlName="photo" type="file" (change)="setPhoto($event)" name="file" id="file" class="file"
+            accept="image/*">
+          <label for="file"><i class="material-icons photoIcon">add_a_photo </i> Vložte fotku</label>
+          <span id="fileName">{{fileName}}</span>
+        </div>
+      </form>
+
+      <div class="btn" *ngIf="showEditInputs">
+        <button mat-raised-button class="submitButton" [disabled]="!newTruckForm.valid" (click)="sendData()" color="primary">Pridaj</button>
       </div>
-    </form>
-
-    <div class="btn" *ngIf="showEditInputs">
-      <button mat-raised-button class="submitButton" [disabled]="!newTruckForm.valid" (click)="sendData()" color="primary">Pridaj</button>
     </div>
+  </div>
+  <div  class="loader" *ngIf="waithingForDataSave">
+      <mat-spinner></mat-spinner> <br>
+      ukladám...
   </div>
 </div>
