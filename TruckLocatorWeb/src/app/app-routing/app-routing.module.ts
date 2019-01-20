@@ -10,6 +10,7 @@ import { RegistrationComponent } from '../components/registration/registration.c
 import {StatisticsComponent} from '../components/statistics/statistics.component';
 import { AuthGuard } from '../core/auth.guard';
 import { ResetPasswordComponent } from '../components/reset-password/reset-password.component';
+import { HistoricalTracksComponent } from '../components/historical-tracks/historical-tracks.component';
 
 
 const routes: Routes = [
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'tasks', component: TasksComponent, canActivate: [AuthGuard] },
   { path: 'trucks', component: TrucksComponent, canActivate: [AuthGuard] },
   { path: 'statistics', component: StatisticsComponent, canActivate: [AuthGuard] },
+  { path: 'historicalTracks', component: HistoricalTracksComponent, canActivate: [AuthGuard]},
   { path: 'resetPassword', component: ResetPasswordComponent },
 ];
 

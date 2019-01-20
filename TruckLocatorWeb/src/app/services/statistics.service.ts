@@ -22,16 +22,16 @@ export class StatisticsService {
   trucksFuel: ILabelAndDataForCharts;
   trucksFinishedTracksNumber: ILabelAndDataForCharts;
 
-  constructor(private db: AngularFireDatabase) { this.createDriversStatisticsFromFinishedTracks(); }
+  constructor(private db: AngularFireDatabase) { }
 
   createDriversStatisticsFromFinishedTracks() {
     this.db.list('UPC/stats/finishedTracks').valueChanges().subscribe(finishedTracks => {
+      console.log("loadingdata....");
       this.dataDispaliedOnce = false;
       this.dataReady = false;
       this.statisticsByDriver = {};
       this.statisticsByTruck = {};
       finishedTracks.forEach((track: ITrack) => {
-
         // DRIVERS
         if (this.statisticsByDriver[track.driverName]) {
           this.statisticsByDriver[track.driverName].numberOfFinishedTracks += 1;

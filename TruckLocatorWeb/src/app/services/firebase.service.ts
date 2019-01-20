@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { IPerson } from '../../models/person';
 import { ITruck } from '../../models/truck';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { ITrack } from 'src/models/track';
 
 @Injectable({
   providedIn: 'root'
@@ -55,6 +56,10 @@ export class FirebaseService {
 
   getActiveEmployees(): Observable<IPerson[]> {
     return this.db.list<IPerson>(this.basePath + '/Drivers', ref => ref.orderByChild('isActive').equalTo(true)).valueChanges();
+  }
+
+  getFinishedTracks(): Observable<ITrack[]>{
+    return this.db.list<ITrack>(this.basePath + '/stats/finishedTracks').valueChanges();
   }
 
   // getActiveTrackOfEmployee(employeeId): Observable<ITrack[]> {

@@ -21,10 +21,11 @@ export class StatisticsComponent implements OnInit {
   @ViewChild('trucksFuelPerKm') trucksFuelPerKm: ElementRef;
   @ViewChild('trucksOnTasks') trucksOnTasks: ElementRef;
   
-  constructor(private statisticsService: StatisticsService, private router: Router, private afAuth: AngularFireAuth) {
-  }
+  constructor(private statisticsService: StatisticsService, private router: Router, private afAuth: AngularFireAuth) {}
 
-  ngOnInit() { }
+  ngOnInit() { 
+    this.statisticsService.createDriversStatisticsFromFinishedTracks();
+  }
 
   ngAfterViewChecked() {
     if (!this.statisticsService.dataDispaliedOnce && this.statisticsService.dataReady) {

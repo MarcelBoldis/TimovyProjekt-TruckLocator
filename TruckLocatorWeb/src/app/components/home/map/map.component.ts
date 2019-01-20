@@ -42,7 +42,7 @@ export class MapComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    console.log(this.shownTrack);
+    console.log("in map component: ",this.shownTrack);
     if (this.dataInitialized) {
       this.showTrackerRoute(this.shownTrack);
     }
