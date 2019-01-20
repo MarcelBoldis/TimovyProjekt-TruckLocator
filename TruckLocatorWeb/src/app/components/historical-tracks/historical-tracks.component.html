@@ -1,0 +1,23 @@
+<div class="wrapper">
+  <div class="left">
+    <h1>Ukončené trasy</h1>
+    <div class="list">
+      <div *ngFor="let track of finishedTracks; let i = index">
+        <mat-card (click)="selectTrack(i)">
+          <div class="selected" *ngIf="i === dysplayedTrackIndex ">Zobrazené</div>
+          <div>
+            <h4>
+              {{track.addressStart}} - {{track.addressFinish}}
+              <br>
+                <i class="trackDate"> {{track.wayDate | date: 'MMM d, y'}}</i>
+            </h4>
+          </div>
+          <button mat-raised-button color="primary" *ngIf="i === dysplayedTrackIndex " (click)="driverButtonClicked()" >Detail</button>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="finishedTracks[dysplayedTrackIndex]" class="right">
+    <app-map [shownTrack]="finishedTracks[dysplayedTrackIndex]"></app-map>
+  </div>
+</div>

@@ -26,6 +26,7 @@ export class NewEmployeeComponent implements OnInit {
   selectedFile: File = null;
   uploadedImage: File;
   photoUploaded = new EventEmitter();
+  addEmployee: boolean;
 
   constructor(
     public dialogRef: MatDialogRef<NewEmployeeComponent>,
@@ -72,6 +73,7 @@ export class NewEmployeeComponent implements OnInit {
 
     if (this.data) {
       if (this.data.edit) {
+        this.addEmployee = false;
         this.newEmployeeForm.controls["photo"].clearValidators();
         this.fillFormControl(this.data.data);
         this.title = 'Editácia zamestnanca';
@@ -81,6 +83,8 @@ export class NewEmployeeComponent implements OnInit {
         this.title = 'Info o zamestnancovi';
         this.showEditInputs = false;
       }
+    }else{
+      this.addEmployee = true;
     }
   }
   makePassword(length: number): string {

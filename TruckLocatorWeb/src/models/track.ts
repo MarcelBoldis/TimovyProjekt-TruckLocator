@@ -11,6 +11,7 @@ export interface ITrack {
     tasks: Array<ITask>;
     coordinations: Array<ICoordinate>;
     drivenDistance?: number, 
+    wayDate?: Date,
     fuelCosts?: {
         price?: number;
         gasStation?: string;

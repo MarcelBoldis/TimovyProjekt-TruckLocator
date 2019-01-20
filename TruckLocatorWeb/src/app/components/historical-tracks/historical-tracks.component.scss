@@ -1,0 +1,58 @@
+@import '../../../assets/global-css/variables.scss';
+
+.wrapper {
+    padding-top: 5vh;
+    width: 95%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    .left {
+        width: 25%;
+        margin-right: 5%;
+        float: left;
+        
+        .list {
+            max-height: 65vh;
+            overflow: auto;
+            padding: 0 15px 0 0;
+            box-sizing: border-box;
+
+            /* width */
+
+        }
+    }
+
+    .right {
+        width: 70%;
+        float: right;
+    }
+}
+.trackDate{
+    font-size: 12px;
+    font-weight: 400;
+}
+.selected{
+    color: rgb(255, 166, 0);
+    text-align: end;
+    padding: 5px;
+}
+mat-card{
+    margin: 5px;
+}
+
+
+/*Scroll bar*/
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: white;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: $nav-color; 
+    border-radius: 10px;
+}
