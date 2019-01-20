@@ -49,7 +49,15 @@ export class LoginPage {
         return that.ofAuth.auth.signInWithEmailAndPassword(user.userName, user.password);
       })
       .then(success => {
-        that.navCtrl.setRoot('HomePage');
+        //overenie ci je to vodic a nie zamestnavatel
+        if(!success.emailVerified){
+          that.navCtrl.setRoot('HomePage');
+        }else{
+          that.toast.create({
+            message: 'Zadali ste nesprávne prihlasovacie údaje',
+            duration: 3000
+           }).present();
+        }
       })
       .catch(error => {
         // Handle Errors here.
