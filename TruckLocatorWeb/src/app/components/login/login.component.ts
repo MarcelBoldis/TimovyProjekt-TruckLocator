@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { SessionStorageService } from 'angular-web-storage'
+import { SessionCryptoService } from 'src/app/services/session-crypto.service';
 
 
 @Component({
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     public afAuth: AngularFireAuth,
     public fbService: FirebaseService,
-    private session: SessionStorageService) { }
+    private session: SessionStorageService,
+    private cryptoservice: SessionCryptoService) { }
 
 
 
@@ -43,11 +45,9 @@ export class LoginComponent implements OnInit {
         that.fbService.setCompany(company);
         that.router.navigateByUrl('/home');
       }).catch(function (error) {
-        // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
         console.log(errorCode + "    " + errorMessage);
-        // ...
       });
     }
   }
@@ -58,8 +58,7 @@ export class LoginComponent implements OnInit {
   }
 
   setSessionCompanyName(company: string) {
-    console.log("ukladam : ", company);
-    this.session.set('companyNameTruckLocator', company);
+    this.session.set('companyNameTruckLocator', this.cryptoservice.encriptPlainText(company, 'kajovKlucNaSeesionPreTruckLocator'));
   }
   removeSessionCompanyName() {
     this.session.remove('companyNameTruckLocator');
@@ -69,4 +68,5 @@ export class LoginComponent implements OnInit {
     const company = splittedLogin[1].substring(0, splittedLogin[1].indexOf("."));
     return splittedLogin[0].includes(company);
   }
+
 }

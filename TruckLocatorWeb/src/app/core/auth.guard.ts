@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { FirebaseService } from '../services/firebase.service';
 import { SessionStorageService } from '../../../node_modules/angular-web-storage';
 import { NavServiceService } from '../services/nav-service.service';
+import { SessionCryptoService } from '../services/session-crypto.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class AuthGuard implements CanActivate {
               private router: Router,
               private firebaseService: FirebaseService,
               private session: SessionStorageService,
-              private nav: NavServiceService){
+              private nav: NavServiceService,
+              private cryptoservice: SessionCryptoService){
   }
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -24,7 +26,7 @@ export class AuthGuard implements CanActivate {
         var that=this;
           this.afAuth.authState.subscribe((succ)=> {
             if(succ != null) { 
-              that.firebaseService.setCompany(that.session.get('companyNameTruckLocator'));
+              that.firebaseService.setCompany( that.cryptoservice.getPlainText(that.session.get('companyNameTruckLocator'), 'kajovKlucNaSeesionPreTruckLocator'));
               that.nav.show();
               resolve(true); 
             }
