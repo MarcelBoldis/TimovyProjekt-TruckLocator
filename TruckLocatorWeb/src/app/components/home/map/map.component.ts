@@ -30,19 +30,16 @@ export class MapComponent implements OnInit, OnChanges {
     }).addTo(this.map);
 
     // this.map.on('click', (e) => {
-    //   console.log(e.latlng);
     // });
     this.dataInitialized = true;
 
     // this.dbService.getGeolocations().subscribe(data => {
     //   this.geoTestData = data;
-    //   console.log(this.geoTestData);
     //   this.dataInitialized = true;
     // });
   }
 
   ngOnChanges() {
-    console.log("in map component: ",this.shownTrack);
     if (this.dataInitialized) {
       this.showTrackerRoute(this.shownTrack);
     }
@@ -70,7 +67,6 @@ export class MapComponent implements OnInit, OnChanges {
     
     //const geolocations = this.geoTestData.filter(data => data.id === id)[0];
     var markers = [];
-    console.log(coordinations);
     coordinations.forEach(geolocation => {
       var marker = L.marker([geolocation.latitude, geolocation.longitude]);
       markers.push(marker.getLatLng());

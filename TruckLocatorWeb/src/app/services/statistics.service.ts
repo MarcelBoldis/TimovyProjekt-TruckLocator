@@ -8,6 +8,7 @@ import { ITask } from 'src/models/task';
   providedIn: 'root'
 })
 export class StatisticsService {
+  company: string = '';
 
   statisticsByDriver: IDriversStatistics;
   statisticsByTruck: ITrucksStatistics;
@@ -38,7 +39,6 @@ export class StatisticsService {
           if (track.fuelCosts) {
             this.statisticsByDriver[track.driverName].priceForFuel += +track.fuelCosts.price;
             this.statisticsByDriver[track.driverName].fuelAmount += +track.fuelCosts.fuelAmount;
-
           }
           if (track.tasks) {
             this.statisticsByDriver[track.driverName].completedTasks += +this.getNumberOfCompletedTasks(track.tasks);

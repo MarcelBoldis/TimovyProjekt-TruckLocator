@@ -7,10 +7,10 @@
       <form id="newEmployeeForm" [formGroup]="newEmployeeForm">
 
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Meno" formControlName="firstName">
+          <input matInput (blur)="createEmail()" placeholder="Meno" formControlName="firstName">
         </mat-form-field>
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Priezvisko" formControlName="lastName">
+          <input matInput (blur)="createEmail()" placeholder="Priezvisko" formControlName="lastName">
         </mat-form-field>
         <mat-form-field class="example-full-width">
           <input matInput placeholder="Rodné číslo" formControlName="birthNumber">
@@ -33,8 +33,8 @@
         <mat-form-field>
           <input matInput placeholder="Adresa" formControlName="address">
         </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Email" formControlName="email">
+        <mat-form-field *ngIf="addEmployee || !showEditInputs">
+          <input matInput [(ngModel)]="email" readonly placeholder="Email" formControlName="email">
         </mat-form-field>
         <div class="inputfile" *ngIf="showEditInputs">
           <input formControlName="photo" type="file"(change)="setPhoto($event)" name="file" id="file" class="file" accept="image/*">
@@ -43,7 +43,7 @@
         </div>
       </form>
       <div class="btn" *ngIf="showEditInputs">
-        <button mat-raised-button [disabled]="!newEmployeeForm.valid" (click)="sendEmployee()" class="submitButton" color="primary">Pridaj</button>
+        <button mat-raised-button [disabled]="!newEmployeeForm.valid" (click)="sendEmployee()" class="submitButton" color="primary">{{ addEmployee ? 'Pridať' : 'Uložiť' }}</button>
       </div>
     </div>
   </div>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '../../../../node_modules/@angular/forms';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-reset-password',
@@ -12,7 +13,8 @@ export class ResetPasswordComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private router: Router,
-              private afAuth: AngularFireAuth) { }
+              private afAuth: AngularFireAuth, 
+              private snackBar: MatSnackBar) { }
   resPassForm = this.fb.group({
     email: ['', Validators.required]
   });
@@ -27,7 +29,9 @@ export class ResetPasswordComponent implements OnInit {
       that.router.navigateByUrl('/login');
     })
     .catch(function(error) {
-      console.log(error.code + "     " + error.message);
+      that.snackBar.open(error.message, 'Ok', {
+        duration: 2000,
+      });
     });
   }
 

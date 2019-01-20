@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, EventEmitter } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { FirebaseService } from '../../services/firebase.service';
@@ -10,6 +10,7 @@ import * as firebase from 'firebase/app';
 import 'firebase/storage';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Router } from '@angular/router';
+import { SessionStorageService } from 'angular-web-storage';
 
 
 @Component({
@@ -26,6 +27,8 @@ export class NewEmployeeComponent implements OnInit {
   selectedFile: File = null;
   uploadedImage: File;
   photoUploaded = new EventEmitter();
+  addEmployee: boolean;
+  email: string = '';
 
   constructor(
     public dialogRef: MatDialogRef<NewEmployeeComponent>,
@@ -37,6 +40,8 @@ export class NewEmployeeComponent implements OnInit {
     public sanitizer: DomSanitizer,
     private router: Router,
     private afAuth: AngularFireAuth, 
+    private snackBar: MatSnackBar,
+    private session: SessionStorageService,
     ) { }
 
   newEmployeeForm = this.fb.group({
@@ -47,7 +52,7 @@ export class NewEmployeeComponent implements OnInit {
     birthDate: ['', Validators.required],
     specialisation: ['', Validators.required],
     address: ['', Validators.required],
-    email: ['', [Validators.required, Validators.email]],
+    email: [this.email],
     photo: ['', Validators.required]
   });
 
@@ -67,11 +72,12 @@ export class NewEmployeeComponent implements OnInit {
         return obj.key;
       });
       this.employeeKeys = employeeWorkersKeys.concat(employeeFiredWorkersKeys);
-      console.log(this.employeeKeys);
     });
 
     if (this.data) {
+      this.email = this.data.data.email;
       if (this.data.edit) {
+        this.addEmployee = false;
         this.newEmployeeForm.controls["photo"].clearValidators();
         this.fillFormControl(this.data.data);
         this.title = 'Editácia zamestnanca';
@@ -81,8 +87,24 @@ export class NewEmployeeComponent implements OnInit {
         this.title = 'Info o zamestnancovi';
         this.showEditInputs = false;
       }
+    }else{
+      this.addEmployee = true;
     }
   }
+
+  createEmail(): void{
+    const name = this.newEmployeeForm.get('firstName').value.toLowerCase();
+    const surName = this.newEmployeeForm.get('lastName').value.toLowerCase();
+
+    var found = this.employeeKeys.filter(function (element) {
+        return (element.includes(`${name}-${surName}`));
+    });
+
+    const specificKey = name + '-' + surName + '-' + found.length;
+    //Karol
+    this.email = specificKey + "@" + this.session.get('companyMail');
+  }
+
   makePassword(length: number): string {
     var text = "";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.-@#$%^&*()_+!";
@@ -106,41 +128,42 @@ export class NewEmployeeComponent implements OnInit {
     }
     if (!this.data) {
       var that = this;
-      var userMail = this.newEmployeeForm.get('email').value;
+
+      const name = this.newEmployeeForm.get('firstName').value.toLowerCase();
+      const surName = this.newEmployeeForm.get('lastName').value.toLowerCase();
+
+      var found = this.employeeKeys.filter(function (element) {
+          return (element.includes(`${name}-${surName}`));
+      });
+
+      const specificKey = name + '-' + surName + '-' + found.length;
+      //Karol
+      var userMail = specificKey + "@" + this.session.get('companyMail');
+      this.email = userMail;
       var userPass = this.makePassword(10);
       this.afAuth.auth.createUserWithEmailAndPassword(
         userMail, userPass)
         .then(function (success) {
-          console.log("hereeeeeeeeeeeeeeee");
           
           that.dialogRef.close(that.newEmployeeForm.value);
-
-          const name = that.newEmployeeForm.get('firstName').value.toLowerCase();
-          const surName = that.newEmployeeForm.get('lastName').value.toLowerCase();
-
-          var found = that.employeeKeys.filter(function (element) {
-            return (element.includes(`${name}-${surName}`));
-          });
-
-          const specificKey = name + '-' + surName + '-' + found.length;
           that.uploadPhoto(that.uploadedImage, specificKey);
           that.af.object(`${that.company}/Drivers/${specificKey}`).set(that.createNewEmployeeFromForm(that.newEmployeeForm.value, specificKey));
-          console.log("============================");
-          console.log(specificKey);
-          console.log(that.newEmployeeForm.value);
           that.afAuth.auth.sendPasswordResetEmail(userMail)
           .then(function(success) {
-            console.log('uspesne odoslany mail');
+            that.snackBar.open('Uspešne odoslaný e-mail', 'Ok', {
+              duration: 2000,
+            });
           })
           .catch(function(error) {
-            console.log(error.code + "     " + error.message);
+            that.snackBar.open(error.message, 'Ok', {
+              duration: 2000,
+            });
           });
         })
         .catch(function (error) {
-          // Handle Errors here.
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          console.log(errorCode + "       " + errorMessage);
+          that.snackBar.open(error.message, 'Ok', {
+            duration: 2000,
+          });
         });
 
 
@@ -166,27 +189,27 @@ export class NewEmployeeComponent implements OnInit {
     person.specialisation = newEmployeeForm.specialisation;
     person.email = newEmployeeForm.email;
     person.photo = specificKey;
-    console.log(person);
     return person;
   }
 
   setPhoto(event: any) {
     this.uploadedImage = event.target.files[0];
     this.fileName = this.uploadedImage.name;
-    console.log(this.uploadedImage.name);
   }
 
   uploadPhoto(image: File, name: string) {
+    var that = this;
     this.ng2ImgMax.compressImage(image, 0.075).subscribe(
       result => {
         this.selectedFile = new File([result], result.name);
-        console.log(this.selectedFile);
         var storageRef = firebase.storage().ref(name);
         storageRef.put(this.selectedFile)
                   .then(() => this.photoUploaded.emit());
       },
       error => {
-        console.log('Image could not be compressed.', error);
+        that.snackBar.open(error, 'Ok', {
+          duration: 2000,
+        });
       }
     );
   }

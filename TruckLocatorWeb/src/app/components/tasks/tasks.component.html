@@ -1,8 +1,17 @@
 <div class="container">
-
+  <div class="left-content">
+    <h2>Editacia trás</h2>
+    <mat-list role="list">
+      <mat-list-item role="listitem" *ngFor="let item of taskList; let index=index;">
+        <p>{{item.addressStart}} - {{item.addressFinish}}</p>
+        <div class="iconWrap">
+          <mat-icon class="delete" (click)="deleteClicked(index, item.driverName)">delete</mat-icon>
+          <!-- <mat-icon class="edit" (click)="editClicked(index)">edit</mat-icon> -->
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </div>
+  <div class="right-content">
     <app-new-task></app-new-task>
-  <!-- <div class="right-content">
-    <app-task-list></app-task-list>
-  </div> -->
-
+  </div>
 </div>

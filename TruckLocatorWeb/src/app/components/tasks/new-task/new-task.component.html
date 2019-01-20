@@ -15,9 +15,7 @@
           </mat-form-field>
           <mat-form-field>
             <mat-select placeholder="Vodič" formControlName="driverName">
-              <mat-option 
-                *ngFor="let driver of driversList; let index = index;" 
-                [value]="driverKeys[index]">
+              <mat-option *ngFor="let driver of driversList" [value]="driver.id">
                 {{driver.firstName}} {{driver.lastName}}
               </mat-option>
             </mat-select>
@@ -46,7 +44,7 @@
           <div *ngFor="let address of tasks.controls; let i=index">
             <div [formGroupName]="i" class="taskWrapper">
               <h6>Uloha {{i+1}}</h6>
-              <mat-icon class="deleteIcon" (click)="removeTask(i)" >delete</mat-icon>
+              <mat-icon class="deleteIcon" (click)="removeTask(i)">delete</mat-icon>
               <mat-form-field>
                 <input matInput formControlName="taskAddress" placeholder="Adresa">
               </mat-form-field>

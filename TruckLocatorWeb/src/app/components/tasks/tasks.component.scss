@@ -1,14 +1,58 @@
-// .left-content, 
-// .right-content {
-//     width: 50%;
-//     box-sizing: border-box;
-//     float: left;
-//     margin-top: 5vh;
-// }
+@import '../../../assets/global-css/variables.scss';
+
+.left-content, 
+.right-content {
+    box-sizing: border-box;
+    float: right;
+    margin-top: 5vh;
+    width: 70%;
+}
+.left-content {
+    width: 30%;
+    float: left;
+}
 
 .container {
     position: relative;
     top: 5vh;
-    width: 80%;
+    width: 95%;
     margin: 0 auto;
+}
+mat-list-item {
+
+    position: relative;
+    background: #fff;
+    margin-bottom: 7px;
+    border-radius: 7px;
+    p {
+        width: 80%;
+    }
+    &:hover {
+        cursor: pointer;
+        transition: all 0.2s linear;
+        transform: scale(1.05);
+        background: rgba(0,0,0,0.05);
+    }
+    .iconWrap {
+        position: absolute;
+        right: 0;
+        width: 60px;
+    }
+    mat-icon {
+        &:last-child{
+            margin-right: 10px;
+        }
+    }
+    .edit{
+        &:hover {
+            transition: all 0.1s linear;
+            color: $nav-color;
+        }
+    }
+    .delete {
+        &:hover {
+            transition: all 0.1s linear;
+            color: $middle-button-color;
+        }
+    }
 }
